@@ -11,5 +11,13 @@
 
     <artifactId>Player</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.github.arkobat.semesterprojektF21</groupId>
+            <artifactId>Common</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

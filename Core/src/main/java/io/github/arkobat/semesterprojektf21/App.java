@@ -11,7 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
-import io.github.arkobat.semesterprojektf21.entity.Player;
+import io.github.arkobat.semesterprojektf21.temp.PlayerImpl;
 
 public class App implements ApplicationListener {
 
@@ -36,14 +36,10 @@ public class App implements ApplicationListener {
 
         camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
         map = new TmxMapLoader().load("map/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-
         // direct loading
-
-
     }
 
     public void resize(int i, int i1) {
@@ -55,7 +51,6 @@ public class App implements ApplicationListener {
         // System.out.println("render");
 
         //camera.position.set(player.getLocation().getX(), 0, 0);
-        System.out.println(camera.position.x);
         camera.position.set(player.getLocation().getX(), player.getLocation().getY(), 0);
         camera.update();
 
@@ -65,14 +60,14 @@ public class App implements ApplicationListener {
         batch.end();
 
         final Location location = player.getLocation();
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Key.LEFT.isPressed()) {
             location.setX(Math.max(0, location.getX() - 100 * Gdx.graphics.getDeltaTime()));
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Key.RIGHT.isPressed()) {
             location.setX(location.getX() + 100 * Gdx.graphics.getDeltaTime());
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Key.JUMP.isPressed()) {
             location.setY(location.getY() + 100 * Gdx.graphics.getDeltaTime());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {

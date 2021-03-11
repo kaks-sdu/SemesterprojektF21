@@ -1,4 +1,7 @@
-package io.github.arkobat.semesterprojektf21;
+package io.github.arkobat.semesterprojektf21.temp;
+
+import io.github.arkobat.semesterprojektf21.Color;
+import io.github.arkobat.semesterprojektf21.Location;
 
 /**
  * A temporary player, only using for initial testing

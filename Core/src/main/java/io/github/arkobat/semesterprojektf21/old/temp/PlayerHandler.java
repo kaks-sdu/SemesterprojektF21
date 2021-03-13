@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektf21.temp;
+package io.github.arkobat.semesterprojektf21.old.temp;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;

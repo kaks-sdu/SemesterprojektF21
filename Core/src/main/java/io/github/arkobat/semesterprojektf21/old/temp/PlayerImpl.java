@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektf21.temp;
+package io.github.arkobat.semesterprojektf21.old.temp;
 
 import io.github.arkobat.semesterprojektf21.Location;
 import io.github.arkobat.semesterprojektf21.Vector;

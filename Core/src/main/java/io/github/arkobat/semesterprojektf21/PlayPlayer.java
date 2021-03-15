@@ -38,17 +38,6 @@ public class PlayPlayer extends Sprite {
         // Apply gravity
         velocity.setY(velocity.getY() - gravity);
 
-        if (getX() < 0) {
-            setX(0);
-        } else if (getX() + getWidth() > collisionLayer.getWidth() * collisionLayer.getTileWidth()) {
-            setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - getWidth());
-        }
-        if (getY() < 0) {
-            setY(0);
-        } else if (getY() + getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
-            setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - getHeight());
-        }
-
         handleControls();
 
         setX((float) (getX() + velocity.getX() * delta));
@@ -78,6 +67,19 @@ public class PlayPlayer extends Sprite {
     }
 
     private void handleCollision(float oldX, float oldY) {
+
+        // Ensure the player is within game borders
+        if (getX() < 0) {
+            setX(0);
+        } else if (getX() + getWidth() > collisionLayer.getWidth() * collisionLayer.getTileWidth()) {
+            setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - getWidth());
+        }
+        if (getY() < 0) {
+            setY(0);
+        } else if (getY() + getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
+            setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - getHeight());
+        }
+
         boolean blocked = false;
 
         // Check X collision;
@@ -136,26 +138,6 @@ public class PlayPlayer extends Sprite {
             TiledMapTile tile = cell.getTile();
             MapProperties properties = tile.getProperties();
             return (properties.containsKey("collision"));
-        } catch (NullPointerException ignored) {
-            return true;
-        }
-    }
-
-    private boolean checkYCollision(int x, int y) {
-        try {
-            TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-            TiledMapTile tile = cell.getTile();
-            MapProperties properties = tile.getProperties();
-            if (properties.containsKey("collision")) {
-                return true;
-            } else {
-                x += 1;
-                if (getX() + getWidth() > x * collisionLayer.getTileWidth()) {
-                    return checkYCollision(x, y);
-                } else {
-                    return false;
-                }
-            }
         } catch (NullPointerException ignored) {
             return true;
         }

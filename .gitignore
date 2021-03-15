@@ -44,3 +44,5 @@ out/
 ##############################
 */target/**
 /.idea/
+/runner/felix/cache/
+/runner/bundles/

@@ -33,7 +33,7 @@ public class Game implements ApplicationListener {
 
     public void init() {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Asteroids";
+        cfg.title = "Group 1 Semester Project";
         cfg.width = 800;
         cfg.height = 600;
         cfg.useGL30 = false;

@@ -2,24 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.arkobat.semesterprojektF21</groupId>
     <artifactId>SemesterprojektF21</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <modules>
-        <module>Player</module>
-        <module>Core</module>
-        <module>Common</module>
-        <module>Collision</module>
-    </modules>
+    <name>Group 1 SemesterProject</name>
+    <description>Generated using Pax-Construct</description>
+
 
     <properties>
-        <project.java.version>1.13</project.java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!--
+             | some example OSGi runtime properties
+            -->
+        <org.osgi.service.http.port>8080</org.osgi.service.http.port>
+        <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <modules>
+        <module>poms</module>
+        <module>provision</module>
+        <module>Core</module>
+        <module>Common</module>
+        <module>Player</module>
+        <module>Collision</module>
+        <module>OSGiLibGDX</module>
+    </modules>
 
     <dependencies>
         <!-- Annotations -->
@@ -47,5 +58,35 @@
             <version>3.12.0</version>
         </dependency>
     </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <!--
+                               | some example Pax-Runner settings
+                              -->
+                    <provision>
+                        <param>--platform=felix</param>
+                    </provision>
+                </configuration>
+                <executions>
+                    <!--
+                               | uncomment to auto-generate IDE files
+                              <execution>
+                                <id>ide-support</id>
+                                <goals>
+                                  <goal>eclipse</goal>
+                                </goals>
+                              </execution>
+                              -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

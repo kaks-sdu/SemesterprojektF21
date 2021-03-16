@@ -52,6 +52,7 @@
     <module>Core</module>
     <module>Common</module>
     <module>OSGiLibGDX</module>
+    <module>Player</module>
   </modules>
 
   <build>

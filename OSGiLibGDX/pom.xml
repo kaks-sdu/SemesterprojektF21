@@ -8,7 +8,7 @@
   </parent>
 
     <properties>
-        <libGDX.version>1.5.0</libGDX.version>
+        <libGDX.version>1.9.13</libGDX.version>
         <bundle.symbolicName>io.github.semesterprojektF21.libgdx</bundle.symbolicName>
         <bundle.namespace>io.github.semesterprojektF21</bundle.namespace>
     </properties>
@@ -34,23 +34,31 @@
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-platform</artifactId>
-            <version>${libGDX.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-backend-lwjgl</artifactId>
             <version>${libGDX.version}</version>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-box2d</artifactId>
+            <artifactId>gdx-controllers-desktop</artifactId>
             <version>${libGDX.version}</version>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-freetype</artifactId>
+            <artifactId>gdx-controllers-platform</artifactId>
             <version>${libGDX.version}</version>
+            <classifier>natives-desktop</classifier>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-controllers-parent</artifactId>
+            <version>${libGDX.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-freetype-platform</artifactId>
+            <version>${libGDX.version}</version>
+            <classifier>natives-desktop</classifier>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
@@ -60,15 +68,7 @@
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-box2d-platform</artifactId>
-            <classifier>natives-desktop</classifier>
-            <version>${libGDX.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-freetype-platform</artifactId>
-            <classifier>natives-desktop</classifier>
+            <artifactId>gdx-backend-lwjgl</artifactId>
             <version>${libGDX.version}</version>
         </dependency>
         <dependency>

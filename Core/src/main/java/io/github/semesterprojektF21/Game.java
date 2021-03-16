@@ -14,6 +14,7 @@ import io.github.semesterprojektF21.common.services.IEntityProcessingService;
 import io.github.semesterprojektF21.common.services.IGamePluginService;
 import io.github.semesterprojektF21.common.services.IPostEntityProcessingService;
 import io.github.semesterprojektF21.core.managers.GameInputProcessor;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -54,7 +55,6 @@ public class Game implements ApplicationListener {
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
     }
 
     @Override
@@ -92,8 +92,8 @@ public class Game implements ApplicationListener {
             float[] shapey = entity.getShapeY();
 
             for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
+                 i < shapex.length;
+                 j = i++) {
 
                 sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
             }
@@ -137,7 +137,8 @@ public class Game implements ApplicationListener {
     public void addGamePluginService(IGamePluginService plugin) {
         this.gamePluginList.add(plugin);
         plugin.start(gameData, world);
-
+        System.out.println("Started plugin from core scope: " + plugin);
+        // TODO: Setup animations?
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {

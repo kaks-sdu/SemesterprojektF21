@@ -12,6 +12,7 @@ public class Entity implements Serializable {
 
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
+    private String texture;
     private float radius;
     private Map<Class, EntityPart> parts;
     
@@ -41,6 +42,14 @@ public class Entity implements Serializable {
 
     public String getID() {
         return ID.toString();
+    }
+
+    public void setTexture(String texture){
+        this.texture = texture;
+    }
+
+    public String getTexture(){
+        return texture;
     }
 
     public float[] getShapeX() {

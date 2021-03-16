@@ -48,15 +48,9 @@
     </dependency>
     <dependency>
       <groupId>io.github.semesterprojektF21.build</groupId>
-      <artifactId>Core</artifactId>
+      <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
-      <artifactId>OSGiCommon</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -67,7 +61,20 @@
     </dependency>
     <dependency>
       <groupId>io.github.semesterprojektF21.build</groupId>
+      <artifactId>Core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.semesterprojektF21.build</groupId>
       <artifactId>Common</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.semesterprojektF21.build</groupId>
+      <artifactId>Player</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>

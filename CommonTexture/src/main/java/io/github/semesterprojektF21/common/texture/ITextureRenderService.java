@@ -1,8 +1,8 @@
 package io.github.semesterprojektF21.common.texture;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.semesterprojektF21.common.data.GameData;
-import io.github.semesterprojektF21.common.data.World;
+import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.game.GameData;
 
 public interface ITextureRenderService {
 

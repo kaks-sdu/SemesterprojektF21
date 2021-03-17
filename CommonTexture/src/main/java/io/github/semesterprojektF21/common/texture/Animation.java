@@ -3,11 +3,10 @@ package io.github.semesterprojektF21.common.texture;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import io.github.semesterprojektF21.common.data.Entity;
-import io.github.semesterprojektF21.common.data.GameData;
-import io.github.semesterprojektF21.common.data.entityparts.EntityPart;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.game.GameData;
 
-public class Animation implements EntityPart {
+public class Animation {
 
     Array<TextureRegion> frames;
     float maxFrameTime;
@@ -16,13 +15,13 @@ public class Animation implements EntityPart {
     int frame;
 
 
-    public Animation(String fileName, int frameCount, float cycleTime){
+    public Animation(String fileName, int frameCount, float cycleTime) {
         frames = new Array<TextureRegion>();
         Texture texture = new Texture(fileName);
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;
         int frameWidth = region.getRegionWidth() / frameCount;
-        for(int i = 0; i < frameCount; i++){
+        for (int i = 0; i < frameCount; i++) {
             temp = new TextureRegion(region, i * frameWidth, 0, frameWidth, region.getRegionHeight());
             frames.add(temp);
         }
@@ -31,27 +30,26 @@ public class Animation implements EntityPart {
         frame = 0;
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         currentFrameTime += dt;
-        if(currentFrameTime > maxFrameTime){
+        if (currentFrameTime > maxFrameTime) {
             frame++;
             currentFrameTime = 0;
         }
-        if(frame >= frameCount)
+        if (frame >= frameCount)
             frame = 0;
 
     }
 
-    public void flip(){
-        for(TextureRegion region : frames)
+    public void flip() {
+        for (TextureRegion region : frames)
             region.flip(true, false);
     }
 
-    public TextureRegion getFrame(){
+    public TextureRegion getFrame() {
         return frames.get(frame);
     }
 
-    @Override
     public void process(GameData gameData, Entity entity) {
         update(gameData.getDelta());
     }

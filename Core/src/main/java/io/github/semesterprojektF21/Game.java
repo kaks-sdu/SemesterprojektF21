@@ -17,21 +17,25 @@ import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 import io.github.semesterprojektF21.core.managers.GameInputProcessor;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Supplier;
 
+@SuppressWarnings("bundle")
 public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
-    private static World world = new World();
+    private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
-    private final GameData gameData = new GameData();
     private boolean created = false;
     private ShapeRenderer sr;
     private SpriteBatch spriteBatch;
+
+    private Supplier<GameData> gameDataSupplier;
 
     public Game() {
         init();
@@ -45,14 +49,20 @@ public class Game implements ApplicationListener {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
+        gameDataSupplier = () -> new GameData(
+                 Gdx.graphics.getDeltaTime(),
+                 Gdx.graphics.getWidth(),
+                 Gdx.graphics.getHeight(),
+                 KeyController.getPressedKeys()
+         );
+
         new LwjglApplication(this, cfg);
     }
 
     @Override
     public void create() {
         spriteBatch = new SpriteBatch();
-        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        gameData.setDisplayHeight(Gdx.graphics.getHeight());
+        GameData gameData = gameDataSupplier.get();
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2F, gameData.getDisplayHeight() / 2F);
@@ -74,14 +84,11 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-        gameData.getKeys().update();
-
         update();
-        draw();
     }
 
     private void update() {
+        GameData gameData = gameDataSupplier.get();
         // Render
         for (ITextureRenderService textureRenderService : textureRenderList) {
             textureRenderService.render(gameData, world, spriteBatch);
@@ -97,28 +104,8 @@ public class Game implements ApplicationListener {
             postEntityProcessorService.process(gameData, world);
         }
 
-
     }
 
-    private void draw() {
-        for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
-
-            sr.begin(ShapeRenderer.ShapeType.Line);
-
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
-
-            for (int i = 0, j = shapex.length - 1;
-                 i < shapex.length;
-                 j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
-        }
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -163,17 +150,19 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
+        GameData gameData = gameDataSupplier.get();
         plugin.start(gameData, world);
         System.out.println("Started plugin from core scope: " + plugin);
         // TODO: Setup animations?
 
         if (created) {
-            plugin.load();
+            plugin.load(gameData, world);
         }
     }
 
     public void removeGamePluginService(GamePluginService plugin) {
         gamePluginList.remove(plugin);
+        GameData gameData = gameDataSupplier.get();
         plugin.stop(gameData, world);
     }
 

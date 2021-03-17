@@ -1,5 +1,6 @@
 package io.github.semesterprojektF21.player;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -67,7 +68,7 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
     private void handleCollision(PlayerImpl player, float oldX, float oldY) {
         Location loc = player.getLocation();
         Hitbox hitbox = player.getHitbox();
-
+/*
         // Ensure the player is within game borders
         if (loc.getX() < 0) {
             loc.setX(0);
@@ -133,6 +134,7 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
 
 
     private boolean checkCollision(int x, int y) {
+
         try {
             TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
             TiledMapTile tile = cell.getTile();
@@ -141,6 +143,12 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
         } catch (NullPointerException ignored) {
             return true;
         }
+         */
+    }
+
+    @Override
+    public void render(GameData gameData, World world, SpriteBatch sb) {
+        System.out.println("render");
     }
 
 }

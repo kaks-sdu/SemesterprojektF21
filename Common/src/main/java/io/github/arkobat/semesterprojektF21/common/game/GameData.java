@@ -1,67 +1,32 @@
 package io.github.arkobat.semesterprojektF21.common.game;
 
-import io.github.arkobat.semesterprojektF21.common.events.Event;
+import io.github.arkobat.semesterprojektF21.common.World;
+import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
 
+@AllArgsConstructor
 public class GameData {
 
-    private float delta;
-    private int displayWidth;
-    private int displayHeight;
-    private final Key keys = new Key();
-    private List<Event> events = new CopyOnWriteArrayList<>();
+    private final float delta;
+    private final int displayWidth;
+    private final int displayHeight;
+    private final Set<Key> keys;
 
-    public void addEvent(Event e) {
-        events.add(e);
-    }
-
-    public void removeEvent(Event e) {
-        events.remove(e);
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public Key getKeys() {
-        return keys;
-    }
-
-    public void setDelta(float delta) {
-        this.delta = delta;
+    public boolean isPressed(Key key) {
+        return keys.contains(key);
     }
 
     public float getDelta() {
         return delta;
     }
 
-    public void setDisplayWidth(int width) {
-        this.displayWidth = width;
-    }
-
     public int getDisplayWidth() {
         return displayWidth;
-    }
-
-    public void setDisplayHeight(int height) {
-        this.displayHeight = height;
     }
 
     public int getDisplayHeight() {
         return displayHeight;
     }
 
-    public <E extends Event> List<Event> getEvents(Class<E> type, String sourceID) {
-        List<Event> r = new ArrayList();
-        for (Event event : events) {
-            if (event.getClass().equals(type) && event.getSource().getID().equals(sourceID)) {
-                r.add(event);
-            }
-        }
-
-        return r;
-    }
 }

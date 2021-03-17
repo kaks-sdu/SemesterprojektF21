@@ -55,7 +55,20 @@
     </dependency>
     <dependency>
       <groupId>io.github.semesterprojektF21.build</groupId>
+      <artifactId>CommonTexture</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.semesterprojektF21.build</groupId>
       <artifactId>OSGiLibGDX</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.semesterprojektF21.build</groupId>
+      <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
@@ -68,7 +81,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.semesterprojektF21.build</groupId>
-      <artifactId>Common</artifactId>
+      <artifactId>CommonTexture</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>

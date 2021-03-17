@@ -1,5 +1,6 @@
 package io.github.semesterprojektF21.player;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.semesterprojektF21.common.data.Entity;
 import io.github.semesterprojektF21.common.data.GameData;
 import io.github.semesterprojektF21.common.data.GameKeys;
@@ -7,10 +8,11 @@ import io.github.semesterprojektF21.common.data.World;
 import io.github.semesterprojektF21.common.data.entityparts.LifePart;
 import io.github.semesterprojektF21.common.data.entityparts.MovingPart;
 import io.github.semesterprojektF21.common.data.entityparts.PositionPart;
-//import io.github.semesterprojektF21.common.data.entityparts.AnimationPart;
 import io.github.semesterprojektF21.common.services.IEntityProcessingService;
+import io.github.semesterprojektF21.common.texture.Animation;
+import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 
-public class PlayerControlSystem implements IEntityProcessingService {
+public class PlayerControlSystem implements IEntityProcessingService, ITextureRenderService {
 
     @Override
     public void process(GameData gameData, World world) {
@@ -18,7 +20,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
             LifePart lifePart = player.getPart(LifePart.class);
-            //AnimationPart animation = player.getPart(AnimationPart.class);
+            Animation animation = player.getPart(Animation.class);
 
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
@@ -27,7 +29,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
             lifePart.process(gameData, player);
-            //animation.process(gameData, player);
+            animation.process(gameData, player);
+            //System.out.println("Processing player!");
             //TODO: Fix animation part
             updateShape(player);
 
@@ -56,5 +59,18 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
         entity.setShapeX(shapex);
         entity.setShapeY(shapey);
+    }
+
+    @Override
+    public void render(GameData gameData, World world, SpriteBatch sb) {
+        sb.begin();
+        for (Entity player : world.getEntities(Player.class)) {
+            System.out.println("Rendering player!");
+            PositionPart positionPart = player.getPart(PositionPart.class);
+            Animation animation = player.getPart(Animation.class);
+
+            sb.draw(animation.getFrame(), positionPart.getX(), positionPart.getY());
+            //System.out.println("Rendering player at X" + positionPart.getX() + ", Y" + positionPart.getY());
+        }
     }
 }

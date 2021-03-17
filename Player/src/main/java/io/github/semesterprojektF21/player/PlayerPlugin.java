@@ -6,8 +6,8 @@ import io.github.semesterprojektF21.common.data.World;
 import io.github.semesterprojektF21.common.data.entityparts.LifePart;
 import io.github.semesterprojektF21.common.data.entityparts.MovingPart;
 import io.github.semesterprojektF21.common.data.entityparts.PositionPart;
-//import io.github.semesterprojektF21.common.data.entityparts.AnimationPart;
 import io.github.semesterprojektF21.common.services.IGamePluginService;
+import io.github.semesterprojektF21.common.texture.Animation;
 
 import java.util.UUID;
 
@@ -44,8 +44,9 @@ public class PlayerPlugin implements IGamePluginService {
         player.add(new LifePart(1));
         //AnimationPart animationPart = new AnimationPart("birdanimation.png", 3, 0.5f);
         //animationPart.flip();
-        //player.add(animationPart);
+        player.add(new Animation("birdanimation.png", 3, 0.5f));
         //TODO: Fix animation part
+        System.out.println("Created Player and Animation");
 
         return player;
     }

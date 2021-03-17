@@ -1,4 +1,4 @@
 Bundle-SymbolicName: SemesterProjectGroup1
 Bundle-ActivationPolicy: lazy
-Service-Component: META-INF/entityprocessor.xml, META-INF/gameplugin.xml
-Import-Package: io.github.semesterprojektF21.common.*
+Service-Component: META-INF/entityprocessor.xml, META-INF/gameplugin.xml, META-INF/texturerenderer.xml
+Import-Package: io.github.semesterprojektF21.common.*, com.badlogic.gdx.*

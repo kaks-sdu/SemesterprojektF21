@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.semesterprojektF21.common.data.Entity;
 import io.github.semesterprojektF21.common.data.GameData;
@@ -13,6 +14,7 @@ import io.github.semesterprojektF21.common.data.World;
 import io.github.semesterprojektF21.common.services.IEntityProcessingService;
 import io.github.semesterprojektF21.common.services.IGamePluginService;
 import io.github.semesterprojektF21.common.services.IPostEntityProcessingService;
+import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 import io.github.semesterprojektF21.core.managers.GameInputProcessor;
 
 import java.util.List;
@@ -22,10 +24,12 @@ public class Game implements ApplicationListener {
 
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
+    private SpriteBatch spriteBatch;
     private final GameData gameData = new GameData();
     private static World world = new World();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     public Game(){
@@ -45,6 +49,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
+        spriteBatch = new SpriteBatch();
         gameData.setDisplayWidth(Gdx.graphics.getWidth());
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
@@ -55,6 +60,10 @@ public class Game implements ApplicationListener {
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+
+        for(IGamePluginService gamePluginService : gamePluginList){
+            gamePluginService.start(gameData, world);
+        }
     }
 
     @Override
@@ -71,6 +80,11 @@ public class Game implements ApplicationListener {
     }
 
     private void update() {
+        // Render
+        for (ITextureRenderService textureRenderService : textureRenderList) {
+            textureRenderService.render(gameData, world, spriteBatch);
+        }
+
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
@@ -80,6 +94,8 @@ public class Game implements ApplicationListener {
         for (IPostEntityProcessingService postEntityProcessorService : postEntityProcessorList) {
             postEntityProcessorService.process(gameData, world);
         }
+
+
     }
 
     private void draw() {
@@ -118,12 +134,21 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
+    public void addTextureRenderService(ITextureRenderService eps){
+        System.out.println("Added texture render service");
+        textureRenderList.add(eps);
+    }
+
+    public void removeTextureRenderService(ITextureRenderService eps){
+        textureRenderList.remove(eps);
+    }
+
     public void addEntityProcessingService(IEntityProcessingService eps) {
-        this.entityProcessorList.add(eps);
+        entityProcessorList.add(eps);
     }
 
     public void removeEntityProcessingService(IEntityProcessingService eps) {
-        this.entityProcessorList.remove(eps);
+        entityProcessorList.remove(eps);
     }
 
     public void addPostEntityProcessingService(IPostEntityProcessingService eps) {
@@ -135,14 +160,14 @@ public class Game implements ApplicationListener {
     }
 
     public void addGamePluginService(IGamePluginService plugin) {
-        this.gamePluginList.add(plugin);
-        plugin.start(gameData, world);
+        gamePluginList.add(plugin);
+        //plugin.start(gameData, world);
         System.out.println("Started plugin from core scope: " + plugin);
         // TODO: Setup animations?
     }
 
     public void removeGamePluginService(IGamePluginService plugin) {
-        this.gamePluginList.remove(plugin);
+        gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
 

@@ -8,44 +8,33 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.semesterprojektF21.core</bundle.symbolicName>
+        <bundle.symbolicName>io.github.semesterprojektF21.common</bundle.symbolicName>
         <bundle.namespace>io.github.semesterprojektF21</bundle.namespace>
     </properties>
-  
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>Core</artifactId>
+    <artifactId>CommonTexture</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>Core</name>
+    <name>CommonTexture</name>
     <dependencies>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>io.github.semesterprojektF21.build</groupId>
-            <artifactId>Common</artifactId>
+
+        <!--<dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.semesterprojektF21.build</groupId>
-            <artifactId>CommonTexture</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>

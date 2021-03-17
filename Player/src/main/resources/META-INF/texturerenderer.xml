@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.semesterprojektF21.player">
+    <implementation class="io.github.semesterprojektF21.player.PlayerControlSystem"/>
+    <service>
+        <provide interface="io.github.semesterprojektF21.common.texture.ITextureRenderService"/>
+    </service>
+</scr:component>

@@ -1,12 +1,13 @@
-package io.github.semesterprojektF21.common.data.entityparts;
+package io.github.semesterprojektF21.common.texture;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import io.github.semesterprojektF21.common.data.Entity;
 import io.github.semesterprojektF21.common.data.GameData;
+import io.github.semesterprojektF21.common.data.entityparts.EntityPart;
 
-public class AnimationPart implements EntityPart {
+public class Animation implements EntityPart {
 
     Array<TextureRegion> frames;
     float maxFrameTime;
@@ -15,9 +16,10 @@ public class AnimationPart implements EntityPart {
     int frame;
 
 
-    public AnimationPart(String fileName, int frameCount, float cycleTime){
-        frames = new Array<>();
-        TextureRegion region = new TextureRegion(new Texture(fileName));
+    public Animation(String fileName, int frameCount, float cycleTime){
+        frames = new Array<TextureRegion>();
+        Texture texture = new Texture(fileName);
+        TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;
         int frameWidth = region.getRegionWidth() / frameCount;
         for(int i = 0; i < frameCount; i++){
@@ -27,7 +29,6 @@ public class AnimationPart implements EntityPart {
         this.frameCount = frameCount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
-        System.out.println("AnimationPart Called!");
     }
 
     public void update(float dt){
@@ -42,7 +43,6 @@ public class AnimationPart implements EntityPart {
     }
 
     public void flip(){
-        System.out.println("Flip called!");
         for(TextureRegion region : frames)
             region.flip(true, false);
     }
@@ -50,6 +50,7 @@ public class AnimationPart implements EntityPart {
     public TextureRegion getFrame(){
         return frames.get(frame);
     }
+
     @Override
     public void process(GameData gameData, Entity entity) {
         update(gameData.getDelta());

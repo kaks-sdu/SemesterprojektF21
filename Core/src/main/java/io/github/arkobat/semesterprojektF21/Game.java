@@ -1,4 +1,4 @@
-package io.github.semesterprojektF21;
+package io.github.arkobat.semesterprojektF21;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -9,25 +9,24 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import io.github.arkobat.semesterprojektF21.common.World;
-import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.semesterprojektF21.common.texture.ITextureRenderService;
-import io.github.semesterprojektF21.core.managers.GameInputProcessor;
+//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
+
+//import io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService;
 
 @SuppressWarnings("bundle")
 public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    // private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
     private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
@@ -50,11 +49,11 @@ public class Game implements ApplicationListener {
         cfg.resizable = false;
 
         gameDataSupplier = () -> new GameData(
-                 Gdx.graphics.getDeltaTime(),
-                 Gdx.graphics.getWidth(),
-                 Gdx.graphics.getHeight(),
-                 KeyController.getPressedKeys()
-         );
+                Gdx.graphics.getDeltaTime(),
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(),
+                KeyController.getPressedKeys()
+        );
 
         new LwjglApplication(this, cfg);
     }
@@ -70,7 +69,7 @@ public class Game implements ApplicationListener {
 
         sr = new ShapeRenderer();
 
-        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+    //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
         for (GamePluginService gamePluginService : gamePluginList) {
             gamePluginService.load(gameData, world);
@@ -90,9 +89,9 @@ public class Game implements ApplicationListener {
     private void update() {
         GameData gameData = gameDataSupplier.get();
         // Render
-        for (ITextureRenderService textureRenderService : textureRenderList) {
-            textureRenderService.render(gameData, world, spriteBatch);
-        }
+        //       for (ITextureRenderService textureRenderService : textureRenderList) {
+        //           textureRenderService.render(gameData, world, spriteBatch);
+        //       }
 
         // Update
         for (GameProcessingService entityProcessorService : entityProcessorList) {
@@ -123,14 +122,14 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
-    public void addTextureRenderService(ITextureRenderService eps) {
-        System.out.println("Added texture render service");
-        textureRenderList.add(eps);
-    }
+//   public void addTextureRenderService(ITextureRenderService eps) {
+//       System.out.println("Added texture render service");
+//       textureRenderList.add(eps);
+//   }
 
-    public void removeTextureRenderService(ITextureRenderService eps) {
-        textureRenderList.remove(eps);
-    }
+    //   public void removeTextureRenderService(ITextureRenderService eps) {
+//        textureRenderList.remove(eps);
+//}
 
     public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);

@@ -1,4 +1,4 @@
-package io.github.semesterprojektF21;
+package io.github.arkobat.semesterprojektF21;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

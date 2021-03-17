@@ -1,4 +1,4 @@
-package io.github.semesterprojektF21.player;
+package io.github.arkobat.semesterprojektF21.player;
 
 import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Location;

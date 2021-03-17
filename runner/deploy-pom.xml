@@ -2,7 +2,7 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.semesterprojektF21.Group1SemesterProject.build</groupId>
+  <groupId>io.github.arkobat.semesterprojektF21.Group1SemesterProject.build</groupId>
   <artifactId>deployment</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -22,7 +22,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>OSGiLibGDX</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
@@ -47,46 +47,46 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>CommonTexture</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>OSGiLibGDX</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>Core</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>CommonTexture</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
       <artifactId>Player</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>

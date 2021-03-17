@@ -24,7 +24,7 @@
       -->
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.semesterprojektF21</groupId>
+    <groupId>io.github.arkobat.semesterprojektF21</groupId>
     <artifactId>Group1SemesterProject</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -54,7 +54,7 @@
         <module>OSGiLibGDX</module>
         <module>Core</module>
         <module>Common</module>
-        <module>CommonTexture</module>
+       <!-- <module>CommonTexture</module> -->
         <module>Player</module>
     </modules>
 
@@ -106,11 +106,6 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>RELEASE122</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
         </dependency>
     </dependencies>
 

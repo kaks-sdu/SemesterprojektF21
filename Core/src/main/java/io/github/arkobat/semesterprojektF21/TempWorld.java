@@ -1,4 +1,4 @@
-package io.github.semesterprojektF21;
+package io.github.arkobat.semesterprojektF21;
 
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;

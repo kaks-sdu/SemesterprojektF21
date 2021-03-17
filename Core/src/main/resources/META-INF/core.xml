@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.semesterprojektF21.Game">
-    <implementation class="io.github.semesterprojektF21.Game"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.Game">
+    <implementation class="io.github.arkobat.semesterprojektF21.Game"/>
 
     <reference bind="addPostEntityProcessingService" cardinality="0..n"
                interface="io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService"
@@ -11,10 +11,11 @@
                name="IEntityProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
 
     <reference bind="addTextureRenderService" cardinality="0..n"
-               interface="io.github.semesterprojektF21.common.texture.ITextureRenderService"
+               interface="io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService"
                name="ITextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
 
     <reference bind="addGamePluginService" cardinality="0..n"
                interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"
                name="IGamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
+
 </scr:component>

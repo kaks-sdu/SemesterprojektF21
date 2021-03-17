@@ -6,14 +6,16 @@ public interface LivingEntity extends Entity, Damageable {
 
     /**
      * Get the size of the living entity.
+     *
+     * @return the size ratio
      */
-    void getSize();
+    float getSize();
 
     /**
      * Set the size of the current entity.
-     * @param size
-     * @return float - the size in float
+     *
+     * @param size - The new size ratio
      */
-    float setSize(float size);
+    void setSize(float size);
 
 }

@@ -22,6 +22,11 @@ public class PlayerPlugin implements GamePluginService {
     }
 
     @Override
+    public void load(GameData gameData, World world) {
+
+    }
+
+    @Override
     public void stop(GameData gameData, World world) {
         // Remove entities
         Collection<Entity> players = world.getEntities(Player.class);

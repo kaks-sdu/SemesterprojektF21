@@ -4,8 +4,16 @@ import io.github.arkobat.semesterprojektF21.common.Damageable;
 
 public interface LivingEntity extends Entity, Damageable {
 
-    float getSize();
+    /**
+     * Get the size of the living entity.
+     */
+    void getSize();
 
-    void setSize(float size);
+    /**
+     * Set the size of the current entity.
+     * @param size
+     * @return float - the size in float
+     */
+    float setSize(float size);
 
 }

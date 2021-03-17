@@ -1,17 +1,17 @@
 package io.github.semesterprojektF21.player;
 
-import io.github.semesterprojektF21.common.data.Entity;
-import io.github.semesterprojektF21.common.data.GameData;
-import io.github.semesterprojektF21.common.data.World;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.game.GameData;
+import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.semesterprojektF21.common.data.entityparts.LifePart;
 import io.github.semesterprojektF21.common.data.entityparts.MovingPart;
 import io.github.semesterprojektF21.common.data.entityparts.PositionPart;
-import io.github.semesterprojektF21.common.services.IGamePluginService;
+import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.semesterprojektF21.common.texture.Animation;
 
 import java.util.UUID;
 
-public class PlayerPlugin implements IGamePluginService {
+public class PlayerPlugin implements GamePluginService {
 
     private Entity player;
 

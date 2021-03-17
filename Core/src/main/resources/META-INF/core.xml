@@ -3,11 +3,11 @@
     <implementation class="io.github.semesterprojektF21.Game"/>
 
     <reference bind="addPostEntityProcessingService" cardinality="0..n"
-               interface="io.github.semesterprojektF21.common.services.IPostEntityProcessingService"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService"
                name="IPostEntityProcessingService" policy="dynamic" unbind="removePostEntityProcessingService"/>
 
     <reference bind="addEntityProcessingService" cardinality="0..n"
-               interface="io.github.semesterprojektF21.common.services.IEntityProcessingService"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GameProcessingService"
                name="IEntityProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
 
     <reference bind="addTextureRenderService" cardinality="0..n"
@@ -15,6 +15,6 @@
                name="ITextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
 
     <reference bind="addGamePluginService" cardinality="0..n"
-               interface="io.github.semesterprojektF21.common.services.IGamePluginService"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"
                name="IGamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
 </scr:component>

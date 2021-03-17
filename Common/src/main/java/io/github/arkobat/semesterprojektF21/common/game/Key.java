@@ -1,6 +1,6 @@
-package io.github.semesterprojektF21.common.data;
+package io.github.arkobat.semesterprojektF21.common.game;
 
-public class GameKeys {
+public class Key {
 
     private static boolean[] keys;
     private static boolean[] pkeys;
@@ -15,7 +15,7 @@ public class GameKeys {
     public static final int SPACE = 6;
     public static final int SHIFT = 7;
 
-    public GameKeys() {
+    public Key() {
         keys = new boolean[NUM_KEYS];
         pkeys = new boolean[NUM_KEYS];
 

@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import io.github.semesterprojektF21.common.data.Entity;
-import io.github.semesterprojektF21.common.data.GameData;
-import io.github.semesterprojektF21.common.data.World;
-import io.github.semesterprojektF21.common.services.IEntityProcessingService;
-import io.github.semesterprojektF21.common.services.IGamePluginService;
-import io.github.semesterprojektF21.common.services.IPostEntityProcessingService;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.game.GameData;
+import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
+import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
+import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 import io.github.semesterprojektF21.core.managers.GameInputProcessor;
 
@@ -27,10 +27,10 @@ public class Game implements ApplicationListener {
     private SpriteBatch spriteBatch;
     private final GameData gameData = new GameData();
     private static World world = new World();
-    private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
-    private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
+    private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
-    private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
     public Game(){
         init();
@@ -61,7 +61,7 @@ public class Game implements ApplicationListener {
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
-        for(IGamePluginService gamePluginService : gamePluginList){
+        for(GamePluginService gamePluginService : gamePluginList){
             gamePluginService.start(gameData, world);
         }
     }
@@ -86,12 +86,12 @@ public class Game implements ApplicationListener {
         }
 
         // Update
-        for (IEntityProcessingService entityProcessorService : entityProcessorList) {
+        for (GameProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
         }
 
         // Post Update
-        for (IPostEntityProcessingService postEntityProcessorService : postEntityProcessorList) {
+        for (GamePostProcessingService postEntityProcessorService : postEntityProcessorList) {
             postEntityProcessorService.process(gameData, world);
         }
 
@@ -143,30 +143,30 @@ public class Game implements ApplicationListener {
         textureRenderList.remove(eps);
     }
 
-    public void addEntityProcessingService(IEntityProcessingService eps) {
+    public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);
     }
 
-    public void removeEntityProcessingService(IEntityProcessingService eps) {
+    public void removeEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.remove(eps);
     }
 
-    public void addPostEntityProcessingService(IPostEntityProcessingService eps) {
+    public void addPostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.add(eps);
     }
 
-    public void removePostEntityProcessingService(IPostEntityProcessingService eps) {
+    public void removePostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.remove(eps);
     }
 
-    public void addGamePluginService(IGamePluginService plugin) {
+    public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
         //plugin.start(gameData, world);
         System.out.println("Started plugin from core scope: " + plugin);
         // TODO: Setup animations?
     }
 
-    public void removeGamePluginService(IGamePluginService plugin) {
+    public void removeGamePluginService(GamePluginService plugin) {
         gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }

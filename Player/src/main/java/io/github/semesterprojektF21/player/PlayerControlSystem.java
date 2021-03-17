@@ -1,18 +1,18 @@
 package io.github.semesterprojektF21.player;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.semesterprojektF21.common.data.Entity;
-import io.github.semesterprojektF21.common.data.GameData;
-import io.github.semesterprojektF21.common.data.GameKeys;
-import io.github.semesterprojektF21.common.data.World;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.game.GameData;
+import io.github.arkobat.semesterprojektF21.common.game.Key;
+import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.semesterprojektF21.common.data.entityparts.LifePart;
 import io.github.semesterprojektF21.common.data.entityparts.MovingPart;
 import io.github.semesterprojektF21.common.data.entityparts.PositionPart;
-import io.github.semesterprojektF21.common.services.IEntityProcessingService;
+import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.semesterprojektF21.common.texture.Animation;
 import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 
-public class PlayerControlSystem implements IEntityProcessingService, ITextureRenderService {
+public class PlayerControlSystem implements GameProcessingService, ITextureRenderService {
 
     @Override
     public void process(GameData gameData, World world) {
@@ -22,9 +22,9 @@ public class PlayerControlSystem implements IEntityProcessingService, ITextureRe
             LifePart lifePart = player.getPart(LifePart.class);
             Animation animation = player.getPart(Animation.class);
 
-            movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
+            movingPart.setLeft(gameData.getKeys().isDown(Key.LEFT));
+            movingPart.setRight(gameData.getKeys().isDown(Key.RIGHT));
+            movingPart.setUp(gameData.getKeys().isDown(Key.UP));
 
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);

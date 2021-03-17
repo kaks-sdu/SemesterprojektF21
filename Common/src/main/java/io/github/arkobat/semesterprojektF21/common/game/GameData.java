@@ -1,6 +1,6 @@
-package io.github.semesterprojektF21.common.data;
+package io.github.arkobat.semesterprojektF21.common.game;
 
-import io.github.semesterprojektF21.common.events.Event;
+import io.github.arkobat.semesterprojektF21.common.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class GameData {
     private float delta;
     private int displayWidth;
     private int displayHeight;
-    private final GameKeys keys = new GameKeys();
+    private final Key keys = new Key();
     private List<Event> events = new CopyOnWriteArrayList<>();
 
     public void addEvent(Event e) {
@@ -26,7 +26,7 @@ public class GameData {
         return events;
     }
 
-    public GameKeys getKeys() {
+    public Key getKeys() {
         return keys;
     }
 

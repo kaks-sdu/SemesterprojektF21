@@ -1,6 +1,6 @@
 package io.github.semesterprojektF21.player;
 
-import io.github.semesterprojektF21.common.data.Entity;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 
 public class Player extends Entity {
 

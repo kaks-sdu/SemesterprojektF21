@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.semesterprojektF21.player.plugin">
     <implementation class="io.github.semesterprojektF21.player.PlayerPlugin"/>
     <service>
-        <provide interface="io.github.semesterprojektF21.common.services.IGamePluginService"/>
+        <provide interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"/>
     </service>
 </scr:component>

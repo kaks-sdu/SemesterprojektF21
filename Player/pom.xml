@@ -14,7 +14,7 @@
     <artifactId>Player</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>io.github.semesterprojektF21.player.Player</name>
+    <name>io.github.semesterprojektF21.player.PlayerImpl</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

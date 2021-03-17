@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
-import io.github.arkobat.semesterprojektF21.common.World;
-import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
+import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.semesterprojektF21.common.texture.ITextureRenderService;
 import io.github.semesterprojektF21.core.managers.GameInputProcessor;
 
@@ -22,21 +22,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Game implements ApplicationListener {
 
-    private static OrthographicCamera cam;
-    private ShapeRenderer sr;
-    private SpriteBatch spriteBatch;
-    private final GameData gameData = new GameData();
-    private static World world = new World();
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    private static OrthographicCamera cam;
+    private static World world = new World();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private final GameData gameData = new GameData();
+    private boolean created = false;
+    private ShapeRenderer sr;
+    private SpriteBatch spriteBatch;
 
-    public Game(){
+    public Game() {
         init();
     }
 
-    public void init() {
+    private void init() {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "Group 1 Semester Project";
         cfg.width = 800;
@@ -54,16 +55,17 @@ public class Game implements ApplicationListener {
         gameData.setDisplayHeight(Gdx.graphics.getHeight());
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+        cam.translate(gameData.getDisplayWidth() / 2F, gameData.getDisplayHeight() / 2F);
         cam.update();
 
         sr = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
-        for(GamePluginService gamePluginService : gamePluginList){
-            gamePluginService.start(gameData, world);
+        for (GamePluginService gamePluginService : gamePluginList) {
+            gamePluginService.load(gameData, world);
         }
+        created = true;
     }
 
     @Override
@@ -134,12 +136,12 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
-    public void addTextureRenderService(ITextureRenderService eps){
+    public void addTextureRenderService(ITextureRenderService eps) {
         System.out.println("Added texture render service");
         textureRenderList.add(eps);
     }
 
-    public void removeTextureRenderService(ITextureRenderService eps){
+    public void removeTextureRenderService(ITextureRenderService eps) {
         textureRenderList.remove(eps);
     }
 
@@ -161,9 +163,13 @@ public class Game implements ApplicationListener {
 
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
-        //plugin.start(gameData, world);
+        plugin.start(gameData, world);
         System.out.println("Started plugin from core scope: " + plugin);
         // TODO: Setup animations?
+
+        if (created) {
+            plugin.load();
+        }
     }
 
     public void removeGamePluginService(GamePluginService plugin) {

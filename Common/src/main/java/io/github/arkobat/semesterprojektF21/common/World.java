@@ -8,6 +8,8 @@ public interface World {
 
     Collection<Entity> getEntities();
 
+    <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes);
+
     void addEntity(Entity entity);
 
     void removeEntity(Entity entity);

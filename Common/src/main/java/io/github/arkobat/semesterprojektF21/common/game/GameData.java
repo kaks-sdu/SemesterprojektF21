@@ -1,6 +1,5 @@
 package io.github.arkobat.semesterprojektF21.common.game;
 
-import io.github.arkobat.semesterprojektF21.common.World;
 import lombok.AllArgsConstructor;
 
 import java.util.Set;

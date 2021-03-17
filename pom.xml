@@ -1,88 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <!--
-     | put company details here
-    <organization>
-      <name>...</name>
-      <url>http://...</url>
-    </organization>
-    -->
-
-  <!--
-     | put license details here
-    <licenses>
-      <license>
+    <!--
+       | put company details here
+      <organization>
         <name>...</name>
         <url>http://...</url>
-        <comments>
-        </comments>
-      </license>
-    </licenses>
-    -->
+      </organization>
+      -->
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.semesterprojektF21</groupId>
-  <artifactId>Group1SemesterProject</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
-  <name>Group 1 Semester Project</name>
-
-  <!--
-     | describe your project here
-    -->
-
-  <description>Generated using Pax-Construct</description>
-
-  <properties>
     <!--
-         | some example OSGi runtime properties
-        -->
-    <org.osgi.service.http.port>8080</org.osgi.service.http.port>
-    <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+       | put license details here
+      <licenses>
+        <license>
+          <name>...</name>
+          <url>http://...</url>
+          <comments>
+          </comments>
+        </license>
+      </licenses>
+      -->
 
-  <packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.semesterprojektF21</groupId>
+    <artifactId>Group1SemesterProject</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
-  <modules>
-    <module>poms</module>
-    <module>provision</module>
-    <module>OSGiLibGDX</module>
-    <module>Core</module>
-    <module>Common</module>
-    <module>CommonTexture</module>
-    <module>Player</module>
-  </modules>
+    <name>Group 1 Semester Project</name>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.ops4j</groupId>
-        <artifactId>maven-pax-plugin</artifactId>
-        <version>1.6.0</version>
-        <configuration>
-          <!--
-                     | some example Pax-Runner settings
-                    -->
-          <provision>
-            <param>--platform=felix</param>
-          </provision>
-        </configuration>
-        <executions>
-          <!--
-                     | uncomment to auto-generate IDE files
-                    <execution>
-                      <id>ide-support</id>
-                      <goals>
-                        <goal>eclipse</goal>
-                      </goals>
-                    </execution>
-                    -->
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <!--
+       | describe your project here
+      -->
+
+    <description>Generated using Pax-Construct</description>
+
+    <properties>
+        <!--
+             | some example OSGi runtime properties
+            -->
+        <org.osgi.service.http.port>8080</org.osgi.service.http.port>
+        <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>poms</module>
+        <module>provision</module>
+        <module>OSGiLibGDX</module>
+        <module>Core</module>
+        <module>Common</module>
+        <module>CommonTexture</module>
+        <module>Player</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.ops4j</groupId>
+                <artifactId>maven-pax-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <!--
+                               | some example Pax-Runner settings
+                              -->
+                    <provision>
+                        <param>--platform=felix</param>
+                    </provision>
+                </configuration>
+                <executions>
+                    <!--
+                               | uncomment to auto-generate IDE files
+                              <execution>
+                                <id>ide-support</id>
+                                <goals>
+                                  <goal>eclipse</goal>
+                                </goals>
+                              </execution>
+                              -->
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Annotations -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>20.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-openide-util-lookup</artifactId>
+            <version>RELEASE122</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
+    </dependencies>
 
 </project>

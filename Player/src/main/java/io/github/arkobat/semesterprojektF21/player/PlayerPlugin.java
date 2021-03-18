@@ -30,7 +30,9 @@ public class PlayerPlugin implements GamePluginService {
     public void stop(GameData gameData, World world) {
         // Remove entities
         Collection<Entity> players = world.getEntities(Player.class);
-        players.forEach(world::removeEntity);
+        for (Entity player : players) {
+            world.removeEntity(player);
+        }
     }
 
 }

@@ -1,2 +1,1 @@
-Export-Package: io.github.arkobat.semesterprojektF21.commontexture, com.badlogic.gdx.*
-Import-Package: io.github.arkobat.semesterprojektF21.common.*
+Export-Package: io.github.arkobat.semesterprojektF21.commontexture; io.github.arkobat.semesterprojektF21.managers; com.badlogic.gdx.*

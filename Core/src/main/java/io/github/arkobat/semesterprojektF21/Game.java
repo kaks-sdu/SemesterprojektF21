@@ -48,19 +48,31 @@ public class Game implements ApplicationListener {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
-        gameDataSupplier = () -> new GameData(
-                Gdx.graphics.getDeltaTime(),
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(),
-                KeyController.getPressedKeys()
-        );
+        gameDataSupplier = new Supplier<GameData>() {
+            @Override
+            public GameData get() {
+                return new GameData(
+                        Gdx.graphics.getDeltaTime(),
+                        Gdx.graphics.getWidth(),
+                        Gdx.graphics.getHeight(),
+                        KeyController.getPressedKeys()
+                );
+            }
+        };
+
+//        gameDataSupplier = () -> new GameData(
+//                Gdx.graphics.getDeltaTime(),
+//                Gdx.graphics.getWidth(),
+//                Gdx.graphics.getHeight(),
+//                KeyController.getPressedKeys()
+//        );
 
         new LwjglApplication(this, cfg);
     }
 
     @Override
     public void create() {
-        spriteBatch = new SpriteBatch();
+        this.spriteBatch = new SpriteBatch();
         GameData gameData = gameDataSupplier.get();
 
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
@@ -150,7 +162,6 @@ public class Game implements ApplicationListener {
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
         GameData gameData = gameDataSupplier.get();
-        plugin.start(gameData, world);
         System.out.println("Started plugin from core scope: " + plugin);
         // TODO: Setup animations?
 

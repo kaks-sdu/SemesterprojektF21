@@ -3,10 +3,7 @@ package io.github.arkobat.semesterprojektF21;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TempWorld implements World {
@@ -20,7 +17,16 @@ public class TempWorld implements World {
 
     @Override
     public <E extends Entity> Collection<Entity> getEntities(Class<E>... entityTypes) {
-        return entities.stream().filter(entity -> Arrays.stream(entityTypes).anyMatch(clazz -> clazz == entity.getClass())).collect(Collectors.toList());
+        List<Entity> list = new ArrayList<>();
+        for (Entity entity : entities) {
+            for (Class<E> clazz : entityTypes) {
+                if (clazz == entity.getClass()) {
+                    list.add(entity);
+                    break;
+                }
+            }
+        }
+        return list;
     }
 
     @Override

@@ -4,6 +4,7 @@ import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
@@ -19,25 +20,28 @@ public class PlayerControlSystem implements GameProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        world.getEntities(Player.class).stream().filter(player -> player instanceof PlayerImpl).map(player -> (PlayerImpl) player).forEach(player -> {
-            final Location loc = player.getLocation();
-            final float delta = gameData.getDelta();
+        for (Entity player : world.getEntities(Player.class)) {
+            if (player instanceof PlayerImpl) {
+                PlayerImpl player1 = (PlayerImpl) player;
+                final Location loc = player1.getLocation();
+                final float delta = gameData.getDelta();
 
-            float oldX = loc.getX();
-            float oldY = loc.getY();
+                float oldX = loc.getX();
+                float oldY = loc.getY();
 
-            // Apply gravity
-            Vector velocity = player.getVelocity();
-            velocity.setY(velocity.getY() - gravity);
+                // Apply gravity
+                Vector velocity = player1.getVelocity();
+                velocity.setY(velocity.getY() - gravity);
 
-            handleControls(gameData, player);
+                handleControls(gameData, player1);
 
-            loc.setX((float) (loc.getX() + velocity.getX() * delta));
-            loc.setY((float) (loc.getY() + velocity.getY() * delta));
+                loc.setX((float) (loc.getX() + velocity.getX() * delta));
+                loc.setY((float) (loc.getY() + velocity.getY() * delta));
 
-            // Check collision X
-            handleCollision(player, oldX, oldY);
-        });
+                // Check collision X
+                handleCollision(player1, oldX, oldY);
+            }
+        }
     }
 
     private void handleControls(GameData data, PlayerImpl player) {
@@ -63,6 +67,7 @@ public class PlayerControlSystem implements GameProcessingService {
     private void handleCollision(PlayerImpl player, float oldX, float oldY) {
         Location loc = player.getLocation();
         Hitbox hitbox = player.getHitbox();
+
 /*
         // Ensure the player is within game borders
         if (loc.getX() < 0) {

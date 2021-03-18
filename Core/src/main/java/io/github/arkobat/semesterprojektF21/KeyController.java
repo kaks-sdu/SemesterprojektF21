@@ -5,11 +5,7 @@ import com.badlogic.gdx.Input;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class KeyController {
 
@@ -33,7 +29,17 @@ public class KeyController {
     }
 
     public static @NotNull Set<Key> getPressedKeys() {
-        return Arrays.stream(Key.values()).filter(key -> Arrays.stream(keyBindings.get(key)).anyMatch(Gdx.input::isKeyPressed)).collect(Collectors.toSet());
+        Set<Key> set = new HashSet<>();
+        for (Key key : Key.values()) {
+            Input input = Gdx.input;
+            for (int i : keyBindings.get(key)) {
+                if (input.isKeyPressed(i)) {
+                    set.add(key);
+                    break;
+                }
+            }
+        }
+        return set;
     }
 
 }

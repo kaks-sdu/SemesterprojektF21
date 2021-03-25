@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.common.managers;
+package io.github.arkobat.semesterprojektF21.common.texture;
 
 import com.badlogic.gdx.files.FileHandleStream;
 
@@ -9,6 +9,7 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+//TODO: Move to managers folder without breaking
 public class JarFileHandleStream extends FileHandleStream {
     private JarFile jarFile = null;
     private String jarRelResDir;

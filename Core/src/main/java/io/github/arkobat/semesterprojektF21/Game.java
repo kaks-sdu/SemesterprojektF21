@@ -13,6 +13,7 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
+import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -23,7 +24,7 @@ public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    // private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
     private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
@@ -91,9 +92,11 @@ public class Game implements ApplicationListener {
     private void update() {
         GameData gameData = gameDataSupplier.get();
         // Render
-        //       for (ITextureRenderService textureRenderService : textureRenderList) {
-        //           textureRenderService.render(gameData, world, spriteBatch);
-        //       }
+        for (ITextureRenderService textureRenderService : textureRenderList) {
+            spriteBatch.begin();
+            textureRenderService.render(gameData, world, spriteBatch);
+            spriteBatch.end();
+        }
 
         // Update
         for (GameProcessingService entityProcessorService : entityProcessorList) {
@@ -124,14 +127,14 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
-//   public void addTextureRenderService(ITextureRenderService eps) {
-//       System.out.println("Added texture render service");
-//       textureRenderList.add(eps);
-//   }
+    public void addTextureRenderService(ITextureRenderService eps) {
+        System.out.println("Added texture render service");
+        textureRenderList.add(eps);
+    }
 
-    //   public void removeTextureRenderService(ITextureRenderService eps) {
-//        textureRenderList.remove(eps);
-//}
+    public void removeTextureRenderService(ITextureRenderService eps) {
+        textureRenderList.remove(eps);
+    }
 
     public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);

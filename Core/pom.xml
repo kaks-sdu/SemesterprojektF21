@@ -29,17 +29,20 @@
             <artifactId>org.osgi.compendium</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
-            <artifactId>Common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
             <artifactId>CommonTexture</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
 
         <dependency>
             <groupId>${project.groupId}</groupId>

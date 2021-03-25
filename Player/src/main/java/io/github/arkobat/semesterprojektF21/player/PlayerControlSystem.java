@@ -1,7 +1,8 @@
 package io.github.arkobat.semesterprojektF21.player;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -10,8 +11,9 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
+import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
 
-public class PlayerControlSystem implements GameProcessingService {
+public class PlayerControlSystem implements GameProcessingService, ITextureRenderService {
 
     private static final float acceleration = 3;
     private static final float deacceleration = 0.5F;
@@ -147,6 +149,15 @@ public class PlayerControlSystem implements GameProcessingService {
          */
     }
 
+    @Override
+    public void render(GameData gameData, World world, SpriteBatch sb) {
+        System.out.println("Rendering");
+    }
+
+    //  @Override
+  //  public void render(GameData gameData, World world, SpriteBatch sb) {
+  //     System.out.println("render");
+  // }
     //  @Override
     //  public void render(GameData gameData, World world, SpriteBatch sb) {
     //     System.out.println("render");

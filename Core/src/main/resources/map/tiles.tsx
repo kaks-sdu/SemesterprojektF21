@@ -693,6 +693,18 @@
    <property name="color" value="orange"/>
   </properties>
  </tile>
+ <tile id="377">
+  <properties>
+   <property name="collision" type="bool" value="true"/>
+   <property name="color" value="all"/>
+  </properties>
+ </tile>
+ <tile id="378">
+  <properties>
+   <property name="collision" type="bool" value="true"/>
+   <property name="color" value="all"/>
+  </properties>
+ </tile>
  <tile id="379">
   <properties>
    <property name="color" value="all"/>
@@ -807,6 +819,18 @@
    <property name="color" value="orange"/>
   </properties>
  </tile>
+ <tile id="401">
+  <properties>
+   <property name="color" value="all"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
+ <tile id="402">
+  <properties>
+   <property name="color" value="all"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
  <tile id="403">
   <properties>
    <property name="color" value="green"/>
@@ -895,6 +919,18 @@
   <properties>
    <property name="collision" type="bool" value="true"/>
    <property name="color" value="orange"/>
+  </properties>
+ </tile>
+ <tile id="425">
+  <properties>
+   <property name="color" value="green"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
+ <tile id="426">
+  <properties>
+   <property name="color" value="green"/>
+   <property name="portal" value="next"/>
   </properties>
  </tile>
  <tile id="427">
@@ -987,6 +1023,18 @@
    <property name="color" value="orange"/>
   </properties>
  </tile>
+ <tile id="449">
+  <properties>
+   <property name="color" value="blue"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
+ <tile id="450">
+  <properties>
+   <property name="color" value="blue"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
  <tile id="451">
   <properties>
    <property name="color" value="orange"/>
@@ -1075,6 +1123,18 @@
   <properties>
    <property name="collision" type="bool" value="true"/>
    <property name="color" value="orange"/>
+  </properties>
+ </tile>
+ <tile id="473">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="portal" value="next"/>
+  </properties>
+ </tile>
+ <tile id="474">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="portal" value="next"/>
   </properties>
  </tile>
  <tile id="505">

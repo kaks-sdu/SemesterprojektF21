@@ -13,12 +13,11 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
+//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
-
-//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
 //import io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService;
 
@@ -27,6 +26,7 @@ public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
+    // private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
     private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
@@ -73,6 +73,8 @@ public class Game implements ApplicationListener {
 
         sr = new ShapeRenderer();
 
+    //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+        System.out.println("Created game!");
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
             gamePluginService.start(gameData, world);
@@ -85,6 +87,7 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         update();
     }
 
@@ -153,10 +156,10 @@ public class Game implements ApplicationListener {
         gamePluginList.add(plugin);
         GameData gameData = gameDataSupplier.get();
         System.out.println("Started plugin from core scope: " + plugin);
-        // TODO: Setup animations?
 
         if (created) {
             plugin.start(gameData, world);
+            System.out.println("Reloaded!");
         }
     }
 

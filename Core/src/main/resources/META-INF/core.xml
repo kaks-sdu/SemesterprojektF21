@@ -10,9 +10,9 @@
                interface="io.github.arkobat.semesterprojektF21.common.game.GameProcessingService"
                name="IEntityProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
 
-    <reference bind="addTextureRenderService" cardinality="0..n"
+   <!-- <reference bind="addTextureRenderService" cardinality="0..n"
                interface="io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService"
-               name="ITextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
+               name="ITextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/> -->
 
     <reference bind="addGamePluginService" cardinality="0..n"
                interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"

@@ -13,15 +13,12 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 
-//import io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService;
 
-@SuppressWarnings("bundle")
 public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();

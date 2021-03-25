@@ -1,5 +1,7 @@
 package io.github.arkobat.semesterprojektF21.common;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface Collidable {
 
     /**
@@ -12,6 +14,6 @@ public interface Collidable {
      * Not implemented.
      * @return Hitbox
      */
-    Hitbox getHitbox();
+    @NotNull Hitbox getHitbox();
 
 }

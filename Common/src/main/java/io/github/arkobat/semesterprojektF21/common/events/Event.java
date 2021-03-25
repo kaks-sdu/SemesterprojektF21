@@ -1,20 +1,7 @@
 package io.github.arkobat.semesterprojektF21.common.events;
 
-import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import java.io.Serializable;
 
-/**
- *
- * @author Mads
- */
-public class Event implements Serializable{
-    private final Entity source;
+public abstract class Event implements Serializable {
 
-    public Event(Entity source) {
-        this.source = source;
-    }
-
-    public Entity getSource() {
-        return source;
-    }
 }

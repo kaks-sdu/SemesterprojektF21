@@ -82,9 +82,9 @@ public class Game implements ApplicationListener {
         sr = new ShapeRenderer();
 
     //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
+        System.out.println("Created game!");
         for (GamePluginService gamePluginService : gamePluginList) {
-            gamePluginService.load(gameData, world);
+            gamePluginService.start(gameData, world);
         }
         created = true;
     }
@@ -163,10 +163,10 @@ public class Game implements ApplicationListener {
         gamePluginList.add(plugin);
         GameData gameData = gameDataSupplier.get();
         System.out.println("Started plugin from core scope: " + plugin);
-        // TODO: Setup animations?
 
         if (created) {
-            plugin.load(gameData, world);
+            plugin.start(gameData, world);
+            System.out.println("Reloaded!");
         }
     }
 

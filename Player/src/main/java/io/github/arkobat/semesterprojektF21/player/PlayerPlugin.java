@@ -12,6 +12,7 @@ import java.util.Collection;
 
 public class PlayerPlugin implements GamePluginService {
 
+
     @Override
     public void start(GameData gameData, World world) {
         // Add entities to the world

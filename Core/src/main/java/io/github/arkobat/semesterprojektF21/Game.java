@@ -13,11 +13,12 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
+
+//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
 
 //import io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService;
 
@@ -26,14 +27,12 @@ public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    // private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
     private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
     private boolean created = false;
     private ShapeRenderer sr;
     private SpriteBatch spriteBatch;
-
     private Supplier<GameData> gameDataSupplier;
 
     public Game() {
@@ -60,13 +59,6 @@ public class Game implements ApplicationListener {
             }
         };
 
-//        gameDataSupplier = () -> new GameData(
-//                Gdx.graphics.getDeltaTime(),
-//                Gdx.graphics.getWidth(),
-//                Gdx.graphics.getHeight(),
-//                KeyController.getPressedKeys()
-//        );
-
         new LwjglApplication(this, cfg);
     }
 
@@ -81,10 +73,9 @@ public class Game implements ApplicationListener {
 
         sr = new ShapeRenderer();
 
-    //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
         for (GamePluginService gamePluginService : gamePluginList) {
-            gamePluginService.load(gameData, world);
+            System.out.println("Starting plugin " + gamePluginService.getClass());
+            gamePluginService.start(gameData, world);
         }
         created = true;
     }
@@ -94,7 +85,6 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         update();
     }
 
@@ -166,7 +156,7 @@ public class Game implements ApplicationListener {
         // TODO: Setup animations?
 
         if (created) {
-            plugin.load(gameData, world);
+            plugin.start(gameData, world);
         }
     }
 

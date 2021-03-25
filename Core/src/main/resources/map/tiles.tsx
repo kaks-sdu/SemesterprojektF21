@@ -833,31 +833,31 @@
  </tile>
  <tile id="403">
   <properties>
-   <property name="color" value="green"/>
+   <property name="color" value="all"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="404">
   <properties>
-   <property name="color" value="green"/>
+   <property name="color" value="all"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="405">
   <properties>
-   <property name="color" value="green"/>
+   <property name="color" value="all"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="406">
   <properties>
-   <property name="color" value="green"/>
+   <property name="color" value="all"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="407">
   <properties>
-   <property name="color" value="green"/>
+   <property name="color" value="all"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
@@ -935,31 +935,31 @@
  </tile>
  <tile id="427">
   <properties>
-   <property name="color" value="blue"/>
+   <property name="color" value="green"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="428">
   <properties>
-   <property name="color" value="blue"/>
+   <property name="color" value="green"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="429">
   <properties>
-   <property name="color" value="blue"/>
+   <property name="color" value="green"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="430">
   <properties>
-   <property name="color" value="blue"/>
+   <property name="color" value="green"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="431">
   <properties>
-   <property name="color" value="blue"/>
+   <property name="color" value="green"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
@@ -1037,31 +1037,31 @@
  </tile>
  <tile id="451">
   <properties>
-   <property name="color" value="orange"/>
+   <property name="color" value="blue"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="452">
   <properties>
-   <property name="color" value="orange"/>
+   <property name="color" value="blue"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="453">
   <properties>
-   <property name="color" value="orange"/>
+   <property name="color" value="blue"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="454">
   <properties>
-   <property name="color" value="orange"/>
+   <property name="color" value="blue"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="455">
   <properties>
-   <property name="color" value="orange"/>
+   <property name="color" value="blue"/>
    <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
@@ -1135,6 +1135,36 @@
   <properties>
    <property name="color" value="orange"/>
    <property name="portal" value="next"/>
+  </properties>
+ </tile>
+ <tile id="475">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="spikes" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="476">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="spikes" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="477">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="spikes" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="478">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="spikes" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="479">
+  <properties>
+   <property name="color" value="orange"/>
+   <property name="spikes" type="bool" value="true"/>
   </properties>
  </tile>
  <tile id="505">

@@ -9,17 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>World</artifactId>
+    <artifactId>CommonWorld</artifactId>
     <dependencies>
         <dependency>
             <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
             <artifactId>Common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21</groupId>
-            <artifactId>CommonWorld</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

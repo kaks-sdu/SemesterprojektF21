@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Represents a location
+ */
 @Getter
 @Setter
 @AllArgsConstructor

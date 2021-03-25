@@ -57,6 +57,7 @@
         <module>CommonTexture</module>
         <module>Player</module>
         <module>World</module>
+        <module>CommonWorld</module>
     </modules>
 
     <build>

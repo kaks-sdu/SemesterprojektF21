@@ -15,8 +15,10 @@ import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
+import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 
@@ -26,9 +28,10 @@ public class Game implements ApplicationListener {
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
-    private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    private World world;
     private boolean created = false;
     private ShapeRenderer sr;
     private SpriteBatch spriteBatch;
@@ -48,34 +51,34 @@ public class Game implements ApplicationListener {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
-        gameDataSupplier = new Supplier<GameData>() {
-            @Override
-            public GameData get() {
-                return new GameData(
-                        Gdx.graphics.getDeltaTime(),
-                        Gdx.graphics.getWidth(),
-                        Gdx.graphics.getHeight(),
-                        KeyController.getPressedKeys()
-                );
-            }
-        };
+        gameDataSupplier = () -> new GameData(
+                Gdx.graphics.getDeltaTime(),
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight(),
+                KeyController.getPressedKeys()
+        );
 
         new LwjglApplication(this, cfg);
     }
 
     @Override
     public void create() {
-        this.spriteBatch = new SpriteBatch();
         GameData gameData = gameDataSupplier.get();
 
+        this.spriteBatch = new SpriteBatch();
         cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         cam.translate(gameData.getDisplayWidth() / 2F, gameData.getDisplayHeight() / 2F);
         cam.update();
-
         sr = new ShapeRenderer();
 
-    //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
         System.out.println("Created game!");
+
+        Optional<WorldLoader> worldLoader = worldLoaders.stream().findFirst();
+        if (!worldLoader.isPresent()) {
+            throw new IllegalStateException("Could not load world");
+        }
+        world = worldLoader.get().start(gameData);
+
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
             gamePluginService.start(gameData, world);

@@ -1,6 +1,7 @@
 package io.github.arkobat.semesterprojektF21.common.game;
 
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public class GameData {
     private final int displayHeight;
     private final Set<Key> keys;
 
-    public boolean isPressed(Key key) {
+    public boolean isPressed(@NotNull Key key) {
         return keys.contains(key);
     }
 

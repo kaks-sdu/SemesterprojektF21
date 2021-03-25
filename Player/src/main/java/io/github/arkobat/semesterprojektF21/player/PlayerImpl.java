@@ -5,6 +5,7 @@ import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class PlayerImpl implements Player {
 
@@ -53,18 +54,20 @@ public class PlayerImpl implements Player {
         this.health = health;
     }
 
+    @NotNull
     @Override
     public Location getLocation() {
         return this.location;
     }
 
+    @NotNull
     @Override
     public Vector getVelocity() {
         return this.velocity;
     }
 
     @Override
-    public void setVelocity(Vector velocity) {
+    public void setVelocity(@NotNull Vector velocity) {
         this.velocity = velocity;
     }
 
@@ -73,6 +76,7 @@ public class PlayerImpl implements Player {
         return true;
     }
 
+    @NotNull
     @Override
     public Hitbox getHitbox() {
         return null;
@@ -84,7 +88,7 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public void setColor(Color color) {
+    public void setColor(@NotNull Color color) {
         for (int i = 0; i < colors.length; i++) {
             if (colors[i] == color) {
                 this.currentColor = i;

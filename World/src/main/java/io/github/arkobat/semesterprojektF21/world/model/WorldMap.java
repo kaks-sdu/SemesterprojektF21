@@ -1,13 +1,24 @@
-package io.github.arkobat.semesterprojektF21;
+package io.github.arkobat.semesterprojektF21.world.model;
 
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
-public class TempWorld implements World {
+@Getter
+@RequiredArgsConstructor
+public class WorldMap implements World {
+
+    private final @NotNull String mapId;
+    private final @Nullable WorldMap prevMap;
+    private final @Nullable WorldMap nextMap;
 
     private final List<Entity> entities = new LinkedList<>();
 
@@ -42,5 +53,4 @@ public class TempWorld implements World {
     public void removeEntity(@NotNull Entity entity) {
         this.entities.remove(entity);
     }
-
 }

@@ -1,5 +1,7 @@
 package io.github.arkobat.semesterprojektF21.common;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface Colorable {
 
     /**
@@ -12,6 +14,6 @@ public interface Colorable {
      * Set the color
      * @param color - color is an enum
      */
-    void setColor(Color color);
+    void setColor(@NotNull Color color);
 
 }

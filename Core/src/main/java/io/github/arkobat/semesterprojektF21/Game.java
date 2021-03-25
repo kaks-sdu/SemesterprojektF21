@@ -13,27 +13,24 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-//import io.github.arkobat.semesterprojektF21.core.managers.GameInputProcessor;
+import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Supplier;
 
-//import io.github.arkobat.semesterprojektF21.commontexture.ITextureRenderService;
 
-@SuppressWarnings("bundle")
 public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    // private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static OrthographicCamera cam;
     private static World world = new TempWorld();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
     private boolean created = false;
     private ShapeRenderer sr;
     private SpriteBatch spriteBatch;
-
     private Supplier<GameData> gameDataSupplier;
 
     public Game() {
@@ -60,13 +57,6 @@ public class Game implements ApplicationListener {
             }
         };
 
-//        gameDataSupplier = () -> new GameData(
-//                Gdx.graphics.getDeltaTime(),
-//                Gdx.graphics.getWidth(),
-//                Gdx.graphics.getHeight(),
-//                KeyController.getPressedKeys()
-//        );
-
         new LwjglApplication(this, cfg);
     }
 
@@ -84,6 +74,7 @@ public class Game implements ApplicationListener {
     //    Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
         System.out.println("Created game!");
         for (GamePluginService gamePluginService : gamePluginList) {
+            System.out.println("Starting plugin " + gamePluginService.getClass());
             gamePluginService.start(gameData, world);
         }
         created = true;
@@ -101,9 +92,11 @@ public class Game implements ApplicationListener {
     private void update() {
         GameData gameData = gameDataSupplier.get();
         // Render
-        //       for (ITextureRenderService textureRenderService : textureRenderList) {
-        //           textureRenderService.render(gameData, world, spriteBatch);
-        //       }
+        for (ITextureRenderService textureRenderService : textureRenderList) {
+            spriteBatch.begin();
+            textureRenderService.render(gameData, world, spriteBatch);
+            spriteBatch.end();
+        }
 
         // Update
         for (GameProcessingService entityProcessorService : entityProcessorList) {
@@ -134,14 +127,14 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
-//   public void addTextureRenderService(ITextureRenderService eps) {
-//       System.out.println("Added texture render service");
-//       textureRenderList.add(eps);
-//   }
+    public void addTextureRenderService(ITextureRenderService eps) {
+        System.out.println("Added texture render service");
+        textureRenderList.add(eps);
+    }
 
-    //   public void removeTextureRenderService(ITextureRenderService eps) {
-//        textureRenderList.remove(eps);
-//}
+    public void removeTextureRenderService(ITextureRenderService eps) {
+        textureRenderList.remove(eps);
+    }
 
     public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);

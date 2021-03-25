@@ -1,7 +1,8 @@
-package io.github.arkobat.semesterprojektF21.common.managers;
+package io.github.arkobat.semesterprojektF21.common.texture;
 
 import com.badlogic.gdx.assets.AssetManager;
 
+//TODO: Move to managers folder without breaking
 public class AssetLoader {
     private static AssetManager instance = null;
 

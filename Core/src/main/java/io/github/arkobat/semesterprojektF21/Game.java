@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
@@ -32,6 +33,8 @@ public class Game implements ApplicationListener {
     private ShapeRenderer sr;
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;
+
+    private OrthogonalTiledMapRenderer renderer;
 
     public Game() {
         init();

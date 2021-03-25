@@ -7,4 +7,5 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 public interface ITextureRenderService {
 
     void render(GameData gameData, World world, SpriteBatch sb);
+
 }

@@ -1,8 +1,8 @@
 package io.github.arkobat.semesterprojektF21.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -11,7 +11,11 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
+import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 public class PlayerControlSystem implements GameProcessingService, ITextureRenderService {
 
@@ -20,9 +24,22 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
     private static final float jumpAcceleration = 300;
     private static final float gravity = 0.5F;
     private static final float maxAcceleration = 100;
+    private Texture texture;
+
+    public PlayerControlSystem() {
+
+        String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", "Player-1.0-SNAPSHOT.jar!", "player.png").toString();
+        jarUrl = jarUrl.replace("runner", "" + "Player").replace('\\', '/');
+
+        // Load the texture
+        AssetLoader.getInstance().load(jarUrl, Texture.class);
+        AssetLoader.getInstance().finishLoading();
+
+        texture = AssetLoader.getInstance().get(jarUrl, Texture.class);
+    }
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void process(@NotNull GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {
             if (player instanceof PlayerImpl) {
                 PlayerImpl player1 = (PlayerImpl) player;
@@ -151,13 +168,18 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
 
     @Override
     public void render(GameData gameData, World world, SpriteBatch sb) {
+        for (Entity player : world.getEntities(Player.class)) {
+            Location loc = player.getLocation();
+            sb.draw(texture, loc.getX(), loc.getY());
+            System.out.printf("Adding player at %s, %s", loc.getX(), loc.getY());
+        }
         System.out.println("Rendering");
     }
 
     //  @Override
-  //  public void render(GameData gameData, World world, SpriteBatch sb) {
-  //     System.out.println("render");
-  // }
+    //  public void render(GameData gameData, World world, SpriteBatch sb) {
+    //     System.out.println("render");
+    // }
     //  @Override
     //  public void render(GameData gameData, World world, SpriteBatch sb) {
     //     System.out.println("render");

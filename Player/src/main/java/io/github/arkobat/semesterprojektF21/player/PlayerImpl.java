@@ -16,12 +16,15 @@ public class PlayerImpl implements Player {
     private float size;
     private int health;
     private Vector velocity;
+    private Hitbox hitbox;
 
     public PlayerImpl(Color[] colors, Location location) {
         this.colors = colors;
         this.location = location;
         this.size = 1;
         this.jumpCharges = 2;
+        //TODO: Fix hitbox
+        this.hitbox = new Hitbox(0, 0);
     }
 
     @Override
@@ -79,7 +82,7 @@ public class PlayerImpl implements Player {
     @NotNull
     @Override
     public Hitbox getHitbox() {
-        return null;
+        return this.hitbox;
     }
 
     @Override

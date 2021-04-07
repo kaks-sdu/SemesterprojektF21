@@ -11,6 +11,7 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
+import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +34,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         AssetLoader.getInstance().finishLoading();
 
         texture = AssetLoader.getInstance().get(jarUrl, Texture.class);*/
+        texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
     }
 
     @Override
@@ -170,7 +172,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             sb.draw(texture, loc.getX(), loc.getY());
             System.out.printf("Adding player at %s, %s", loc.getX(), loc.getY());
         }
-        System.out.println("Rendering");
+        //System.out.println("Rendering");
     }
 
     //  @Override

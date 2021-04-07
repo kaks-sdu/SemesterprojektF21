@@ -65,7 +65,7 @@ public class WorldMap implements World {
         List<Entity> list = new ArrayList<>();
         for (Entity entity : entities) {
             for (Class<E> clazz : entityTypes) {
-                if (clazz == entity.getClass()) {
+                if (clazz.isInstance(entity)) {
                     list.add(entity);
                     break;
                 }
@@ -116,7 +116,7 @@ public class WorldMap implements World {
             renderer.render();
             renderer.setView(camera);
             System.out.println("Updated map");
-        } // else System.out.println("No player found");
+        } else System.out.println("No player found");
     }
 
 }

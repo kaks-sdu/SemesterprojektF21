@@ -2,11 +2,13 @@ package io.github.arkobat.semesterprojektF21.world.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,11 +31,14 @@ public class WorldMap implements World {
 
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
         this.mapId = mapId;
-        this.map = new TmxMapLoader().load("map/" + mapFileName + ".tmx");
+        //TODO: Fix
+        String mapPath = AssetLoader.getInstance().getFilePath("World", "map/" + mapFileName + ".tmx");
+        this.map = new TmxMapLoader().load(mapPath);
         this.renderer = new OrthogonalTiledMapRenderer(map);
 
         if (music != null) {
-            this.music = Gdx.audio.newMusic(Gdx.files.internal("sound/" + music));
+            String musicPath = AssetLoader.getInstance().getFilePath("World", "sound/" + music);
+            this.music = Gdx.audio.newMusic(new FileHandle(musicPath));
         }
     }
 

@@ -23,11 +23,13 @@ public class Animation {
         String jarUrl =   java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", jarName, fileName).toString();
         jarUrl = jarUrl.replace("runner", "" + moduleName).replace('\\', '/');
 
-        // Load the texture
-        AssetLoader.getInstance().load(jarUrl, Texture.class);
-        AssetLoader.getInstance().finishLoading();
+        //TODO: Use AssetLoader loadTexture method instead
 
-        Texture texture = AssetLoader.getInstance().get(jarUrl, Texture.class);
+        // Load the texture
+        AssetLoader.getInstance().getAssetManager().load(jarUrl, Texture.class);
+        AssetLoader.getInstance().getAssetManager().finishLoading();
+
+        Texture texture = AssetLoader.getInstance().getAssetManager().get(jarUrl, Texture.class);
 
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;

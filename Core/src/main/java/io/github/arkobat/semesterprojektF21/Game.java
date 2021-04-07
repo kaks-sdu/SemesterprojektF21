@@ -8,17 +8,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import io.github.arkobat.semesterprojektF21.common.Hitbox;
-import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
-import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
+import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 
 import java.util.List;
@@ -31,7 +26,7 @@ public class Game implements ApplicationListener {
 
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
-    private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
+    private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     private static OrthographicCamera camera;
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
@@ -41,7 +36,6 @@ public class Game implements ApplicationListener {
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;
 
-    private OrthogonalTiledMapRenderer renderer;
 
     public Game() {
         init();
@@ -84,9 +78,13 @@ public class Game implements ApplicationListener {
         }
         world = worldLoader.get().start(gameData);
 
+        System.out.println("Searching for game plugins");
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
             gamePluginService.start(gameData, world);
+        }
+        if (gamePluginList.size() == 0) {
+            System.out.println("No plugins found :-(");
         }
         created = true;
     }
@@ -97,24 +95,14 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Update camera view
-        Optional<Entity> player = world.getEntities(Player.class).stream().findFirst();
-        if (player.isPresent()) {
-            Location loc = player.get().getLocation();
-            Hitbox hb = player.get().getHitbox();
-            camera.position.set(loc.getX() + hb.getWidth() / 2, loc.getY() + hb.getHeight() / 2, 0);
-            camera.update();
-        }
-        renderer.render();
-        renderer.setView(camera);
-
         update();
+        this.world.update();
     }
 
     private void update() {
         GameData gameData = gameDataSupplier.get();
         // Render
-        for (ITextureRenderService textureRenderService : textureRenderList) {
+        for (TextureRenderService textureRenderService : textureRenderList) {
             spriteBatch.begin();
             textureRenderService.render(gameData, world, spriteBatch);
             spriteBatch.end();
@@ -163,12 +151,12 @@ public class Game implements ApplicationListener {
         }
     }
 
-    public void addTextureRenderService(ITextureRenderService eps) {
+    public void addTextureRenderService(TextureRenderService eps) {
         System.out.println("Added texture render service");
         textureRenderList.add(eps);
     }
 
-    public void removeTextureRenderService(ITextureRenderService eps) {
+    public void removeTextureRenderService(TextureRenderService eps) {
         textureRenderList.remove(eps);
     }
 

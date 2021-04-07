@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class WorldPlugin implements WorldLoader {
 
     private WorldController worldController;
+    public static final String MODULE_NAME = "World";
 
     @NotNull
     @Override
@@ -19,4 +20,5 @@ public class WorldPlugin implements WorldLoader {
     @Override
     public void stop() {
     }
+
 }

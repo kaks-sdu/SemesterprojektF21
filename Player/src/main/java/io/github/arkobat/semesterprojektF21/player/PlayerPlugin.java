@@ -19,8 +19,6 @@ public class PlayerPlugin implements GamePluginService {
         // Add entities to the world
         Player player = new PlayerImpl(new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(0, 500));
         world.addEntity(player);
-
-
         System.out.println("Started Player plugin from module scope");
     }
 

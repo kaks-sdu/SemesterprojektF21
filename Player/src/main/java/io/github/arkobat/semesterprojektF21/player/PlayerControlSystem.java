@@ -11,13 +11,10 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
-import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
-import io.github.arkobat.semesterprojektF21.common.texture.ITextureRenderService;
+import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-
-public class PlayerControlSystem implements GameProcessingService, ITextureRenderService {
+public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
     private static final float acceleration = 3;
     private static final float deacceleration = 0.5F;

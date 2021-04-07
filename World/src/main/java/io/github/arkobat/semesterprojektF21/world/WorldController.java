@@ -25,7 +25,7 @@ public class WorldController {
                 .setMapId("map1")
                 .setMapFileName("level0")
                 .build();
-
+        worldMap.put(map.getMapId(), map);
         return map;
     }
 

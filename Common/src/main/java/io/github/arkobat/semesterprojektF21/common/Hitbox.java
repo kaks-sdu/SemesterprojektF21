@@ -1,12 +1,12 @@
 package io.github.arkobat.semesterprojektF21.common;
 
-/*import lombok.AllArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor*/
+@AllArgsConstructor
 public class Hitbox {
 
     float width;

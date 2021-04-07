@@ -9,7 +9,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import io.github.arkobat.semesterprojektF21.common.Hitbox;
+import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
@@ -29,7 +33,7 @@ public class Game implements ApplicationListener {
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<ITextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
-    private static OrthographicCamera cam;
+    private static OrthographicCamera camera;
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
     private World world;
     private boolean created = false;
@@ -66,9 +70,9 @@ public class Game implements ApplicationListener {
         GameData gameData = gameDataSupplier.get();
 
         this.spriteBatch = new SpriteBatch();
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2F, gameData.getDisplayHeight() / 2F);
-        cam.update();
+        camera = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        camera.translate(gameData.getDisplayWidth() / 2F, gameData.getDisplayHeight() / 2F);
+        camera.update();
         sr = new ShapeRenderer();
 
         System.out.println("Created game!");
@@ -92,6 +96,17 @@ public class Game implements ApplicationListener {
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Update camera view
+        Optional<Entity> player = world.getEntities(Player.class).stream().findFirst();
+        if (player.isPresent()) {
+            Location loc = player.get().getLocation();
+            Hitbox hb = player.get().getHitbox();
+            camera.position.set(loc.getX() + hb.getWidth() / 2, loc.getY() + hb.getHeight() / 2, 0);
+            camera.update();
+        }
+        renderer.render();
+        renderer.setView(camera);
 
         update();
     }
@@ -120,6 +135,8 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
+        camera.viewportWidth = width / 2F;
+        camera.viewportHeight = height / 2F;
     }
 
     @Override

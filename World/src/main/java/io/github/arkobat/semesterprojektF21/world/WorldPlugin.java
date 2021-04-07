@@ -14,10 +14,11 @@ public class WorldPlugin implements WorldLoader {
     public World start(@NotNull GameData gameData) {
         this.worldController = new WorldController();
         return worldController.init();
+        System.out.println("Started World plugin");
+        return null;
     }
 
     @Override
     public void stop() {
     }
-
 }

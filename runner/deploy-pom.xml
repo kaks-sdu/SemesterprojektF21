@@ -111,6 +111,13 @@
       <version>2.8.6</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <artifactId>World</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>

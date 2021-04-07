@@ -28,14 +28,14 @@ public class PlayerControlSystem implements GameProcessingService, ITextureRende
 
     public PlayerControlSystem() {
 
-        String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", "Player-1.0-SNAPSHOT.jar!", "player.png").toString();
+        /*String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", "Player-1.0-SNAPSHOT.jar!", "player.png").toString();
         jarUrl = jarUrl.replace("runner", "" + "Player").replace('\\', '/');
 
         // Load the texture
         AssetLoader.getInstance().load(jarUrl, Texture.class);
         AssetLoader.getInstance().finishLoading();
 
-        texture = AssetLoader.getInstance().get(jarUrl, Texture.class);
+        texture = AssetLoader.getInstance().get(jarUrl, Texture.class);*/
     }
 
     @Override

@@ -73,6 +73,7 @@ public class Game implements ApplicationListener {
 
         System.out.println("Created game!");
 
+        worldLoaders.forEach(loader -> loader.start(gameData));
         Optional<WorldLoader> worldLoader = worldLoaders.stream().findFirst();
         if (!worldLoader.isPresent()) {
             throw new IllegalStateException("Could not load world");
@@ -138,8 +139,11 @@ public class Game implements ApplicationListener {
     }
 
     public void addWorldLoaderService(WorldLoader eps) {
-        // TODO: Remember to start the world loading process!
+        System.out.println("Added World Loader " + eps.getClass().getName());
         worldLoaders.add(eps);
+        if (created) {
+            eps.start(gameDataSupplier.get());
+        }
     }
 
     public void addTextureRenderService(ITextureRenderService eps) {

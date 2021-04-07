@@ -1,9 +1,13 @@
 package io.github.arkobat.semesterprojektF21.world.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-/*import lombok.Getter;
-import lombok.RequiredArgsConstructor;*/
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,24 +16,25 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-/*@Getter
-@RequiredArgsConstructor*/
+@Getter
 public class WorldMap implements World {
 
     private final @NotNull String mapId;
-    private final @Nullable WorldMap prevMap;
-    private final @Nullable WorldMap nextMap;
-
     private final List<Entity> entities = new LinkedList<>();
 
-    public WorldMap(@NotNull String mapId, @Nullable WorldMap prevMap, @Nullable WorldMap nextMap) {
-        this.mapId = mapId;
-        this.prevMap = prevMap;
-        this.nextMap = nextMap;
-    }
+    private @Nullable WorldMap nextMap;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+    private Music music;
 
-    public String getMapId() {
-        return mapId;
+    WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
+        this.mapId = mapId;
+        this.map = new TmxMapLoader().load("map/" + mapFileName + ".tmx");
+        this.renderer = new OrthogonalTiledMapRenderer(map);
+
+        if (music != null) {
+            this.music = Gdx.audio.newMusic(Gdx.files.internal("sound/" + music));
+        }
     }
 
     @NotNull
@@ -63,4 +68,24 @@ public class WorldMap implements World {
     public void removeEntity(@NotNull Entity entity) {
         this.entities.remove(entity);
     }
+
+    public void startMap() {
+        toggleMusic(true);
+    }
+
+    private void toggleMusic(boolean start) {
+        if (this.music == null) return;
+        if (start) {
+            music.setVolume(0.1F);
+            music.setLooping(true);
+            music.play();
+        } else {
+            music.stop();
+        }
+    }
+
+    public void endMap() {
+        toggleMusic(false);
+    }
+
 }

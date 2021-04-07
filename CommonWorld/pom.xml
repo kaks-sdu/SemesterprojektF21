@@ -9,7 +9,7 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.commonWorld</bundle.symbolicName>
+        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.common</bundle.symbolicName>
         <bundle.namespace>io.github.arkobat.semesterprojektF21</bundle.namespace>
     </properties>
 
@@ -17,8 +17,8 @@
     <artifactId>CommonWorld</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-
     <name>CommonWorld</name>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

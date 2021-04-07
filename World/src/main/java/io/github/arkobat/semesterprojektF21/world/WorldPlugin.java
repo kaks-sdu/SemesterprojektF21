@@ -7,15 +7,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class WorldPlugin implements WorldLoader {
 
+    private WorldController worldController;
+
     @NotNull
     @Override
     public World start(@NotNull GameData gameData) {
-        return null;
+        this.worldController = new WorldController();
+        return worldController.init();
     }
 
     @Override
     public void stop() {
-
     }
 
 }

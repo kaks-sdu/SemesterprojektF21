@@ -133,6 +133,15 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
+    public void removeWorldLoaderService(WorldLoader eps) {
+        worldLoaders.remove(eps);
+    }
+
+    public void addWorldLoaderService(WorldLoader eps) {
+        // TODO: Remember to start the world loading process!
+        worldLoaders.add(eps);
+    }
+
     public void addTextureRenderService(ITextureRenderService eps) {
         System.out.println("Added texture render service");
         textureRenderList.add(eps);

@@ -55,9 +55,9 @@
         <module>Core</module>
         <module>Common</module>
         <module>CommonTexture</module>
+        <module>CommonWorld</module>
         <module>Player</module>
         <module>World</module>
-        <module>CommonWorld</module>
     </modules>
 
     <build>
@@ -91,12 +91,12 @@
 
     <dependencies>
         <!-- Annotations -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.4</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>

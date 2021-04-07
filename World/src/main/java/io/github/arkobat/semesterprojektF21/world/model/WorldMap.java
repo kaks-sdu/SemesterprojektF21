@@ -2,8 +2,8 @@ package io.github.arkobat.semesterprojektF21.world.model;
 
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+/*import lombok.Getter;
+import lombok.RequiredArgsConstructor;*/
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,8 +12,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-@Getter
-@RequiredArgsConstructor
+/*@Getter
+@RequiredArgsConstructor*/
 public class WorldMap implements World {
 
     private final @NotNull String mapId;
@@ -21,6 +21,16 @@ public class WorldMap implements World {
     private final @Nullable WorldMap nextMap;
 
     private final List<Entity> entities = new LinkedList<>();
+
+    public WorldMap(@NotNull String mapId, @Nullable WorldMap prevMap, @Nullable WorldMap nextMap) {
+        this.mapId = mapId;
+        this.prevMap = prevMap;
+        this.nextMap = nextMap;
+    }
+
+    public String getMapId() {
+        return mapId;
+    }
 
     @NotNull
     @Override

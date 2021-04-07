@@ -31,6 +31,12 @@
         </dependency>
 
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonWorld</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
             <artifactId>CommonTexture</artifactId>
             <version>${project.version}</version>
@@ -42,19 +48,12 @@
             <version>${project.version}</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21</groupId>
-            <artifactId>CommonWorld</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -63,6 +62,7 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
+                <version>3.5.0</version>
             </plugin>
         </plugins>
     </build>

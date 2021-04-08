@@ -58,6 +58,9 @@
         <module>CommonWorld</module>
         <module>Player</module>
         <module>World</module>
+        <module>Enemy</module>
+        <module>Weapon</module>
+        <module>Collision</module>
     </modules>
 
     <build>

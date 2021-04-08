@@ -112,6 +112,27 @@
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <artifactId>Enemy</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <artifactId>Weapon</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <artifactId>Collision</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <type>bundle</type>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <repositories>
     <repository>

@@ -19,7 +19,7 @@ public class PlayerPlugin implements GamePluginService {
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
         // Add entities to the world
-        PlayerImpl player = new PlayerImpl(new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(0, 500));
+        PlayerImpl player = new PlayerImpl(new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(0, 0));
         world.addEntity(player);
         System.out.println("Started Player plugin from module scope");
 

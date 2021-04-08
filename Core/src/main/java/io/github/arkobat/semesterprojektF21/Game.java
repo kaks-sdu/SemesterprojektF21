@@ -38,12 +38,19 @@ public class Game implements ApplicationListener {
     }
 
     private void init() {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Group 1 Semester Project";
-        cfg.width = 480;
-        cfg.height = 270;
-        cfg.useGL30 = false;
-        cfg.resizable = false;
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.title = "Group 1 Semester Project";
+
+        config.width = 480;
+        config.height = 270;
+
+        config.useGL30 = false;
+        config.useHDPI = false;
+        config.forceExit = true;
+        config.vSyncEnabled = false;
+
+        config.backgroundFPS = -1;
+        config.foregroundFPS = -1;
 
         gameDataSupplier = () -> new GameData(
                 Gdx.graphics.getDeltaTime(),
@@ -51,7 +58,7 @@ public class Game implements ApplicationListener {
                 Gdx.graphics.getHeight()
         );
 
-        new LwjglApplication(this, cfg);
+        new LwjglApplication(this, config);
     }
 
     @Override
@@ -69,13 +76,9 @@ public class Game implements ApplicationListener {
         }
         world = worldLoader.get().start(gameData);
 
-        System.out.println("Searching for game plugins");
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
             gamePluginService.start(gameData, world);
-        }
-        if (gamePluginList.size() == 0) {
-            System.out.println("No plugins found :-(");
         }
         created = true;
     }
@@ -115,6 +118,7 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
+        this.world.resize(width, height);
     }
 
     @Override
@@ -129,10 +133,12 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
+    @SuppressWarnings("unused")
     public void removeWorldLoaderService(WorldLoader eps) {
         worldLoaders.remove(eps);
     }
 
+    @SuppressWarnings("unused")
     public void addWorldLoaderService(WorldLoader eps) {
         System.out.println("Added World Loader " + eps.getClass().getName());
         worldLoaders.add(eps);
@@ -141,31 +147,38 @@ public class Game implements ApplicationListener {
         }
     }
 
+    @SuppressWarnings("unused")
     public void addTextureRenderService(TextureRenderService eps) {
         System.out.println("Added texture render service");
         textureRenderList.add(eps);
     }
 
+    @SuppressWarnings("unused")
     public void removeTextureRenderService(TextureRenderService eps) {
         textureRenderList.remove(eps);
     }
 
+    @SuppressWarnings("unused")
     public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);
     }
 
+    @SuppressWarnings("unused")
     public void removeEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.remove(eps);
     }
 
+    @SuppressWarnings("unused")
     public void addPostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.add(eps);
     }
 
+    @SuppressWarnings("unused")
     public void removePostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.remove(eps);
     }
 
+    @SuppressWarnings("unused")
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
         GameData gameData = gameDataSupplier.get();
@@ -177,6 +190,7 @@ public class Game implements ApplicationListener {
         }
     }
 
+    @SuppressWarnings("unused")
     public void removeGamePluginService(GamePluginService plugin) {
         gamePluginList.remove(plugin);
         GameData gameData = gameDataSupplier.get();

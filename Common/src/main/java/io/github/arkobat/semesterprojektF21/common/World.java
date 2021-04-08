@@ -41,4 +41,6 @@ public interface World {
 
     void update();
 
+    void resize(int width, int height);
+
 }

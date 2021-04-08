@@ -3,8 +3,8 @@ package io.github.arkobat.semesterprojektF21.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -18,28 +18,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
-    private static final float acceleration = 3;
-    private static final float deacceleration = 0.5F;
-    private static final float jumpAcceleration = 90;
-    private static final float gravity = 0.5F;
-    private static final float maxAcceleration = 30;
+    private static final float acceleration = 25F;
+    private static final float deacceleration = 7.5F;
+    private static final float jumpAcceleration = 50F;
+    private static final float gravity = 9.1F;
+    private static final float maxAcceleration = 300F;
     private Texture texture;
-
-    public PlayerControlSystem() {
-
-        /*String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", "Player-1.0-SNAPSHOT.jar!", "player.png").toString();
-        jarUrl = jarUrl.replace("runner", "" + "Player").replace('\\', '/');
-
-        // Load the texture
-        AssetLoader.getInstance().load(jarUrl, Texture.class);
-        AssetLoader.getInstance().finishLoading();
-
-        texture = AssetLoader.getInstance().get(jarUrl, Texture.class);*/
-
-
-        // texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
-        //texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
-    }
 
     @Override
     public void process(@NotNull GameData gameData, World world) {
@@ -54,9 +38,9 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
                 // Apply gravity
                 Vector velocity = player1.getVelocity();
-                velocity.setY(velocity.getY() - gravity);
+                velocity.setY(velocity.getY() - gravity * delta);
 
-                handleControls(player1);
+                handleControls(player1, delta);
 
                 loc.setX((float) (loc.getX() + velocity.getX() * delta));
                 loc.setY((float) (loc.getY() + velocity.getY() * delta));
@@ -67,23 +51,22 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
     }
 
-    private void handleControls(PlayerImpl player) {
+    private void handleControls(PlayerImpl player, float delta) {
         Vector velocity = player.getVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration));
+            velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
-            velocity.setX(Math.max(0, velocity.getX() - deacceleration));
+            velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration));
+            velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
         } else if (velocity.getX() < 0) {
-            velocity.setX(Math.min(0, velocity.getX() + deacceleration));
+            velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta));
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
-            System.out.printf("Jump. charges: %d", player.getJumpCharges());
-            player.setJumpCharges(player.getJumpCharges() - 1);
+            //   player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
         }
     }
@@ -97,13 +80,13 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         if (loc.getX() < 0) {
             loc.setX(0);
         }// else if (loc.getX() + hitbox.getWidth() > Gdx.graphics.getWidth()) {
-         //   loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
-         //   }
+        //   loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
+        //   }
         if (loc.getY() < 0) {
             loc.setY(0);
         }// else if (loc.getY() + hitbox.getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
-         //   loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
-         //  }
+        //   loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
+        //  }
 /*
         boolean blocked = false;
 
@@ -172,12 +155,11 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
     @Override
     public void render(GameData gameData, World world, SpriteBatch sb) {
-        for (Entity player : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(Player.class)) {
+            PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
-            PlayerImpl _player = (PlayerImpl) player;
-            sb.draw(_player.getTexture(), loc.getX(), loc.getY());
+            sb.draw(player.getTexture(), loc.getX(), loc.getY());
         }
-        //System.out.println("Rendering");
     }
 
 }

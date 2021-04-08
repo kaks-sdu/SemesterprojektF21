@@ -38,8 +38,6 @@ public class WorldMap implements World {
     private OrthographicCamera camera;
     private Viewport viewport;
 
-    private TiledMapTileLayer collisionLayer;
-
     private Music music;
 
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
@@ -50,12 +48,10 @@ public class WorldMap implements World {
         this.map = new TmxMapLoader().load(mapPath);
         //TODO: Make AssetLoader handle loading maps
         //this.map = AssetLoader.getInstance().loadMap(MODULE_NAME, "map/" + mapFileName + ".tmx");
+
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false);
         this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
-        System.out.println("Found layers: " + map.getLayers().size());
 
         if (music != null) {
             String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
@@ -112,12 +108,20 @@ public class WorldMap implements World {
         if (player.isPresent()) {
             Location loc = player.get().getLocation();
             Hitbox hb = player.get().getHitbox();
-            camera.position.set(loc.getX() + (hb.getWidth() / 2), loc.getY() + (hb.getHeight() / 2), 0);
+
+            camera.position.set(loc.getX(), loc.getY(), 0);
             camera.update();
 
             renderer.render();
             renderer.setView(camera);
         }
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        System.out.println("Resize");
+        camera.viewportWidth = width / 2.5F;
+        camera.viewportHeight = height / 2.5F;
     }
 
 }

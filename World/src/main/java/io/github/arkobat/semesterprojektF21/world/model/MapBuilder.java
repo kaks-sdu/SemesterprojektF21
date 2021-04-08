@@ -1,15 +1,13 @@
 package io.github.arkobat.semesterprojektF21.world.model;
 
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 @Getter
 public class MapBuilder {
 
-    private @NotNull String mapId;
-    private @NotNull String mapFileName;
-    private @Nullable String music;
+    private String mapId;
+    private String mapFileName;
+    private String music;
 
     public MapBuilder setMapId(String mapId) {
         this.mapId = mapId;

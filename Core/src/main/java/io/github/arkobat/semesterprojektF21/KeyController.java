@@ -23,7 +23,7 @@ public class KeyController {
 
     private static void setKey(Key key, int... keys) {
         if (keys.length == 0) {
-            throw new IllegalArgumentException("The key must have be binded");
+            throw new IllegalArgumentException("The key must have be bound");
         }
         keyBindings.put(key, keys);
     }

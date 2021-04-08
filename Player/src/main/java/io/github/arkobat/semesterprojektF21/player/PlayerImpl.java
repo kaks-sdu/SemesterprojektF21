@@ -23,8 +23,8 @@ public class PlayerImpl implements Player {
         this.location = location;
         this.size = 1;
         this.jumpCharges = 2;
-        //TODO: Fix hitbox
-        this.hitbox = new Hitbox(0, 0);
+        this.velocity = new Vector();
+        this.hitbox = new Hitbox(8, 16);
     }
 
     @Override

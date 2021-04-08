@@ -11,7 +11,6 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
-import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +33,9 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         AssetLoader.getInstance().finishLoading();
 
         texture = AssetLoader.getInstance().get(jarUrl, Texture.class);*/
-        texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
+
+
+        // texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
     }
 
     @Override
@@ -169,84 +170,9 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     public void render(GameData gameData, World world, SpriteBatch sb) {
         for (Entity player : world.getEntities(Player.class)) {
             Location loc = player.getLocation();
-            sb.draw(texture, loc.getX(), loc.getY());
-            System.out.printf("Adding player at %s, %s", loc.getX(), loc.getY());
+            //   sb.draw(texture, loc.getX(), loc.getY());
         }
         //System.out.println("Rendering");
     }
 
-    //  @Override
-    //  public void render(GameData gameData, World world, SpriteBatch sb) {
-    //     System.out.println("render");
-    // }
-    //  @Override
-    //  public void render(GameData gameData, World world, SpriteBatch sb) {
-    //     System.out.println("render");
-    // }
-
 }
-
-    /*
-
-    @Override
-    public void process(GameData gameData, World world) {
-        for (Entity player : world.getEntities(PlayerImpl.class)) {
-            PositionPart positionPart = player.getPart(PositionPart.class);
-            MovingPart movingPart = player.getPart(MovingPart.class);
-            LifePart lifePart = player.getPart(LifePart.class);
-            Animation animation = player.getPart(Animation.class);
-
-            movingPart.setLeft(gameData.getKeys().isDown(Key.LEFT));
-            movingPart.setRight(gameData.getKeys().isDown(Key.RIGHT));
-            movingPart.setUp(gameData.getKeys().isDown(Key.UP));
-
-            movingPart.process(gameData, player);
-            positionPart.process(gameData, player);
-            lifePart.process(gameData, player);
-            animation.process(gameData, player);
-            //System.out.println("Processing player!");
-            //TODO: Fix animation part
-            updateShape(player);
-
-        }
-    }
-
-    private void updateShape(Entity entity) {
-        float[] shapex = new float[4];
-        float[] shapey = new float[4];
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        float x = positionPart.getX();
-        float y = positionPart.getY();
-        float radians = positionPart.getRadians();
-
-        shapex[0] = (float) (x + Math.cos(radians) * entity.getRadius());
-        shapey[0] = (float) (y + Math.sin(radians) * entity.getRadius());
-
-        shapex[1] = (float) (x + Math.cos(radians - 4 * 3.1415f / 5) * entity.getRadius());
-        shapey[1] = (float) (y + Math.sin(radians - 4 * 3.1145f / 5) * entity.getRadius());
-
-        shapex[2] = (float) (x + Math.cos(radians + 3.1415f) * entity.getRadius() * 0.5);
-        shapey[2] = (float) (y + Math.sin(radians + 3.1415f) * entity.getRadius() * 0.5);
-
-        shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * entity.getRadius());
-        shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * entity.getRadius());
-
-        entity.setShapeX(shapex);
-        entity.setShapeY(shapey);
-
-
-    @Override
-    public void render(GameData gameData, World world, SpriteBatch sb) {
-        sb.begin();
-        for (Entity player : world.getEntities(PlayerImpl.class)) {
-            System.out.println("Rendering player!");
-            PositionPart positionPart = player.getPart(PositionPart.class);
-            Animation animation = player.getPart(Animation.class);
-
-            sb.draw(animation.getFrame(), positionPart.getX(), positionPart.getY());
-            //System.out.println("Rendering player at X" + positionPart.getX() + ", Y" + positionPart.getY());
-        }
-    }
-    }
-*/
-

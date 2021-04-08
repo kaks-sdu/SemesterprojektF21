@@ -1,7 +1,10 @@
 package io.github.arkobat.semesterprojektF21.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -10,8 +13,6 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.game.Key;
-import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,9 +20,9 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
     private static final float acceleration = 3;
     private static final float deacceleration = 0.5F;
-    private static final float jumpAcceleration = 300;
+    private static final float jumpAcceleration = 90;
     private static final float gravity = 0.5F;
-    private static final float maxAcceleration = 100;
+    private static final float maxAcceleration = 30;
     private Texture texture;
 
     public PlayerControlSystem() {
@@ -55,7 +56,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
                 Vector velocity = player1.getVelocity();
                 velocity.setY(velocity.getY() - gravity);
 
-                handleControls(gameData, player1);
+                handleControls(player1);
 
                 loc.setX((float) (loc.getX() + velocity.getX() * delta));
                 loc.setY((float) (loc.getY() + velocity.getY() * delta));
@@ -66,21 +67,22 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
     }
 
-    private void handleControls(GameData data, PlayerImpl player) {
+    private void handleControls(PlayerImpl player) {
         Vector velocity = player.getVelocity();
 
-        if (data.isPressed(Key.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration));
         }
-        if (data.isPressed(Key.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration));
         } else if (velocity.getX() < 0) {
             velocity.setX(Math.min(0, velocity.getX() + deacceleration));
         }
 
-        if (data.isPressed(Key.JUMP) && player.getJumpCharges() > 0) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
+            System.out.printf("Jump. charges: %d", player.getJumpCharges());
             player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
         }
@@ -90,19 +92,19 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Location loc = player.getLocation();
         Hitbox hitbox = player.getHitbox();
 
-/*
+
         // Ensure the player is within game borders
         if (loc.getX() < 0) {
             loc.setX(0);
-        } else if (loc.getX() + hitbox.getWidth() > collisionLayer.getWidth() * collisionLayer.getTileWidth()) {
-            loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
-        }
+        }// else if (loc.getX() + hitbox.getWidth() > Gdx.graphics.getWidth()) {
+         //   loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
+         //   }
         if (loc.getY() < 0) {
             loc.setY(0);
-        } else if (loc.getY() + hitbox.getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
-            loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
-        }
-
+        }// else if (loc.getY() + hitbox.getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
+         //   loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
+         //  }
+/*
         boolean blocked = false;
 
         // Check X collision;

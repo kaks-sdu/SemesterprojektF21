@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -36,6 +37,9 @@ public class WorldMap implements World {
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Viewport viewport;
+
+    private TiledMapTileLayer collisionLayer;
+
     private Music music;
 
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
@@ -48,6 +52,8 @@ public class WorldMap implements World {
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.collisionLayer = (TiledMapTileLayer) map.getLayers().get(0);
+        System.out.println("Found layers: " + map.getLayers().size());
 
         if (music != null) {
             String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
@@ -109,7 +115,7 @@ public class WorldMap implements World {
 
             renderer.render();
             renderer.setView(camera);
-        } else System.out.println("No player found");
+        }
     }
 
 }

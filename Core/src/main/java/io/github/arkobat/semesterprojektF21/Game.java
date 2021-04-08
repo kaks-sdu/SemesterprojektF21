@@ -52,8 +52,7 @@ public class Game implements ApplicationListener {
         gameDataSupplier = () -> new GameData(
                 Gdx.graphics.getDeltaTime(),
                 Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight(),
-                KeyController.getPressedKeys()
+                Gdx.graphics.getHeight()
         );
 
         new LwjglApplication(this, cfg);

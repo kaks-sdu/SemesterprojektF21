@@ -19,7 +19,8 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Optional;
 
 import static io.github.arkobat.semesterprojektF21.world.WorldPlugin.MODULE_NAME;
 
@@ -27,7 +28,7 @@ import static io.github.arkobat.semesterprojektF21.world.WorldPlugin.MODULE_NAME
 public class WorldMap implements World {
 
     private final @NotNull String mapId;
-    private final List<Entity> entities = new LinkedList<>();
+    private final EntityCache entityCache = new EntityCache();
 
     private @Nullable WorldMap nextMap;
 
@@ -55,33 +56,24 @@ public class WorldMap implements World {
     @NotNull
     @Override
     public Collection<Entity> getEntities() {
-        return this.entities;
+        return this.entityCache.getEntities();
     }
 
     @SafeVarargs
     @NotNull
     @Override
     public final <E extends Entity> Collection<Entity> getEntities(@NotNull Class<E>... entityTypes) {
-        List<Entity> list = new ArrayList<>();
-        for (Entity entity : entities) {
-            for (Class<E> clazz : entityTypes) {
-                if (clazz.isInstance(entity)) {
-                    list.add(entity);
-                    break;
-                }
-            }
-        }
-        return list;
+        return this.entityCache.get(entityTypes);
     }
 
     @Override
     public void addEntity(@NotNull Entity entity) {
-        this.entities.add(entity);
+        this.entityCache.add(entity);
     }
 
     @Override
     public void removeEntity(@NotNull Entity entity) {
-        this.entities.remove(entity);
+        this.entityCache.remove(entity);
     }
 
     public void startMap() {
@@ -115,7 +107,6 @@ public class WorldMap implements World {
 
             renderer.render();
             renderer.setView(camera);
-            System.out.println("Updated map");
         } else System.out.println("No player found");
     }
 

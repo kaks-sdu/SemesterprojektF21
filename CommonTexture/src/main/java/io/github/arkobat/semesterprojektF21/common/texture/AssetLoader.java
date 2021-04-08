@@ -8,6 +8,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import java.io.File;
 
 //TODO: Move to managers folder without breaking
+/*
+    Still need to change many things here. AssetLoader responsibility should be everything related to loading textures, maps, music etc.
+    This means getRawFilePath will be changed, as it is bad practice!!
+ */
 public class AssetLoader {
 
     private static AssetLoader instance;

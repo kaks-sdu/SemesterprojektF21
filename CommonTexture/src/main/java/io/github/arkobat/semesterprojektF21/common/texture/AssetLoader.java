@@ -2,6 +2,8 @@ package io.github.arkobat.semesterprojektF21.common.texture;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 import java.io.File;
 
@@ -10,19 +12,22 @@ public class AssetLoader {
 
     private static AssetLoader instance;
     private AssetManager assetManager;
+    private TmxMapLoader mapLoader;
 
     public AssetLoader(){
         AssetsJarFileResolver jfhr = new AssetsJarFileResolver();
         assetManager = new AssetManager(jfhr);
+        mapLoader = new TmxMapLoader(jfhr);
     }
 
     public static AssetLoader getInstance() {
         if(instance == null){
             instance = new AssetLoader();
         }
-        return instance;    }
+        return instance;
+    }
 
-
+    @Deprecated
     public AssetManager getAssetManager(){
         return assetManager;
     }
@@ -37,6 +42,7 @@ public class AssetLoader {
 
     public Texture loadTexture(String moduleName, String fileName){
         String jarUrl = getJarUrl(moduleName, fileName);
+        System.out.println("Jar URL: " + jarUrl);
         // Load the texture
         assetManager.load(jarUrl, com.badlogic.gdx.graphics.Texture.class);
         assetManager.finishLoading();
@@ -44,7 +50,12 @@ public class AssetLoader {
         return assetManager.get(jarUrl, com.badlogic.gdx.graphics.Texture.class);
     }
 
-    public String getFilePath(String moduleName, String fileName){
+    public TiledMap loadMap(String moduleName, String fileName){
+        String jarUrl = getJarUrl(moduleName, fileName);
+        return mapLoader.load(jarUrl);
+    }
+
+    public String getRawFilePath(String moduleName, String fileName){
         //TODO: Fix to open jar file instead
         //String jarName = moduleName + "-1.0-SNAPSHOT.jar!";
         // Get texture from relative path of jar name

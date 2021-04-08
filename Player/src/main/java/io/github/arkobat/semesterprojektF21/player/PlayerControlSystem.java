@@ -11,6 +11,7 @@ import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.Key;
+import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +37,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
 
         // texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
+        //texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
     }
 
     @Override
@@ -170,7 +172,8 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     public void render(GameData gameData, World world, SpriteBatch sb) {
         for (Entity player : world.getEntities(Player.class)) {
             Location loc = player.getLocation();
-            //   sb.draw(texture, loc.getX(), loc.getY());
+            PlayerImpl _player = (PlayerImpl) player;
+            sb.draw(_player.getTexture(), loc.getX(), loc.getY());
         }
         //System.out.println("Rendering");
     }

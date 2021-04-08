@@ -41,14 +41,16 @@ public class WorldMap implements World {
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
         this.mapId = mapId;
         //TODO: Fix
-        String mapPath = AssetLoader.getInstance().getFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
+        String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
         this.map = new TmxMapLoader().load(mapPath);
+        //TODO: Make AssetLoader handle loading maps
+        //this.map = AssetLoader.getInstance().loadMap(MODULE_NAME, "map/" + mapFileName + ".tmx");
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         if (music != null) {
-            String musicPath = AssetLoader.getInstance().getFilePath(MODULE_NAME, "sound/" + music);
+            String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
             this.music = Gdx.audio.newMusic(new FileHandle(musicPath));
         }
     }

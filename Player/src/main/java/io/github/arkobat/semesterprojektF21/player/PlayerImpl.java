@@ -1,5 +1,6 @@
 package io.github.arkobat.semesterprojektF21.player;
 
+import com.badlogic.gdx.graphics.Texture;
 import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
@@ -17,6 +18,7 @@ public class PlayerImpl implements Player {
     private int health;
     private Vector velocity;
     private Hitbox hitbox;
+    private Texture texture;
 
     public PlayerImpl(Color[] colors, Location location) {
         this.colors = colors;
@@ -25,6 +27,14 @@ public class PlayerImpl implements Player {
         this.jumpCharges = 2;
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 16);
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 
     @Override

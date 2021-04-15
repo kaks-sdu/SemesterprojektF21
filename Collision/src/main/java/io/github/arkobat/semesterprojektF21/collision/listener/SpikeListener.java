@@ -1,6 +1,5 @@
 package io.github.arkobat.semesterprojektF21.collision.listener;
 
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.collision.CollisionHandler;
 import io.github.arkobat.semesterprojektF21.common.Damageable;
@@ -23,15 +22,7 @@ public class SpikeListener extends EventListener {
         }
 
         final TiledMapTileLayer collisionLayer = ((WorldTemp) world).getCollisionLayer();
-
-        boolean b = true;
-        for (MapProperties property : CollisionHandler.getProperties(collisionLayer, event.getNewLocation(), event.getEntity().getHitbox())) {
-            if (property.containsKey("spikes")) {
-                b = false;
-                break;
-            }
-        }
-        if (b) {
+        if (CollisionHandler.getProperties(collisionLayer, event.getNewLocation(), event.getEntity().getHitbox()).stream().noneMatch(property -> property.containsKey("spikes"))) {
             return;
         }
 

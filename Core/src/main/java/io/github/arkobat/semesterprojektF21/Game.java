@@ -92,7 +92,6 @@ public class Game implements ApplicationListener {
 
         this.world.update(this.spriteBatch);
         update();
-
     }
 
     private void update() {

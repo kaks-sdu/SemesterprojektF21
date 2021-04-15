@@ -3,9 +3,7 @@ package io.github.arkobat.semesterprojektF21.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -18,8 +16,6 @@ import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
-import javax.lang.model.element.ElementVisitor;
-
 public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
     private static final float acceleration = 25F;
@@ -27,7 +23,6 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     private static final float jumpAcceleration = 50F;
     private static final float gravity = 80.1F;
     private static final float maxAcceleration = 300F;
-    private Texture texture;
 
     @Override
     public void process(@NotNull GameData gameData, World world) {
@@ -63,14 +58,16 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Vector velocity = player.getVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            if(player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
+            if (player.getCurrentAnimation().isFlipped()) {
+                player.getCurrentAnimation().flip();
+            }
 
             velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if(!player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
+            if (!player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
 
             velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
         } else if (velocity.getX() < 0) {
@@ -83,32 +80,38 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
 
         // Handle animations
-        if (velocity.getX() < 0.05 && velocity.getY() > -0.05) {
-            if (player.getCurrentAnimation() != player.getAnimation("idle")) {
-                player.setCurrentAnimation(player.getAnimation("idle"));
-            }
-        } else {
+        if (velocity.getX() > 0.1 || velocity.getX() < -0.1) {
             if (player.getCurrentAnimation() != player.getAnimation("run")) {
                 player.setCurrentAnimation(player.getAnimation("run"));
             }
+        } else if (player.getCurrentAnimation() != player.getAnimation("idle")) {
+            player.setCurrentAnimation(player.getAnimation("idle"));
         }
 
-        handleWackControls(player);
+        // Handle flips
+        boolean flipped = player.getCurrentAnimation().isFlipped();
+        if (velocity.getX() > 0 && flipped) {
+            player.getCurrentAnimation().flip();
+        } else if (velocity.getX() < 0 && !flipped) {
+            player.getCurrentAnimation().flip();
+        }
+
+        handleTeleport(player);
     }
 
-    private void handleWackControls(Player player) {
+    private void handleTeleport(Player player) {
         Location loc = player.getLocation();
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            loc.setX(loc.getX() - 8);
+            loc.setX(loc.getX() - 32);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            loc.setX(loc.getX() + 8);
+            loc.setX(loc.getX() + 32);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            loc.setY(loc.getY() + 8);
+            loc.setY(loc.getY() + 32);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            loc.setY(loc.getY() - 8);
+            loc.setY(loc.getY() - 32);
         }
     }
 
@@ -119,7 +122,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             Location loc = player.getLocation();
 
             // Draw animation
-            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX(), loc.getY());
+            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + entity.getHitbox().getOffsetX(), loc.getY() + entity.getHitbox().getOffsetY());
         }
     }
 

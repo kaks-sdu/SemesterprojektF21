@@ -14,20 +14,22 @@ import java.util.Collection;
 
 public class PlayerPlugin implements GamePluginService {
 
+    static final String MODULE_NAME = "Player";
 
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
         // Add entities to the world
-        PlayerImpl player = new PlayerImpl(world, new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(42, 96));
+        PlayerImpl player = new PlayerImpl(world, new Color[]{Color.ORANGE, Color.GREEN, Color.BLUE}, new Location(42, 96));
+        player.setColor(Color.BLUE);
         world.addEntity(player);
         System.out.println("Started Player plugin from module scope");
 
         // TODO: Setup tests for assets loading
 
         // Set animations TODO: Add all colour animations
-        String moduleName = "Player";
-        Animation idleAnimation = new Animation(moduleName, "idle/player_blue_idle.png", 2, 0.5f);
-        Animation runAnimation = new Animation(moduleName, "run/player_blue_run.png", 4, 0.5f);
+
+        Animation idleAnimation = new Animation(MODULE_NAME, "idle/player_blue_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(MODULE_NAME, "run/player_blue_run.png", 4, 0.5f);
 
         player.addAnimation("idle", idleAnimation);
         player.addAnimation("run", runAnimation);

@@ -10,6 +10,8 @@ import java.util.Map;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
+import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NAME;
+
 public class PlayerImpl implements Player {
 
     @Setter
@@ -122,7 +124,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public Color getColor() {
-        return null;
+        return this.colors[currentColor];
     }
 
     @Override
@@ -130,10 +132,35 @@ public class PlayerImpl implements Player {
         for (int i = 0; i < colors.length; i++) {
             if (colors[i] == color) {
                 this.currentColor = i;
+                changeColor(colors[currentColor]);
                 return;
             }
         }
         throw new IllegalArgumentException("Color not unlocked");
+    }
+
+    public void nextColor() {
+        this.currentColor = ++this.currentColor % this.colors.length;
+        changeColor(colors[currentColor]);
+    }
+
+    public void prevColor() {
+        if (currentColor == 0) {
+            this.currentColor = this.colors.length - 1;
+        } else {
+            this.currentColor--;
+        }
+        changeColor(colors[currentColor]);
+    }
+
+    private void changeColor(Color color) {
+        this.animatons.clear();
+
+        Animation idleAnimation = new Animation(MODULE_NAME, "idle/player_" + color.name().toLowerCase() + "_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(MODULE_NAME, "run/player_" + color.name().toLowerCase() + "_run.png", 4, 0.5f);
+
+        this.addAnimation("idle", idleAnimation);
+        this.addAnimation("run", runAnimation);
     }
 
     public int getJumpCharges() {

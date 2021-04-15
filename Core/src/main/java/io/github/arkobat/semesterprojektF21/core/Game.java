@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21;
+package io.github.arkobat.semesterprojektF21.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -42,8 +42,8 @@ public class Game implements ApplicationListener {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Group 1 Semester Project";
 
-        config.width = 480;
-        config.height = 270;
+        config.width = 800;
+        config.height = 600;
 
         config.useGL30 = false;
         config.useHDPI = false;

@@ -61,22 +61,30 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             if (player.getCurrentAnimation().isFlipped()) {
                 player.getCurrentAnimation().flip();
             }
-
             velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (!player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
-
+            if (!player.getCurrentAnimation().isFlipped()) {
+                player.getCurrentAnimation().flip();
+            }
             velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
         } else if (velocity.getX() < 0) {
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta));
         }
 
+        // Jump
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
             //   player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
+        }
+
+        // Color change
+        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+            player.nextColor();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+            player.prevColor();
         }
 
         // Handle animations
@@ -99,7 +107,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         handleTeleport(player);
     }
 
-    private void handleTeleport(Player player) {
+    private void handleTeleport(PlayerImpl player) {
         Location loc = player.getLocation();
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             loc.setX(loc.getX() - 32);

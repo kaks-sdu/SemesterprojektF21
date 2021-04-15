@@ -20,13 +20,17 @@ public class CollisionPlugin implements GamePluginService {
     public void start(@NotNull GameData gameData, @NotNull World world) {
         this.listeners.add(new MoveListener());
         this.listeners.add(new SpikeListener());
-        this.listeners.forEach(EventManager::registerListener);
+        for(EventListener listener : listeners){
+            EventManager.registerListener(listener);
+        }
         System.out.println("Started collision plugin");
     }
 
     @Override
     public void stop(@NotNull GameData gameData, @NotNull World world) {
-        this.listeners.forEach(EventManager::unregisterListener);
+        for(EventListener listener : listeners){
+            EventManager.unregisterListener(listener);
+        }
         System.out.println("Stopped collision plugin");
     }
 

@@ -7,7 +7,7 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
-import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
+import io.github.arkobat.semesterprojektF21.common.texture.Animation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -22,11 +22,18 @@ public class PlayerPlugin implements GamePluginService {
         world.addEntity(player);
         System.out.println("Started Player plugin from module scope");
 
-        //TODO: Setup tests for assets loading
+        // TODO: Setup tests for assets loading
 
-        System.out.println("Loading texture");
-        Texture texture = AssetLoader.getInstance().loadTexture("Player", "player.png");
-        player.setTexture(texture);
+        // Set animations TODO: Add all colour animations
+        String moduleName = "Player";
+        Animation idleAnimation = new Animation(moduleName, "idle/player_blue_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(moduleName, "run/player_blue_run.png", 4, 0.5f);
+
+        player.addAnimation("idle", idleAnimation);
+        player.addAnimation("run", runAnimation);
+
+        // Set current animation
+        player.setCurrentAnimation(player.getAnimation("run"));
     }
 
     @Override

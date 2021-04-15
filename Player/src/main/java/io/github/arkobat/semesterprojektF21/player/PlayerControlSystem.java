@@ -77,6 +77,19 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             //   player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
         }
+
+        // Handle animations
+        if (velocity.getX() < 0.05 && velocity.getY() > -0.05) {
+            if (player.getCurrentAnimation() != player.getAnimation("idle")) {
+                player.setCurrentAnimation(player.getAnimation("idle"));
+            }
+        } else {
+            if (player.getCurrentAnimation() != player.getAnimation("run")) {
+                player.setCurrentAnimation(player.getAnimation("run"));
+            }
+        }
+
+        handleWackControls(player);
     }
 
     private void handleWackControls(Player player) {
@@ -100,7 +113,9 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         for (Entity entity : world.getEntities(Player.class)) {
             PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
-            sb.draw(player.getTexture(), loc.getX(), loc.getY());
+
+            // Draw animation
+            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX(), loc.getY());
         }
     }
 

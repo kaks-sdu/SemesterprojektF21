@@ -5,31 +5,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 
-import java.io.File;
-
 public class Animation {
 
-    Array<TextureRegion> frames;
-    float maxFrameTime;
-    float currentFrameTime;
-    int frameCount;
-    int frame;
+    private Array<TextureRegion> frames;
+    private float maxFrameTime;
+    private float currentFrameTime;
+    private int frameCount;
+    private int frame;
+    private boolean flipped;
 
 
-    public Animation(String jarName, String moduleName, String fileName, int frameCount, float cycleTime){
+    public Animation(String moduleName, String fileName, int frameCount, float cycleTime){
         frames = new Array<>();
 
-        // Get texture from relative path of jar name
-        String jarUrl =   java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", jarName, fileName).toString();
-        jarUrl = jarUrl.replace("runner", "" + moduleName).replace('\\', '/');
-
-        //TODO: Use AssetLoader loadTexture method instead
-
-        // Load the texture
-        AssetLoader.getInstance().getAssetManager().load(jarUrl, Texture.class);
-        AssetLoader.getInstance().getAssetManager().finishLoading();
-
-        Texture texture = AssetLoader.getInstance().getAssetManager().get(jarUrl, Texture.class);
+        Texture texture = AssetLoader.getInstance().loadTexture(moduleName, fileName);
 
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;
@@ -55,8 +44,13 @@ public class Animation {
     }
 
     public void flip(){
+        flipped = !flipped;
         for(TextureRegion region : frames)
             region.flip(true, false);
+    }
+
+    public boolean isFlipped() {
+        return flipped;
     }
 
     public TextureRegion getFrame(){

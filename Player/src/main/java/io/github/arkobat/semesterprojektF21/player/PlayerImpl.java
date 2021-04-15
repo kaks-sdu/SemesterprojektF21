@@ -32,7 +32,7 @@ public class PlayerImpl implements Player {
         this.size = 1;
         this.jumpCharges = 2;
         this.velocity = new Vector();
-        this.hitbox = new Hitbox(8, 12);
+        this.hitbox = new Hitbox(8, 12, -4, 0);
         animatons = new HashMap<>();
     }
 

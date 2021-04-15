@@ -2,6 +2,12 @@ package io.github.arkobat.semesterprojektF21.player;
 
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
+import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerImpl implements Player {
@@ -16,7 +22,8 @@ public class PlayerImpl implements Player {
     private int health;
     private Vector velocity;
     private Hitbox hitbox;
-    private Texture texture;
+    private Map<String, Animation> animatons;
+    private Animation currentAnimation;
 
     public PlayerImpl(World world, Color[] colors, Location location) {
         this.world = world;
@@ -26,14 +33,23 @@ public class PlayerImpl implements Player {
         this.jumpCharges = 2;
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 16);
+        animatons = new HashMap<>();
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void addAnimation(String id, Animation animation) {
+        animatons.put(id, animation);
     }
 
-    public Texture getTexture() {
-        return texture;
+    public Animation getAnimation(String id) {
+        return animatons.get(id);
+    }
+
+    public void setCurrentAnimation(Animation currentAnimation) {
+        this.currentAnimation = currentAnimation;
+    }
+
+    public Animation getCurrentAnimation() {
+        return currentAnimation;
     }
 
     @Override

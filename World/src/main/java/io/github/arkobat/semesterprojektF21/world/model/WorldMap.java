@@ -52,7 +52,6 @@ public class WorldMap implements WorldTemp {
         String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
         this.map = new TmxMapLoader().load(mapPath);
         //TODO: Make AssetLoader handle loading maps
-        //this.map = AssetLoader.getInstance().loadMap(MODULE_NAME, "map/" + mapFileName + ".tmx");
 
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.camera = new OrthographicCamera();
@@ -117,6 +116,8 @@ public class WorldMap implements WorldTemp {
         // Update camera view
         Optional<Entity> player = getEntities(Player.class).stream().findFirst();
         if (player.isPresent()) {
+            spriteBatch.setProjectionMatrix(this.camera.combined);
+
             Location loc = player.get().getLocation();
             Hitbox hb = player.get().getHitbox();
 

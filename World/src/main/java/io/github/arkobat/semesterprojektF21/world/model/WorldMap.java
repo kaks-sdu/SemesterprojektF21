@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
@@ -16,6 +19,7 @@ import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
+import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,14 +30,16 @@ import java.util.Optional;
 import static io.github.arkobat.semesterprojektF21.world.WorldPlugin.MODULE_NAME;
 
 @Getter
-public class WorldMap implements World {
+public class WorldMap implements WorldTemp {
 
     private final @NotNull String mapId;
+    private final @NotNull String mapFileName;
     private final EntityCache entityCache = new EntityCache();
 
     private @Nullable WorldMap nextMap;
 
     private TiledMap map;
+    private TiledMapTileLayer collisionLayer;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -42,9 +48,8 @@ public class WorldMap implements World {
 
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
         this.mapId = mapId;
-        //TODO: Fix
-        // String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
-        String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "oldMap/map.tmx");
+        this.mapFileName = mapFileName;
+        String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
         this.map = new TmxMapLoader().load(mapPath);
         //TODO: Make AssetLoader handle loading maps
         //this.map = AssetLoader.getInstance().loadMap(MODULE_NAME, "map/" + mapFileName + ".tmx");
@@ -53,6 +58,12 @@ public class WorldMap implements World {
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        for (MapLayer layer : map.getLayers()) {
+            if (layer.getName().endsWith("_map")) {
+                this.collisionLayer = (TiledMapTileLayer) layer;
+                break;
+            }
+        }
         if (music != null) {
             String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
             this.music = Gdx.audio.newMusic(new FileHandle(musicPath));
@@ -62,7 +73,7 @@ public class WorldMap implements World {
     @NotNull
     @Override
     public Collection<Entity> getEntities() {
-        return this.entityCache.getEntities();
+        return this.entityCache.get();
     }
 
     @SafeVarargs
@@ -102,26 +113,31 @@ public class WorldMap implements World {
     }
 
     @Override
-    public void update() {
+    public void update(SpriteBatch spriteBatch) {
         // Update camera view
         Optional<Entity> player = getEntities(Player.class).stream().findFirst();
         if (player.isPresent()) {
             Location loc = player.get().getLocation();
             Hitbox hb = player.get().getHitbox();
 
-            camera.position.set(loc.getX(), loc.getY(), 0);
-            camera.update();
+            this.camera.position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
+            this.camera.update();
 
-            renderer.render();
-            renderer.setView(camera);
+            this.renderer.render();
+            this.renderer.setView(camera);
         }
     }
 
     @Override
+    public TiledMapTileLayer getCollisionLayer() {
+        return this.collisionLayer;
+    }
+
+    @Override
     public void resize(int width, int height) {
-        System.out.println("Resize");
-        camera.viewportWidth = width / 2.5F;
-        camera.viewportHeight = height / 2.5F;
+        final float mapZoom = 2.5F;
+        camera.viewportWidth = width / mapZoom;
+        camera.viewportHeight = height / mapZoom;
     }
 
 }

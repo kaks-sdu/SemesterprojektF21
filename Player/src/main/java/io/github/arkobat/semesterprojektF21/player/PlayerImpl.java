@@ -1,15 +1,13 @@
 package io.github.arkobat.semesterprojektF21.player;
 
-import com.badlogic.gdx.graphics.Texture;
-import io.github.arkobat.semesterprojektF21.common.Color;
-import io.github.arkobat.semesterprojektF21.common.Hitbox;
-import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.common.Vector;
+import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class PlayerImpl implements Player {
 
+    @Setter
+    private World world;
     private final Location location;
     private Color[] colors;
     private int currentColor;
@@ -20,7 +18,8 @@ public class PlayerImpl implements Player {
     private Hitbox hitbox;
     private Texture texture;
 
-    public PlayerImpl(Color[] colors, Location location) {
+    public PlayerImpl(World world, Color[] colors, Location location) {
+        this.world = world;
         this.colors = colors;
         this.location = location;
         this.size = 1;
@@ -65,6 +64,11 @@ public class PlayerImpl implements Player {
     @Override
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    @Override
+    public World getWorld() {
+        return this.world;
     }
 
     @NotNull

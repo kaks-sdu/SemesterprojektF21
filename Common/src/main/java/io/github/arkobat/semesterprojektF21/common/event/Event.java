@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.common.events;
+package io.github.arkobat.semesterprojektF21.common.event;
 
 import java.io.Serializable;
 

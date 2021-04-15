@@ -11,42 +11,50 @@ import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
+import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
+import javax.lang.model.element.ElementVisitor;
+
 public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
     private static final float acceleration = 25F;
-    private static final float deacceleration = 7.5F;
+    private static final float deacceleration = 15.5F;
     private static final float jumpAcceleration = 50F;
-    private static final float gravity = 9.1F;
+    private static final float gravity = 80.1F;
     private static final float maxAcceleration = 300F;
     private Texture texture;
 
     @Override
     public void process(@NotNull GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
-            if (player instanceof PlayerImpl) {
-                PlayerImpl player1 = (PlayerImpl) player;
-                final Location loc = player1.getLocation();
+        for (Entity entity : world.getEntities(Player.class)) {
+            if (entity instanceof PlayerImpl) {
+                PlayerImpl player = (PlayerImpl) entity;
+                final Location loc = player.getLocation();
                 final float delta = gameData.getDelta();
 
                 float oldX = loc.getX();
                 float oldY = loc.getY();
 
                 // Apply gravity
-                Vector velocity = player1.getVelocity();
+                Vector velocity = player.getVelocity();
                 velocity.setY(velocity.getY() - gravity * delta);
 
-                handleControls(player1, delta);
+                handleControls(player, delta);
 
                 loc.setX((float) (loc.getX() + velocity.getX() * delta));
                 loc.setY((float) (loc.getY() + velocity.getY() * delta));
 
                 // Check collision X
-                handleCollision(player1, oldX, oldY);
+                EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
+                EventManager.callEvent(event);
+
+                // Process animation
+                player.getCurrentAnimation().process(gameData);
             }
         }
     }
@@ -71,86 +79,20 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
     }
 
-    private void handleCollision(PlayerImpl player, float oldX, float oldY) {
+    private void handleWackControls(Player player) {
         Location loc = player.getLocation();
-        Hitbox hitbox = player.getHitbox();
-
-
-        // Ensure the player is within game borders
-        if (loc.getX() < 0) {
-            loc.setX(0);
-        }// else if (loc.getX() + hitbox.getWidth() > Gdx.graphics.getWidth()) {
-        //   loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
-        //   }
-        if (loc.getY() < 0) {
-            loc.setY(0);
-        }// else if (loc.getY() + hitbox.getHeight() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
-        //   loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
-        //  }
-/*
-        boolean blocked = false;
-
-        // Check X collision;
-        if (player.getVelocity().getX() > 0) {
-            int cellX = (int) (loc.getX() + hitbox.getWidth()) / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
-            while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(cellX, cellY)) blocked = true;
-                cellY++;
-            }
-
-        } else if (player.getVelocity().getX() < 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
-            while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(cellX, cellY)) blocked = true;
-                cellY++;
-            }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            loc.setX(loc.getX() - 8);
         }
-
-        if (blocked) {
-            loc.setX(oldX);
-            player.getVelocity().setX(0);
-            blocked = false;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            loc.setX(loc.getX() + 8);
         }
-
-        // Check collision Y
-        if (player.getVelocity().getY() > 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + hitbox.getHeight()) / collisionLayer.getTileHeight();
-            while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(cellX, cellY)) blocked = true;
-                cellX++;
-            }
-
-        } else if (velocity.getY() < 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) loc.getY() / collisionLayer.getTileHeight();
-            while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(cellX, cellY)) blocked = true;
-                cellX++;
-            }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            loc.setY(loc.getY() + 8);
         }
-
-        if (blocked) {
-            player.getVelocity().setY(0);
-            loc.setY(oldY);
-            player.setJumpCharges(2);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            loc.setY(loc.getY() - 8);
         }
-    }
-
-
-    private boolean checkCollision(int x, int y) {
-
-        try {
-            TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-            TiledMapTile tile = cell.getTile();
-            MapProperties properties = tile.getProperties();
-            return (properties.containsKey("collision"));
-        } catch (NullPointerException ignored) {
-            return true;
-        }
-         */
     }
 
     @Override

@@ -15,7 +15,7 @@ public class EntityCache {
      * @return A unmodifiable list of entities
      */
     @NotNull
-    public Collection<Entity> getEntities() {
+    public Collection<Entity> get() {
         List<Entity> entities = this.cached.get(null);
         if (entities == null) {
             entities = Collections.unmodifiableList(this.entities);

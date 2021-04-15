@@ -13,6 +13,7 @@ import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingServic
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
+import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class Game implements ApplicationListener {
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
-    private World world;
+    private WorldTemp world;
     private boolean created = false;
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;

@@ -1,13 +1,15 @@
 package io.github.arkobat.semesterprojektF21.common.entity;
 
-import io.github.arkobat.semesterprojektF21.common.Collidable;
-import io.github.arkobat.semesterprojektF21.common.Colorable;
-import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.common.Vector;
+import io.github.arkobat.semesterprojektF21.common.*;
 import org.jetbrains.annotations.NotNull;
 
 public interface Entity extends Colorable, Collidable {
 
+    /**
+     * Gets the current world of the entity
+     * @return the current world of the entity
+     */
+    World getWorld();
 
     /**
      * Gets the current location of this entity.

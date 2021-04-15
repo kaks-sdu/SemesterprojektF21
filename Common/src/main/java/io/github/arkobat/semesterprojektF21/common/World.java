@@ -39,8 +39,4 @@ public interface World {
      */
     void removeEntity(@NotNull Entity entity);
 
-    void update();
-
-    void resize(int width, int height);
-
 }

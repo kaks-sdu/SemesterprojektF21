@@ -9,5 +9,6 @@ public class CollisionControlSystem implements GameProcessingService {
     @Override
     public void process(@NotNull GameData gameData, @NotNull World world) {
 
+
     }
 }

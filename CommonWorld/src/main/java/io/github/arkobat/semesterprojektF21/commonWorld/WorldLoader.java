@@ -10,7 +10,7 @@ public interface WorldLoader {
      * @param gameData basic information regarding the game
      * @return the initial world
      */
-    World start(@NotNull GameData gameData);
+    WorldTemp start(@NotNull GameData gameData);
 
     void stop();
 

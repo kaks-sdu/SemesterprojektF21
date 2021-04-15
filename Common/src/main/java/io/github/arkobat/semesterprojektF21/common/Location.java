@@ -17,7 +17,7 @@ public class Location {
     private float y;
     private @Nullable Direction direction;
 
-    public Location(int x, int y) {
+    public Location(float x, float y) {
         this.x = x;
         this.y = y;
     }

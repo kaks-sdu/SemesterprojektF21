@@ -1,6 +1,5 @@
 package io.github.arkobat.semesterprojektF21.player;
 
-import com.badlogic.gdx.graphics.Texture;
 import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -19,7 +18,7 @@ public class PlayerPlugin implements GamePluginService {
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
         // Add entities to the world
-        PlayerImpl player = new PlayerImpl(new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(0, 0));
+        PlayerImpl player = new PlayerImpl(world, new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(42, 96));
         world.addEntity(player);
         System.out.println("Started Player plugin from module scope");
 

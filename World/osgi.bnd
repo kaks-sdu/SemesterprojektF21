@@ -1,0 +1,4 @@
+Bundle-SymbolicName: SemesterProjectGroup1_World
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/worldload.xml
+Import-Package: io.github.arkobat.semesterprojektF21.commonWorld;io.github.arkobat.semesterprojektF21.common.*;io.github.arkobat.semesterprojektF21.common.texture;com.badlogic.gdx.*

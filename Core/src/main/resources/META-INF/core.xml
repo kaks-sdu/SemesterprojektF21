@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.Game">
+    <implementation class="io.github.arkobat.semesterprojektF21.Game"/>
+
+    <reference bind="addPostEntityProcessingService" cardinality="0..n"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService"
+               name="GamePostProcessingService" policy="dynamic" unbind="removePostEntityProcessingService"/>
+
+    <reference bind="addEntityProcessingService" cardinality="0..n"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GameProcessingService"
+               name="GameProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
+
+   <reference bind="addTextureRenderService" cardinality="0..n"
+               interface="io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService"
+               name="TextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
+
+    <reference bind="addWorldLoaderService" cardinality="0..n"
+               interface="io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader"
+               name="WorldLoader" policy="dynamic" unbind="removeWorldLoaderService"/>
+
+    <reference bind="addGamePluginService" cardinality="0..n"
+               interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"
+               name="GamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
+
+</scr:component>

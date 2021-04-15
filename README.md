@@ -1,3 +1,3 @@
-# Hey there cutie :3
+# Semester Project
 
-this project is gon' be very cool
+A component based game, implemented with OSGI and LibGDX

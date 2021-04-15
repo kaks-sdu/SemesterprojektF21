@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -18,13 +19,11 @@ public class MoveListener extends EventListener {
     @Override
     public void onEntityMove(EntityMoveEvent event) {
         if (!event.getEntity().hasCollision()) {
-            System.out.println("No collision");
             return;
         }
 
         World world = event.getEntity().getWorld();
         if (!(world instanceof WorldTemp)) {
-            System.out.println("Wrong world");
             return;
         }
 
@@ -111,14 +110,11 @@ public class MoveListener extends EventListener {
 
 
     private boolean checkCollision(TiledMapTileLayer collisionLayer, int x, int y) {
-        try {
-            TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
-            TiledMapTile tile = cell.getTile();
-            MapProperties properties = tile.getProperties();
-            return (properties.containsKey("collision"));
-        } catch (NullPointerException ignored) {
-            return false;
-        }
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
+        if (cell == null) return false;
+        TiledMapTile tile = cell.getTile();
+        MapProperties properties = tile.getProperties();
+        return (properties.containsKey("collision"));
     }
 
 }

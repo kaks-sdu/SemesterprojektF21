@@ -83,6 +83,11 @@ public class PlayerImpl implements Player {
     }
 
     @Override
+    public void kill() {
+        System.out.println("Yooo, you dead");
+    }
+
+    @Override
     public World getWorld() {
         return this.world;
     }

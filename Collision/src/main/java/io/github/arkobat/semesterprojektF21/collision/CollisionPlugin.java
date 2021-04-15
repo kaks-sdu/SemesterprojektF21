@@ -1,26 +1,37 @@
 package io.github.arkobat.semesterprojektF21.collision;
 
 import io.github.arkobat.semesterprojektF21.collision.listener.MoveListener;
+import io.github.arkobat.semesterprojektF21.collision.listener.SpikeListener;
 import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollisionPlugin implements GamePluginService {
 
-    private MoveListener moveListener;
+    private final List<EventListener> listeners = new ArrayList<>();
 
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
-        this.moveListener = new MoveListener();
-        EventManager.registerListener(this.moveListener);
+        this.listeners.add(new MoveListener());
+        this.listeners.add(new SpikeListener());
+        for(EventListener listener : listeners){
+            EventManager.registerListener(listener);
+        }
         System.out.println("Started collision plugin");
     }
 
     @Override
     public void stop(@NotNull GameData gameData, @NotNull World world) {
-        EventManager.unregisterListener(this.moveListener);
+        for(EventListener listener : listeners){
+            EventManager.unregisterListener(listener);
+        }
         System.out.println("Stopped collision plugin");
     }
+
 }

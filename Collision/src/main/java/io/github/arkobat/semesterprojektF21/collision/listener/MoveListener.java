@@ -74,7 +74,6 @@ public class MoveListener extends EventListener {
         }
 
         if (blocked) {
-            System.out.println("X blocked");
             loc.setX(event.getOldLocation().getX());
             entity.getVelocity().setX(0);
             blocked = false;
@@ -87,7 +86,6 @@ public class MoveListener extends EventListener {
             while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
                 if (checkCollision(collisionLayer, cellX, cellY)) {
                     blocked = true;
-                    System.out.println("Blocked 1");
                     break;
                 }
                 cellX++;
@@ -99,7 +97,6 @@ public class MoveListener extends EventListener {
             while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
                 if (checkCollision(collisionLayer, cellX, cellY)) {
                     blocked = true;
-                    System.out.println("Blocked 2");
                     break;
                 }
                 cellX++;
@@ -107,7 +104,6 @@ public class MoveListener extends EventListener {
         }
 
         if (blocked) {
-            System.out.println("Y blocked");
             entity.getVelocity().setY(0);
             loc.setY(event.getOldLocation().getY());
         }

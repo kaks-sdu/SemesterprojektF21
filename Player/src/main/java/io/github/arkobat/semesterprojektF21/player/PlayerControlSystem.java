@@ -22,12 +22,11 @@ import javax.lang.model.element.ElementVisitor;
 
 public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
-    private static final float acceleration = 25F;
-    private static final float deacceleration = 15.5F;
-    private static final float jumpAcceleration = 50F;
-    private static final float gravity = 80.1F;
-    private static final float maxAcceleration = 300F;
-    private Texture texture;
+    private static final float acceleration = 150F;
+    private static final float deacceleration = 250F;
+    private static final float jumpAcceleration = 75F;
+    private static final float gravity = 250F;
+    private static final float maxAcceleration = 75F;
 
     @Override
     public void process(@NotNull GameData gameData, World world) {

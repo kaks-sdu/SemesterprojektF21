@@ -87,12 +87,11 @@ public class Game implements ApplicationListener {
     @Override
     public void render() {
         // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.054f, 0.027f, 0.105f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         this.world.update(this.spriteBatch);
         update();
-
     }
 
     private void update() {

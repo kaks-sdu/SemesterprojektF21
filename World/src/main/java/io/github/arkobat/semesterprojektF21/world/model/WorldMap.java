@@ -136,7 +136,7 @@ public class WorldMap implements WorldTemp {
 
     @Override
     public void resize(int width, int height) {
-        final float mapZoom = 2.5F;
+        final float mapZoom = 5.0F;
         camera.viewportWidth = width / mapZoom;
         camera.viewportHeight = height / mapZoom;
     }

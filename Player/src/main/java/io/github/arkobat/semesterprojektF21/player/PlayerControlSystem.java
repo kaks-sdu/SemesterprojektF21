@@ -76,8 +76,8 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
         // Jump
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
-            //   player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
+            player.setJumpCharges(player.getJumpCharges() - 1);
         }
 
         // Color change

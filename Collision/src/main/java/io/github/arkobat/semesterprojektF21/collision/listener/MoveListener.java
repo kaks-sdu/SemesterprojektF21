@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
@@ -94,6 +95,9 @@ public class MoveListener extends EventListener {
             while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
                 if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
                     blocked = true;
+                    if (entity instanceof Player) {
+                        ((Player) entity).setJumpCharges(2);
+                    }
                     break;
                 }
                 cellX++;

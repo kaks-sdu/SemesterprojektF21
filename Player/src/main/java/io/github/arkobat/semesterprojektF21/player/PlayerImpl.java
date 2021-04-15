@@ -155,21 +155,22 @@ public class PlayerImpl implements Player {
 
     private void changeColor(Color color) {
         this.animatons.clear();
-
-        Animation idleAnimation = new Animation(MODULE_NAME, "idle/player_" + color.name().toLowerCase() + "_idle.png", 2, 0.5f);
-        Animation runAnimation = new Animation(MODULE_NAME, "run/player_" + color.name().toLowerCase() + "_run.png", 4, 0.5f);
-
-        this.addAnimation("idle", idleAnimation);
-        this.addAnimation("run", runAnimation);
+        boolean flip = this.currentAnimation.isFlipped();
+        this.addAnimation("idle", new Animation(MODULE_NAME, "idle/player_" + color.name().toLowerCase() + "_idle.png", 2, 0.5f));
+        this.addAnimation("run", new Animation(MODULE_NAME, "run/player_" + color.name().toLowerCase() + "_run.png", 4, 0.5f));
+        if (flip) {
+            for (Animation animation : this.animatons.values()) {
+                animation.flip();
+            }
+        }
     }
 
     public int getJumpCharges() {
         return jumpCharges;
     }
 
-    public PlayerImpl setJumpCharges(int jumpCharges) {
+    public void setJumpCharges(int jumpCharges) {
         this.jumpCharges = jumpCharges;
-        return this;
     }
 
 }

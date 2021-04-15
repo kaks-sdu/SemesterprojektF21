@@ -63,11 +63,15 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Vector velocity = player.getVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+            if(player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
+
             velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+            if(!player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
+
             velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
         } else if (velocity.getX() < 0) {
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta));

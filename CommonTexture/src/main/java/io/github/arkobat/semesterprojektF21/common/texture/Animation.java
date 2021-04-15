@@ -13,23 +13,29 @@ public class Animation {
     private int frameCount;
     private int frame;
     private boolean flipped;
+    private int xoffset;
+    private int yoffset;
+    private int frameWidth;
 
 
-    public Animation(String moduleName, String fileName, int frameCount, float cycleTime){
+    public Animation(String moduleName, String fileName, int frameCount, float cycleTime, int xoffset, int yoffset){
         frames = new Array<>();
 
         Texture texture = AssetLoader.getInstance().loadTexture(moduleName, fileName);
 
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;
-        int frameWidth = region.getRegionWidth() / frameCount;
-        for(int i = 0; i < frameCount; i++){
-            temp = new TextureRegion(region, i * frameWidth, 0, frameWidth, region.getRegionHeight());
+        frameWidth = region.getRegionWidth() / frameCount;
+        for(int i = 0; i < frameCount; i++){ // i * framewidth + 4  --> højre  | i * framewidth - 4 --> venstre | getregionx -->
+            temp = new TextureRegion(region, i * frameWidth - xoffset, yoffset, frameWidth, region.getRegionHeight());
             frames.add(temp);
+            System.out.println("Original region x: " + temp.getRegionX());
         }
         this.frameCount = frameCount;
         maxFrameTime = cycleTime / frameCount;
         frame = 0;
+        this.xoffset = xoffset;
+        this.yoffset = yoffset;
     }
 
     public void update(float dt){
@@ -45,8 +51,37 @@ public class Animation {
 
     public void flip(){
         flipped = !flipped;
-        for(TextureRegion region : frames)
+        /*for(int i = 0; i < frameCount; i++){
+            TextureRegion region = frames.get(i);
+            if(flipped){
+                region.setRegionX(i * frameWidth - xoffset);
+            }else{
+                region.setRegionX(i * frameWidth + xoffset);
+            }
+            System.out.println("Region x " + region.getRegionX());
             region.flip(true, false);
+        }*/
+        for(TextureRegion region : frames){
+            /*if(flipped){
+                region.setRegionX(region.getRegionX() - xoffset);
+            }else{
+                region.setRegionX(region.getRegionX() + xoffset);
+            }*/
+            region.flip(true, false);
+
+            // i*framewidth - (-4) --> i * framewidth + 4 --> højre  | i * framewidth - 4 --> venstre | getregionx --> i * framewidth + 4
+            if (flipped){
+                region.setRegionX(region.getRegionX() - 8);
+                System.out.println("Region x: " + region.getRegionX());
+            }else{
+                region.setRegionX(region.getRegionX() + 8);
+            }
+            System.out.println("x offset: " + xoffset);
+        }
+    }
+
+    public void setFlipped(boolean flipped) {
+        this.flipped = flipped;
     }
 
     public boolean isFlipped() {

@@ -26,8 +26,8 @@ public class PlayerPlugin implements GamePluginService {
 
         // Set animations TODO: Add all colour animations
         String moduleName = "Player";
-        Animation idleAnimation = new Animation(moduleName, "idle/player_blue_idle.png", 2, 0.5f);
-        Animation runAnimation = new Animation(moduleName, "run/player_blue_run.png", 4, 0.5f);
+        Animation idleAnimation = new Animation(moduleName, "idle/player_blue_idle.png", 2, 0.5f, -4, 0);
+        Animation runAnimation = new Animation(moduleName, "run/player_blue_run.png", 4, 0.5f, -4, 0);
 
         player.addAnimation("idle", idleAnimation);
         player.addAnimation("run", runAnimation);

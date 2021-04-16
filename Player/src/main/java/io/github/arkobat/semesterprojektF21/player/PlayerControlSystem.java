@@ -2,14 +2,15 @@ package io.github.arkobat.semesterprojektF21.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
@@ -58,18 +59,16 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Vector velocity = player.getVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            if (player.getCurrentAnimation().isFlipped()) {
-                player.getCurrentAnimation().flip();
+            if (velocity.getX() < maxAcceleration) {
+                velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
             }
-            velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (!player.getCurrentAnimation().isFlipped()) {
-                player.getCurrentAnimation().flip();
+            if (velocity.getX() > -maxAcceleration) {
+                velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
             }
-            velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
         } else if (velocity.getX() < 0) {
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta));
         }
@@ -78,6 +77,17 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
             velocity.setY(jumpAcceleration);
             player.setJumpCharges(player.getJumpCharges() - 1);
+        }
+
+        //Dash
+        if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+            float dashSpeed = maxAcceleration * 5;
+            velocity.setX(player.getLocation().getDirection() == Direction.RIGHT ? dashSpeed : -dashSpeed);
+        }
+        if (velocity.getX() > maxAcceleration) {
+            velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta * 5));
+        } else if (velocity.getX() < -maxAcceleration) {
+            velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta * 5));
         }
 
         // Color change
@@ -97,14 +107,23 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
 
         // Handle flips
-        boolean flipped = player.getCurrentAnimation().isFlipped();
+        boolean flipped = player.getLocation().getDirection() == Direction.LEFT;
         if (velocity.getX() > 0 && flipped) {
-            player.getCurrentAnimation().flip();
+            flip(player, Direction.RIGHT);
         } else if (velocity.getX() < 0 && !flipped) {
-            player.getCurrentAnimation().flip();
+            flip(player, Direction.LEFT);
         }
 
         handleTeleport(player);
+    }
+
+    private void flip(PlayerImpl player, Direction direction) {
+        EntityTurnEvent entityTurnEvent = new EntityTurnEvent(player, direction);
+        EventManager.callEvent(entityTurnEvent);
+        if (!entityTurnEvent.isCanceled()) {
+            player.getLocation().setDirection(entityTurnEvent.getDirection());
+            player.flip();
+        }
     }
 
     private void handleTeleport(PlayerImpl player) {

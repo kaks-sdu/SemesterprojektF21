@@ -1,16 +1,10 @@
 package io.github.arkobat.semesterprojektF21.common;
 
-/*import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;*/
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a location
  */
-/*@Getter
-@Setter
-@AllArgsConstructor*/
 public class Location {
 
     private float x;
@@ -18,8 +12,13 @@ public class Location {
     private @Nullable Direction direction;
 
     public Location(float x, float y) {
+        this(x, y, null);
+    }
+
+    public Location(float x, float y, @Nullable Direction direction) {
         this.x = x;
         this.y = y;
+        this.direction = direction;
     }
 
     public float getX() {
@@ -30,10 +29,6 @@ public class Location {
         return y;
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
     public void setX(float x) {
         this.x = x;
     }
@@ -42,7 +37,11 @@ public class Location {
         this.y = y;
     }
 
-    public void setDirection(Direction direction) {
+    public @Nullable Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(@Nullable Direction direction) {
         this.direction = direction;
     }
 }

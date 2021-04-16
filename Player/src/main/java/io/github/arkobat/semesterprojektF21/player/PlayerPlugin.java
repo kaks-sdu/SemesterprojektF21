@@ -1,6 +1,7 @@
 package io.github.arkobat.semesterprojektF21.player;
 
 import io.github.arkobat.semesterprojektF21.common.Color;
+import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
@@ -18,7 +19,7 @@ public class PlayerPlugin implements GamePluginService {
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
         // Add entities to the world
-        PlayerImpl player = new PlayerImpl(world, new Color[]{Color.ORANGE, Color.GREEN, Color.BLUE}, new Location(42, 96));
+        PlayerImpl player = new PlayerImpl(world, new Color[]{Color.ORANGE, Color.GREEN, Color.BLUE}, new Location(42, 96, Direction.RIGHT));
         player.setColor(Color.BLUE);
         world.addEntity(player);
 

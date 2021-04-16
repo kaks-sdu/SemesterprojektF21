@@ -12,7 +12,6 @@ public class Animation {
     private float currentFrameTime;
     private final int frameCount;
     private int frame;
-    private boolean flipped;
 
     public Animation(String moduleName, String fileName, int frameCount, float cycleTime) {
         frames = new Array<>();
@@ -45,11 +44,6 @@ public class Animation {
         for (TextureRegion region : frames) {
             region.flip(true, false);
         }
-        flipped = !flipped;
-    }
-
-    public boolean isFlipped() {
-        return flipped;
     }
 
     public TextureRegion getFrame() {

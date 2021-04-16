@@ -46,7 +46,6 @@ public class AssetLoader {
 
     public Texture loadTexture(String moduleName, String fileName){
         String jarUrl = getJarUrl(moduleName, fileName);
-        System.out.println("Jar URL: " + jarUrl);
         // Load the texture
         assetManager.load(jarUrl, com.badlogic.gdx.graphics.Texture.class);
         assetManager.finishLoading();

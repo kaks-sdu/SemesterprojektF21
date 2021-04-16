@@ -9,7 +9,7 @@ public interface Entity extends Colorable, Collidable {
      * Gets the current world of the entity
      * @return the current world of the entity
      */
-    World getWorld();
+    @NotNull World getWorld();
 
     /**
      * Gets the current location of this entity.

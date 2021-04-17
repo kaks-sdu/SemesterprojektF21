@@ -23,7 +23,7 @@ public class WorldController {
         // TODO - Implement via config file, instead of hard coded maps
         WorldMap map = new MapBuilder()
                 .setMapId("map1")
-                .setMapFileName("level0")
+                .setMapFileName("level3")
                 .build();
         worldMap.put(map.getMapId(), map);
         return map;

@@ -71,7 +71,16 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
     public void findPath(Enemy enemy, float delta){
         Vector velocity = enemy.getVelocity();
 
+        //velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
+    }
+    
+    private void moveRight(Vector velocity, float delta)
+    {
         velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
+
+        if (velocity.getX() > 0) {
+            velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
+        }
     }
 
     @Override

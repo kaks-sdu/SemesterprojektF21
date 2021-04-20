@@ -18,7 +18,7 @@ public class EntityCacheTest {
     private EntityCache cache;
 
     @Mock
-    Player player;
+    Player player, player2, player3;
     @Mock
     Projectile projectile;
     @Mock
@@ -63,8 +63,10 @@ public class EntityCacheTest {
     public void getPlayer_three_manyBulletsThreePlayers() {
         for (int i = 0; i < 10; i++) {
             this.cache.add(projectile);
-            if (i < 3) this.cache.add(player);
         }
+        this.cache.add(player);
+        this.cache.add(player2);
+        this.cache.add(player3);
 
         int players = this.cache.get(Player.class).size();
 
@@ -92,6 +94,20 @@ public class EntityCacheTest {
         this.cache.add(player);
         this.cache.add(projectile);
         this.cache.add(player);
+
+        int beforeRemove = this.cache.get().size();
+        this.cache.remove(player);
+        int afterRemove = this.cache.get().size();
+
+        assertEquals(afterRemove, 2);
+        assertEquals(afterRemove, beforeRemove - 1);
+    }
+
+    @Test
+    public void remove_true_addedThreeSameTypeEntitiesRemovedOne() {
+        this.cache.add(player);
+        this.cache.add(player2);
+        this.cache.add(player3);
 
         int beforeRemove = this.cache.get().size();
         this.cache.remove(player);

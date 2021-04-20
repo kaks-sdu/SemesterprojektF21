@@ -1,6 +1,8 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.astar.Node;
+import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -13,6 +15,8 @@ import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class EnemyControlSystem implements GameProcessingService, TextureRenderService {
 
     private static final float acceleration = 150F;
@@ -20,6 +24,7 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
     private static final float jumpAcceleration = 75F;
     private static final float gravity = 250F;
     private static final float maxAcceleration = 75F;
+    private boolean pathFound = false;
 
 
     @Override
@@ -37,9 +42,15 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
             velocity.setY(velocity.getY() - gravity * delta);
 
             // Handle pathfinding
-            findPath(enemy, delta);
+            enemy.getAi().process();
 
-            loc.setX((float) (loc.getX() + velocity.getX() * delta));
+            // Track player
+            for (Entity player : world.getEntities(Player.class)) {
+                //System.out.println("Player location: " + player.getLocation().getX() + ", " + player.getLocation().getY());
+                enemy.getAi().gotoLocation(player.getLocation());
+            }
+
+                    loc.setX((float) (loc.getX() + velocity.getX() * delta));
             loc.setY((float) (loc.getY() + velocity.getY() * delta));
 
             // Check collision X
@@ -65,21 +76,6 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
             } else if (velocity.getX() < 0 && !flipped) {
                 enemy.getCurrentAnimation().flip();
             }
-        }
-    }
-
-    public void findPath(Enemy enemy, float delta){
-        Vector velocity = enemy.getVelocity();
-
-        //velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
-    }
-    
-    private void moveRight(Vector velocity, float delta)
-    {
-        velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
-
-        if (velocity.getX() > 0) {
-            velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
     }
 

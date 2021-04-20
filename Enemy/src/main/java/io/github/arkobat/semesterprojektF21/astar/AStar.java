@@ -6,19 +6,32 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
+import io.github.arkobat.semesterprojektF21.enemy.Enemy;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class AStar {
 
-    private int[][] map;
-    private Location startLocation, endLocation;
-    private TiledMapTileLayer tiledMapTileLayer;
     private final int WALL = 100;
+    private final double LEAST_DISTANCE = 1.2; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate
 
-    public AStar(Entity entity, Location endLocation){
+    private Enemy entity;
+    private int[][] map;
+    private TiledMapTileLayer tiledMapTileLayer;
+    private int jumpCost = 2;
+    private Location startLocation;
+    private List<Node> path;
+    private boolean isRunning;
+
+    public AStar(Enemy entity){
+        this.entity = entity;
+        this.path = new ArrayList<>();
         tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
         this.map = new int[tiledMapTileLayer.getWidth()][tiledMapTileLayer.getHeight()];
+        isRunning = false;
 
         // Fill map
         for(int x = 0; x < tiledMapTileLayer.getWidth(); x++){
@@ -37,20 +50,120 @@ public class AStar {
         // map is sideways, so what you think is x is actually y. tilt ur head
         // Right now it only completes a maze, and thus not take into account having to jump and where it will land.
         // Could be fixable by telling it to jump if there is a gap infront of it, or if the path goes upwards.
-        startLocation = new Location(4, 11);
-        endLocation = new Location(16, 11);
+        int tilesPerPixel = 8;
 
-        //map[(int) startLocation.getX()][(int) startLocation.getY()] = 22;
-        //map[(int) endLocation.getX()][(int) endLocation.getY()] = 33;
+        int entityX = (int) entity.getLocation().getX() / tilesPerPixel;
+        int entityY = (int) entity.getLocation().getY() / tilesPerPixel - 1; // -1 since it goes from the head
+
+        System.out.println("x: " + entityX + ", y: " + entityY);
+
+        startLocation = new Location(entityX, entityY);
 
         // Dunno why, but the map is always sideways
         displayMap();
 
-        findPath(startLocation, endLocation);
+       /* List<Node> path = findPath(new Location(16, 11));
+
+        if(path != null){
+            displayPath(path);
+        }else{
+            System.out.println("No path found");
+        }*/
     }
 
+    /**
+     * Update the algorithm
+     */
+    public void process(){
+        // If the ai is running, then find a path
+        if(isRunning){
+            // Get initial node
+            Node node = path.get(0);
+
+            Location nodeLocation = node.convertToLocation(); // target location
+            Location currentLocation = entity.getLocation();
+
+            // Calculate distance from current location to target location
+            double distance = Math.sqrt( Math.pow(currentLocation.getY() - nodeLocation.getY(), 2) + Math.pow(currentLocation.getX() - nodeLocation.getX(), 2) );
+
+            // If the distance is close enough
+            if(distance < LEAST_DISTANCE){
+                // Done following to this node, so remove it
+                //System.out.println("Reached checkpoint!");
+                path.remove(0);
+            }
+
+            //System.out.println("Current Location " + currentLocation.getX() + ", " + currentLocation.getY());
+            //System.out.println("Node Location " + nodeLocation.getX() + ", " + nodeLocation.getY());
+
+
+            if(currentLocation.getX() < nodeLocation.getX()){
+                // move right
+                entity.getVelocity().setX(entity.getSpeed());
+            }else {
+                // move left
+                entity.getVelocity().setX(-entity.getSpeed());
+            }
+
+            if(currentLocation.getY() < nodeLocation.getY()){
+                // jump
+                entity.getVelocity().setY(75f);
+            }
+
+            // No more path to follow, so algorithm does not run anymore
+            if(path.isEmpty()){
+                System.out.println("Enemy reached goal");
+                // Stop x movement.
+                entity.getVelocity().setX(0);
+                entity.getVelocity().setY(0);
+                isRunning = false;
+            }
+        }
+    }
+
+    // Goto (location)
+    public void gotoLocation(Location endLocation){
+        // If the ai is already going to a location, then wait for it to finish
+
+        if(isRunning){
+            return;
+        }
+        //System.out.println("Going to location");
+
+        // Convert location to real world coordinates instead of grid based
+        int tilesPerPixel = 8;
+        int entityX = Math.round(entity.getLocation().getX() / tilesPerPixel);
+        int entityY = Math.round(entity.getLocation().getY() / tilesPerPixel);
+        startLocation = new Location(entityX, entityY);
+
+        int endX = Math.round(endLocation.getX() / tilesPerPixel);
+        int endY = Math.round(endLocation.getY() / tilesPerPixel);
+        Location _endLocation = new Location(endX, endY);
+
+
+        path = findPath(_endLocation);
+
+        if(path == null || path.isEmpty()){
+            // Found no path
+            System.out.println("Found no path to specified location");
+            return;
+        }
+
+        System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
+        System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
+
+        for(Node node : path){
+            System.out.println("Node waypoint: " + node.convertToLocation().getX() + ", " + node.convertToLocation().getY());
+        }
+        System.out.println("End pathway points");
+
+        isRunning = true;
+    }
+
+    // TODO: Track method to track another entity?
+
     // Returns null if no path
-    public List<Node> findPath(Location startLocation, Location endLocation){
+    private List<Node> findPath(Location endLocation){
         // Initialize open and closed lists
         PriorityQueue<Node> open = new PriorityQueue<>(); // Priority queue is like a heap q. Using normal ArrayList will mean that every pop, we have to scan the WHOLE list. See https://stackoverflow.com/questions/60853524/astar-pathfinding-visualization-is-incredibly-slow-python
         PriorityQueue<Node> closed = new PriorityQueue<>();
@@ -73,7 +186,6 @@ public class AStar {
 
                 // If the child is the goal then stop the search
                 if(child.location.getX() == endLocation.getX() && child.location.getY() == endLocation.getY()){
-                    System.out.println("Found path: ");
                     List<Node> path = new ArrayList<>();
                     path.add(new Node(null, endLocation)); // Add end location too. Can be ommitted
                     Node current = currentNode;
@@ -81,13 +193,15 @@ public class AStar {
                         path.add(current);
                         current = current.parent;
                     }
-                    displayPath(path);
-                    //TODO: Don't display path
+                    path.remove(0); // Remove initial node, since it is the starting point, and we don't want that to be in the path too
+                    Collections.reverse(path); // We have to reverse the path first
+
+                    //TODO: Go to path
                     return path;
                 }
 
                 // Create the f, g, and h values
-                child.g = currentNode.g + 1; // This is the movement cost from starting point to this node
+                //child.g = currentNode.g + 1; // This is the movement cost from starting point to this node. See neighbours instead
                 // Heuristic function
                 //child.h = Math.abs(child.location.getX() - endLocation.getX()) + Math.abs(child.location.getY() - endLocation.getY()); // Manhattan distance
 
@@ -126,7 +240,7 @@ public class AStar {
             // Add currentNode to closed list
             closed.offer(currentNode);
         }
-        System.out.println("No path found");
+        // No path found
         return null;
     }
 
@@ -142,6 +256,7 @@ public class AStar {
         return false;
     }
 
+    // TODO: A neighbour can also be one where you jump to reach it
     private List<Node> findNeighborsOptimized(Node node, boolean shuffle){
         List<Node> neighbours = new ArrayList<>(8); // Reserve only 8 nodes
         Location[] adjacentLocations = {
@@ -149,10 +264,10 @@ public class AStar {
                 new Location(0, 1),
                 new Location(-1, 0),
                 new Location(1, 0),
-                new Location(-1, -1),
-                new Location(-1, 1),
+               /* new Location(-1, -1), // Diagonals. Skip for now, but can be used to implement jumping. Just insert it as a valid neighbor, and calculate it's
+                new Location(-1, 1),    // Cost in child.g + distance
                 new Location(1, -1),
-                new Location(1, 1),
+                new Location(1, 1),*/
         };
 
         for(Location newPosition : adjacentLocations){
@@ -166,7 +281,21 @@ public class AStar {
 
             // If it is not a wall
             if (map[(int) nodePosition.getX()][ (int) nodePosition.getY()] != WALL) {
-                neighbours.add(new Node(node, nodePosition));
+
+
+                Node child = new Node(node, nodePosition);
+                // Distance from original position to new position. Euclidean
+                int distanceToLocation = (int) Math.sqrt( (node.location.getX() - newPosition.getX()) * 2 + (node.location.getY() - newPosition.getY()) * 2);
+
+                // If node is a jump
+                if(newPosition.getY() > 0){
+                    // +2 movement cost for jumping
+                    child.g = node.g + distanceToLocation + jumpCost;
+                }else{
+                    child.g = node.g + distanceToLocation;
+                }
+
+                neighbours.add(child);
             }
         }
 
@@ -179,14 +308,34 @@ public class AStar {
 
     private void displayPath(List<Node> path){
         Collections.reverse(path);
-        for(Node node : path){
-            System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
+
+        for(int i = 1; i < path.size(); i++){
+            Node node = path.get(i);
+            Node previousNode = path.get(i-1);
+
+            if(node.location.getX() > previousNode.location.getX()){
+                // move right
+                System.out.println("Move right");
+            }else if(node.location.getX() < previousNode.location.getX()){
+                // move left
+                System.out.println("Move left");
+            }else if(node.location.getY() > previousNode.location.getY()){
+                // jump
+                System.out.println("Jump");
+            }
+
+            System.out.println("(" + previousNode.location.getX() + ", " + previousNode.location.getY() + ")");
             map[(int) node.location.getX()][(int) node.location.getY()] = 99;
         }
+
+        /*for(Node node : path){
+            System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
+            map[(int) node.location.getX()][(int) node.location.getY()] = 99;
+        }*/
         displayMap();
     }
 
-    public void displayMap(){
+    private void displayMap(){
         for(int x = 0; x < map.length; x++){
             for(int y = 0; y < map[0].length; y++) {
                 System.out.printf("%5d", map[x][y]);

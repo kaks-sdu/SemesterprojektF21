@@ -1,5 +1,6 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
+import io.github.arkobat.semesterprojektF21.astar.AStar;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.LivingEntity;
 import io.github.arkobat.semesterprojektF21.common.texture.Animation;
@@ -23,6 +24,8 @@ public class Enemy implements LivingEntity {
     private Hitbox hitbox;
     private Map<String, Animation> animatons;
     private Animation currentAnimation;
+    private float speed = 50f;
+    private AStar ai;
 
     public Enemy(World world, Color[] colors, Location location){
         this.world = world;
@@ -32,6 +35,22 @@ public class Enemy implements LivingEntity {
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 12, -4, 0);
         animatons = new HashMap<>();
+    }
+
+    public void setAi(AStar ai) {
+        this.ai = ai;
+    }
+
+    public AStar getAi() {
+        return ai;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
     public void addAnimation(String id, Animation animation) {
@@ -82,7 +101,7 @@ public class Enemy implements LivingEntity {
 
     @Override
     public void kill() {
-        System.out.println("Enemy died");
+        //System.out.println("Enemy died");
     }
 
     @Override

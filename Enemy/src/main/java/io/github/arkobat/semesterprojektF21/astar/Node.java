@@ -17,6 +17,10 @@ public class Node implements Comparable {
         f = 0;
     }
 
+    public Location convertToLocation(){
+        return new Location(location.getX()*8, location.getY()*8); // 8 pixels per square
+    }
+
     // Add own equals method as list.contains(object) uses the equals method to check whether it is inside
     @Override
     public boolean equals(Object o) {

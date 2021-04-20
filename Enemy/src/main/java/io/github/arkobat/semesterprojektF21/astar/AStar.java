@@ -7,6 +7,7 @@ import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import io.github.arkobat.semesterprojektF21.enemy.Enemy;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ public class AStar {
 
     private final int WALL = 100;
     private final double LEAST_DISTANCE = 1.2; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate
+    private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
 
     private Enemy entity;
     private int[][] map;
@@ -25,6 +27,8 @@ public class AStar {
     private Location startLocation;
     private List<Node> path;
     private boolean isRunning;
+    private long startTime;
+
 
     public AStar(Enemy entity){
         this.entity = entity;
@@ -61,14 +65,6 @@ public class AStar {
 
         // Dunno why, but the map is always sideways
         displayMap();
-
-       /* List<Node> path = findPath(new Location(16, 11));
-
-        if(path != null){
-            displayPath(path);
-        }else{
-            System.out.println("No path found");
-        }*/
     }
 
     /**
@@ -89,13 +85,8 @@ public class AStar {
             // If the distance is close enough
             if(distance < LEAST_DISTANCE){
                 // Done following to this node, so remove it
-                //System.out.println("Reached checkpoint!");
                 path.remove(0);
             }
-
-            //System.out.println("Current Location " + currentLocation.getX() + ", " + currentLocation.getY());
-            //System.out.println("Node Location " + nodeLocation.getX() + ", " + nodeLocation.getY());
-
 
             if(currentLocation.getX() < nodeLocation.getX()){
                 // move right
@@ -112,7 +103,6 @@ public class AStar {
 
             // No more path to follow, so algorithm does not run anymore
             if(path.isEmpty()){
-                System.out.println("Enemy reached goal");
                 // Stop x movement.
                 entity.getVelocity().setX(0);
                 entity.getVelocity().setY(0);
@@ -123,12 +113,20 @@ public class AStar {
 
     // Goto (location)
     public void gotoLocation(Location endLocation){
-        // If the ai is already going to a location, then wait for it to finish
+        // If it's been long enough without finding the path, then cancel
+        if(((System.currentTimeMillis() - startTime) / 1000) > SECONDS_BEFORE_STOPPING){
+            System.out.println("Cancelled pathfinding due to time constraints");
+            isRunning = false;
+            path = null;
+        }
 
+        // If the ai is already going to a location, then wait for it to finish
         if(isRunning){
             return;
         }
-        //System.out.println("Going to location");
+
+        // Set start time for later use if the ai gets stuck
+        startTime = System.currentTimeMillis();
 
         // Convert location to real world coordinates instead of grid based
         int tilesPerPixel = 8;
@@ -149,13 +147,13 @@ public class AStar {
             return;
         }
 
-        System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
+        /*System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
         System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
 
         for(Node node : path){
             System.out.println("Node waypoint: " + node.convertToLocation().getX() + ", " + node.convertToLocation().getY());
         }
-        System.out.println("End pathway points");
+        System.out.println("End pathway points");*/
 
         isRunning = true;
     }
@@ -264,6 +262,7 @@ public class AStar {
                 new Location(0, 1),
                 new Location(-1, 0),
                 new Location(1, 0),
+                new Location(2, 3), // Jump + 2 tiles forward and +3 tiles upwards
                /* new Location(-1, -1), // Diagonals. Skip for now, but can be used to implement jumping. Just insert it as a valid neighbor, and calculate it's
                 new Location(-1, 1),    // Cost in child.g + distance
                 new Location(1, -1),

@@ -25,6 +25,7 @@ public class Enemy implements LivingEntity {
     private Map<String, Animation> animatons;
     private Animation currentAnimation;
     private float speed = 50f;
+    private int jumpCharges = 1;
     private AStar ai;
 
     public Enemy(World world, Color[] colors, Location location){
@@ -35,6 +36,14 @@ public class Enemy implements LivingEntity {
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 12, -4, 0);
         animatons = new HashMap<>();
+    }
+
+    public void setJumpCharges(int jumpCharges) {
+        this.jumpCharges = jumpCharges;
+    }
+
+    public int getJumpCharges() {
+        return jumpCharges;
     }
 
     public void setAi(AStar ai) {

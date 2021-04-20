@@ -7,15 +7,13 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 
 public class Animation {
 
-    private Array<TextureRegion> frames;
-    private float maxFrameTime;
+    private final Array<TextureRegion> frames;
+    private final float maxFrameTime;
     private float currentFrameTime;
-    private int frameCount;
+    private final int frameCount;
     private int frame;
-    private boolean flipped;
 
-
-    public Animation(String moduleName, String fileName, int frameCount, float cycleTime){
+    public Animation(String moduleName, String fileName, int frameCount, float cycleTime) {
         frames = new Array<>();
 
         Texture texture = AssetLoader.getInstance().loadTexture(moduleName, fileName);
@@ -23,37 +21,32 @@ public class Animation {
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;
         int frameWidth = region.getRegionWidth() / frameCount;
-        for(int i = 0; i < frameCount; i++){
+        for (int i = 0; i < frameCount; i++) {
             temp = new TextureRegion(region, i * frameWidth, 0, frameWidth, region.getRegionHeight());
             frames.add(temp);
         }
         this.frameCount = frameCount;
-        maxFrameTime = cycleTime / frameCount;
-        frame = 0;
+        this.maxFrameTime = cycleTime / frameCount;
+        this.frame = 0;
     }
 
-    public void update(float dt){
+    public void update(float dt) {
         currentFrameTime += dt;
-        if(currentFrameTime > maxFrameTime){
+        if (currentFrameTime > maxFrameTime) {
             frame++;
             currentFrameTime = 0;
         }
-        if(frame >= frameCount)
+        if (frame >= frameCount)
             frame = 0;
-
     }
 
-    public void flip(){
-        flipped = !flipped;
-        for(TextureRegion region : frames)
+    public void flip() {
+        for (TextureRegion region : frames) {
             region.flip(true, false);
+        }
     }
 
-    public boolean isFlipped() {
-        return flipped;
-    }
-
-    public TextureRegion getFrame(){
+    public TextureRegion getFrame() {
         return frames.get(frame);
     }
 

@@ -28,7 +28,6 @@ public class CollisionPlugin implements GamePluginService {
     @Override
     public void stop(@NotNull GameData gameData, @NotNull World world) {
         for(EventListener listener : listeners){
-            System.out.println("Checking for listener " + listener.getClass().getName());
             EventManager.unregisterListener(listener);
         }
     }

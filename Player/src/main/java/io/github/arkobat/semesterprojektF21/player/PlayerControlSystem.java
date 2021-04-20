@@ -43,14 +43,13 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
                 handleControls(player, delta);
 
-                loc.setX((loc.getX() + velocity.getX() * delta));
-                loc.setY((loc.getY() + velocity.getY() * delta));
-
                 // Check collision X
                 if (loc.getX() != oldX || loc.getY() != oldY) {
                     EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
                     EventManager.callEvent(event);
                 }
+
+                handleTeleport(player);
 
                 // Process animation
                 player.getCurrentAnimation().process(gameData);
@@ -93,9 +92,12 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta * 5));
         }
 
+        Location loc = player.getLocation();
+        loc.setX((loc.getX() + velocity.getX() * delta));
+        loc.setY((loc.getY() + velocity.getY() * delta));
+
         // Shoot
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            System.out.println("Space pressed");
             EntityShootEvent shootEvent = new EntityShootEvent(player);
             EventManager.callEvent(shootEvent);
         }
@@ -124,7 +126,6 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             flip(player, Direction.LEFT);
         }
 
-        handleTeleport(player);
     }
 
     private void flip(PlayerImpl player, Direction direction) {

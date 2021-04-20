@@ -26,15 +26,11 @@ public class EventListener {
     }
 
     final void callEvent(@NotNull Event event) {
-        if (!event.getClass().getSimpleName().equals("EntityMoveEvent")) {
-            System.out.println("  Called event " + event.getClass().getSimpleName());
-        }
         if (event.getClass() == EntityEvent.class) {
             onEntity((EntityEvent) event);
         } else if (event.getClass() == EntityMoveEvent.class) {
             onEntityMove((EntityMoveEvent) event);
         } else if (event.getClass() == EntityShootEvent.class) {
-            System.out.println("    is shoot event");
             onEntityShoot((EntityShootEvent) event);
         } else if (event.getClass() == EntityTurnEvent.class) {
             onEntityTurn((EntityTurnEvent) event);

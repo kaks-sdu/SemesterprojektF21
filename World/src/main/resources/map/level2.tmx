@@ -80,6 +80,11 @@
 </data>
  </layer>
  <layer id="11" name="level2_entities" width="54" height="35">
+  <properties>
+   <property name="nextLevel" value="level2"/>
+   <property name="spawnX" type="int" value="13"/>
+   <property name="spawnY" type="int" value="10"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

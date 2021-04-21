@@ -20,6 +20,8 @@ public class MoveListener extends EventListener {
             return;
         }
 
+        if (event.getEntity() instanceof Player) ((Player) event.getEntity()).setJumpCharges(2);
+
         World world = event.getEntity().getWorld();
         if (!(world instanceof WorldTemp)) {
             return;
@@ -31,124 +33,60 @@ public class MoveListener extends EventListener {
         Location loc = entity.getLocation();
         Hitbox hitbox = entity.getHitbox();
 
+        // Calculate offset
+        float offsetX = hitbox.getOffsetX();
+        if (event.getNewLocation().getX() > event.getOldLocation().getX()) {
+            offsetX += hitbox.getWidth();
+        }
+        float offsetY = hitbox.getOffsetY();
+        if (event.getNewLocation().getY() > event.getOldLocation().getY()) {
+            offsetY += hitbox.getHeight();
+        }
 
         // Ensure the player is within game borders
-        if (loc.getX() + hitbox.getOffsetX() < 0) {
+        if (loc.getX() + offsetX < 0) {
             loc.setX(0);
-        } else if (loc.getX() + hitbox.getWidth() + hitbox.getOffsetX() > Gdx.graphics.getWidth()) {
+        } else if (loc.getX() + offsetX > Gdx.graphics.getWidth()) {
             loc.setX(collisionLayer.getWidth() * collisionLayer.getTileWidth() - hitbox.getWidth());
         }
-        if (loc.getY() + hitbox.getOffsetY() < 0) {
+        if (loc.getY() + offsetY < 0) {
             loc.setY(0);
-        } else if (loc.getY() + hitbox.getHeight() + hitbox.getOffsetY() > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
+        } else if (loc.getY() + offsetY > collisionLayer.getHeight() * collisionLayer.getTileHeight()) {
             loc.setY(collisionLayer.getHeight() * collisionLayer.getTileHeight() - hitbox.getHeight());
         }
 
-        boolean blocked = false;
 
-        /*
-        int cellX = (int) (event.getOldLocation().getX()) / collisionLayer.getTileWidth();
-        int cellY = (int) (event.getOldLocation().getY()) / collisionLayer.getTileHeight();
+        int oldX = (int) (event.getOldLocation().getX() + offsetX) / collisionLayer.getTileWidth();
+        int newX = (int) (event.getNewLocation().getX() + offsetX) / collisionLayer.getTileWidth();
 
-        
+        int oldY = (int) (event.getOldLocation().getY() + offsetY) / collisionLayer.getTileHeight();
+        int newY = (int) (event.getNewLocation().getY() + offsetY) / collisionLayer.getTileHeight();
 
-
-        while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-            if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                blocked = true;
-                break;
-            }
-            cellY++;
-        }
-
-        if (blocked) {
-            loc.setX(event.getOldLocation().getX());
-            entity.getVelocity().setX(0);
-            blocked = false;
-        }
-
-        while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-            if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                blocked = true;
-                if (entity instanceof Player) {
-                    ((Player) entity).setJumpCharges(2);
-                }
-                break;
-            }
-            cellX++;
-        }
-
-        if (blocked) {
-            entity.getVelocity().setY(0);
-            loc.setY(event.getOldLocation().getY());
-        }
-
-
- */
-
-
-        if (entity.getVelocity().getX() > 0) {
-            int cellX = (int) (loc.getX() + hitbox.getWidth()) / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
-            while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                    blocked = true;
+        if (oldX != newX) {
+            while (true) {
+                if (checkCollision(collisionLayer, event.getEntity(), oldX, oldY)) {
+                    loc.setX(event.getOldLocation().getX());
+                    entity.getVelocity().setX(0);
                     break;
                 }
-                cellY++;
+                if (newX > oldX) oldX++;
+                else if (newX < oldX) oldX--;
+                else break;
             }
+        }
 
-        } else if (entity.getVelocity().getX() < 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
-            while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                    blocked = true;
+        if (oldY != newY) {
+            while (true) {
+                if (checkCollision(collisionLayer, event.getEntity(), oldX, oldY)) {
+                    loc.setY(event.getOldLocation().getY());
+                    entity.getVelocity().setY(0);
                     break;
                 }
-                cellY++;
+                if (newY > oldY) oldY++;
+                else if (newY < oldY) oldY--;
+                else break;
             }
         }
-
-        if (blocked) {
-            loc.setX(event.getOldLocation().getX());
-            entity.getVelocity().setX(0);
-            blocked = false;
-        }
-
-        // Check collision Y
-        if (entity.getVelocity().getY() > 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) (loc.getY() + hitbox.getHeight()) / collisionLayer.getTileHeight();
-            while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                    blocked = true;
-                    break;
-                }
-                cellX++;
-            }
-
-        } else if (entity.getVelocity().getY() < 0) {
-            int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
-            int cellY = (int) loc.getY() / collisionLayer.getTileHeight();
-            while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
-                    blocked = true;
-                    if (entity instanceof Player) {
-                        ((Player) entity).setJumpCharges(2);
-                    }
-                    break;
-                }
-                cellX++;
-            }
-        }
-
-        if (blocked) {
-            entity.getVelocity().setY(0);
-            loc.setY(event.getOldLocation().getY());
-        }
-
-
     }
 
 

@@ -4,10 +4,8 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import io.github.arkobat.semesterprojektF21.enemy.Enemy;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,11 +17,11 @@ public class AStar {
     private final int WALL = 100;
     private final double LEAST_DISTANCE = 1.2; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate
     private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
+    private  final int JUMP_COST = 10000;
 
     private Enemy entity;
     private int[][] map;
     private TiledMapTileLayer tiledMapTileLayer;
-    private int jumpCost = 2;
     private Location startLocation;
     private List<Node> path;
     private boolean isRunning;
@@ -44,7 +42,9 @@ public class AStar {
                 // If there is a wall at the current location
                 if(containsProperty("collision", new Location(x, y))){
                     map[x][y] = WALL;
-                }else {
+                }else if(containsProperty("spikes", new Location(x, y))){
+                    map[x][y] = 200; // TODO: SPIKES
+                } else  {
                     map[x][y] = 0;
                 }
             }
@@ -76,6 +76,10 @@ public class AStar {
             // Get initial node
             Node node = path.get(0);
 
+            // If node's instruction is null then skip this instruction. rly fucking shit code but i cba
+            if(node.getInstruction() == null)
+                path.remove(0);
+
             Location nodeLocation = node.convertToLocation(); // target location
             Location currentLocation = entity.getLocation();
 
@@ -91,21 +95,40 @@ public class AStar {
             if(currentLocation.getX() < nodeLocation.getX()){
                 // move right
                 entity.getVelocity().setX(entity.getSpeed());
-            }else {
+            }
+            if(currentLocation.getX() > nodeLocation.getX()){
                 // move left
                 entity.getVelocity().setX(-entity.getSpeed());
             }
 
+           /* System.out.println("Is on ground? " + isOnGround());
+            System.out.println("Node instruction: " + node.getInstruction());*/
+
+
             if(currentLocation.getY() < nodeLocation.getY()){
-                // jump
                 entity.getVelocity().setY(75f);
             }
 
+
+           /* if(node.getInstruction() == Node.Instruction.JUMP && isOnGround()){
+                entity.getVelocity().setY(75f);
+            }
+*/
+            // And is on ground
+            /*if(currentLocation.getY() < nodeLocation.getY() && node.getInstruction() == Node.Instruction.JUMP){
+                // jump
+                if(isOnGround())
+                    entity.getVelocity().setY(75f);
+            }*/
+            /*if(node.getInstruction() == Node.Instruction.JUMP){
+                entity.getVelocity().setY(75f);
+            }*/
+
             // No more path to follow, so algorithm does not run anymore
             if(path.isEmpty()){
+                System.out.println("Enemy reached goal!");
                 // Stop x movement.
                 entity.getVelocity().setX(0);
-                entity.getVelocity().setY(0);
                 isRunning = false;
             }
         }
@@ -193,7 +216,7 @@ public class AStar {
                     }
                     path.remove(0); // Remove initial node, since it is the starting point, and we don't want that to be in the path too
                     Collections.reverse(path); // We have to reverse the path first
-
+                    displayPath(path);
                     //TODO: Go to path
                     return path;
                 }
@@ -262,11 +285,16 @@ public class AStar {
                 new Location(0, 1),
                 new Location(-1, 0),
                 new Location(1, 0),
-                new Location(2, 3), // Jump + 2 tiles forward and +3 tiles upwards
-               /* new Location(-1, -1), // Diagonals. Skip for now, but can be used to implement jumping. Just insert it as a valid neighbor, and calculate it's
-                new Location(-1, 1),    // Cost in child.g + distance
-                new Location(1, -1),
-                new Location(1, 1),*/
+                //new Location(4, 0)
+                //new Location(2, 1), // Jump + 2 tiles forward and +3 tiles upwards
+                //new Location(3, 1), // Jump + 2 tiles forward and +3 tiles upwards
+                //new Location(4, 1), // Jump + 2 tiles forward and +3 tiles upwards
+
+
+                /* new Location(-1, -1), // Diagonals. Skip for now, but can be used to implement jumping. Just insert it as a valid neighbor, and calculate it's
+                 new Location(-1, 1),    // Cost in child.g + distance
+                 new Location(1, -1),
+                 new Location(1, 1),*/
         };
 
         for(Location newPosition : adjacentLocations){
@@ -278,6 +306,11 @@ public class AStar {
                 continue;
             }
 
+            // Make sure it is a valid child i.e going to this node won't make it so it falls down into spikes
+            /*if(!isValidChild(nodePosition)){
+                continue;
+            }*/
+
             // If it is not a wall
             if (map[(int) nodePosition.getX()][ (int) nodePosition.getY()] != WALL) {
 
@@ -286,12 +319,27 @@ public class AStar {
                 // Distance from original position to new position. Euclidean
                 int distanceToLocation = (int) Math.sqrt( (node.location.getX() - newPosition.getX()) * 2 + (node.location.getY() - newPosition.getY()) * 2);
 
-                // If node is a jump
-                if(newPosition.getY() > 0){
-                    // +2 movement cost for jumping
-                    child.g = node.g + distanceToLocation + jumpCost;
+                // If node is a jump or a drop
+                /*if(newPosition.getY() > 0 ||  newPosition.getY() < 0){
+                    // +movement cost for jumping and dropping
+                    child.g = node.g + JUMP_COST;
                 }else{
-                    child.g = node.g + distanceToLocation;
+                    child.g = node.g + 1;
+                }*/
+
+                // Set nodes instruction (either jump or walk)
+                if(newPosition.getX() > 1 || newPosition.getY() >= 1){ // jump 2+ x tiles or 1+ y tile
+                    child.setInstruction(Node.Instruction.JUMP);
+                    child.g = node.g + JUMP_COST; // = 2
+                }else{
+
+                    if(newPosition.getX() < 0){
+                        child.setInstruction(Node.Instruction.WALK_LEFT);
+                    }else{
+                        child.setInstruction(Node.Instruction.WALK_RIGHT);
+                    }
+                    //child.setInstruction(Node.Instruction.WALK);
+                    child.g = node.g + 1; // Walk cost
                 }
 
                 neighbours.add(child);
@@ -305,14 +353,33 @@ public class AStar {
         return neighbours;
     }
 
-    private void displayPath(List<Node> path){
-        Collections.reverse(path);
+    // Check whether the node will make it so the player ends up falling into a spike
+    // TODO: Can't do this, as it will make it so the ai can't go down and strafe to a new spot, I'm pretty sure
+    private boolean isValidChild(Location nodeLocation){
+        for(int y = (int) nodeLocation.getY(); y >= 0; y--){
+            if(map[ (int) nodeLocation.getX()][y] == 200){ // TODO: Or if it is down in the void. 200 = spikes
+                return false;
+            }else if(map[ (int) nodeLocation.getX()][y] == WALL){ // If it finds the ground before it finds spikes, then it is a valid position
+                return true;
+            }
+        }
+        return true;
+    }
 
-        for(int i = 1; i < path.size(); i++){
+    private void displayPath(List<Node> path){
+
+        for(Node node : path){
+            System.out.println("Node instruction: " + node.getInstruction());
+
+            System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
+            map[(int) node.location.getX()][(int) node.location.getY()] = 99;
+        }
+
+       /* for(int i = 1; i < path.size(); i++){
             Node node = path.get(i);
             Node previousNode = path.get(i-1);
 
-            if(node.location.getX() > previousNode.location.getX()){
+            *//*if(node.location.getX() > previousNode.location.getX()){
                 // move right
                 System.out.println("Move right");
             }else if(node.location.getX() < previousNode.location.getX()){
@@ -321,11 +388,13 @@ public class AStar {
             }else if(node.location.getY() > previousNode.location.getY()){
                 // jump
                 System.out.println("Jump");
-            }
+            }*//*
+
+            System.out.println("Node instruction: " + node.getInstruction());
 
             System.out.println("(" + previousNode.location.getX() + ", " + previousNode.location.getY() + ")");
             map[(int) node.location.getX()][(int) node.location.getY()] = 99;
-        }
+        }*/
 
         /*for(Node node : path){
             System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
@@ -342,6 +411,11 @@ public class AStar {
             System.out.println();
         }
         System.out.println();
+    }
+
+    @Deprecated
+    private boolean isOnGround(){
+        return containsProperty("collision", new Location(entity.getLocation().getX()/8, entity.getLocation().getY()/8-1));
     }
 
     private boolean containsProperty(String property, Location location){

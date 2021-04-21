@@ -8,6 +8,7 @@ public class Node implements Comparable {
     public Node parent;
     public Location location;
     public int g, h, f;
+    private Instruction instruction;
 
     public Node(Node parent, Location location){
         this.parent = parent;
@@ -15,6 +16,15 @@ public class Node implements Comparable {
         g = 0;
         h = 0;
         f = 0;
+        //this.instruction = Instruction.WALK;
+    }
+
+    public void setInstruction(Instruction instruction) {
+        this.instruction = instruction;
+    }
+
+    public Instruction getInstruction() {
+        return instruction;
     }
 
     public Location convertToLocation(){
@@ -34,5 +44,11 @@ public class Node implements Comparable {
     public int compareTo(@NotNull Object o) {
         Node that = (Node) o;
         return (this.g + this.h) - (that.g + that.h);
+    }
+
+    enum Instruction {
+        JUMP,
+        WALK_RIGHT,
+        WALK_LEFT,
     }
 }

@@ -38,7 +38,8 @@ public class EnemyPlugin implements GamePluginService {
         AStar aStar = new AStar(enemy);
         enemy.setAi(aStar);
 
-        //enemy.getAi().gotoLocation(new Location(128, 88));
+        enemy.getAi().gotoLocation(new Location(400, 88)); // Go right
+        //enemy.getAi().gotoLocation(new Location(24, 120)); // Jump to moving platform
 
 
         //enemy.getAi().gotoLocation(new Location(21, 11));

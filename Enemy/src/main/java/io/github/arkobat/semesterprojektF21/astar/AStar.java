@@ -17,7 +17,7 @@ public class AStar {
     private final int WALL = 100;
     private final double LEAST_DISTANCE = 1.2; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate
     private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
-    private  final int JUMP_COST = 10000;
+    private  final int JUMP_COST = 2;
 
     private Enemy entity;
     private int[][] map;
@@ -26,6 +26,8 @@ public class AStar {
     private List<Node> path;
     private boolean isRunning;
     private long startTime;
+
+    // Based on pseudo code: https://www.geeksforgeeks.org/a-search-algorithm/
 
 
     public AStar(Enemy entity){
@@ -190,6 +192,7 @@ public class AStar {
         PriorityQueue<Node> closed = new PriorityQueue<>();
 
         Node startNode = new Node(null, startLocation);
+        System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
 
         // Add start node to open list
         open.offer(startNode);
@@ -227,8 +230,7 @@ public class AStar {
                 //child.h = Math.abs(child.location.getX() - endLocation.getX()) + Math.abs(child.location.getY() - endLocation.getY()); // Manhattan distance
 
                 // Use the euclidean distance
-                child.h = (int) Math.sqrt( (child.location.getX() - endLocation.getX()) * 2 + (child.location.getY() - endLocation.getY()) * 2); // Euclidean distance
-
+                child.h = Math.sqrt(Math.abs((child.location.getX() - endLocation.getX()) * 2 + (child.location.getY() - endLocation.getY()) * 2)); // Euclidean distance
                 // 0 for Dijkstra's Algorithm
                 //child.h = 0;
                 child.f = child.g + child.h;
@@ -370,6 +372,9 @@ public class AStar {
 
         for(Node node : path){
             System.out.println("Node instruction: " + node.getInstruction());
+
+            System.out.println("Nodes f: " + node.f + "  | g: " + node.g + " | h " + node.h);
+            System.out.println("Node location: " + node.location.getX() + ", " + node.location.getY());
 
             System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
             map[(int) node.location.getX()][(int) node.location.getY()] = 99;

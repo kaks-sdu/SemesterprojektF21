@@ -7,7 +7,8 @@ public class Node implements Comparable {
 
     public Node parent;
     public Location location;
-    public int g, h, f;
+    //public int g, f;
+    public double g, h, f;
     private Instruction instruction;
 
     public Node(Node parent, Location location){
@@ -43,7 +44,7 @@ public class Node implements Comparable {
     @Override
     public int compareTo(@NotNull Object o) {
         Node that = (Node) o;
-        return (this.g + this.h) - (that.g + that.h);
+        return (int) Math.round((this.g + this.h) - (that.g + that.h));
     }
 
     enum Instruction {

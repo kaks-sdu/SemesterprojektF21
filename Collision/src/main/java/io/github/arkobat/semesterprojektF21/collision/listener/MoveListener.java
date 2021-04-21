@@ -46,6 +46,7 @@ public class MoveListener extends EventListener {
 
         boolean blocked = false;
 
+        /*
         int cellX = (int) (event.getOldLocation().getX()) / collisionLayer.getTileWidth();
         int cellY = (int) (event.getOldLocation().getY()) / collisionLayer.getTileHeight();
 
@@ -83,8 +84,8 @@ public class MoveListener extends EventListener {
         }
 
 
+ */
 
-        /*
 
         if (entity.getVelocity().getX() > 0) {
             int cellX = (int) (loc.getX() + hitbox.getWidth()) / collisionLayer.getTileWidth();
@@ -147,7 +148,7 @@ public class MoveListener extends EventListener {
             loc.setY(event.getOldLocation().getY());
         }
 
-         */
+
     }
 
 

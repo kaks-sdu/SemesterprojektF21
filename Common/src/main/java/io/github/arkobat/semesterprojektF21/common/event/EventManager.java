@@ -8,6 +8,7 @@ public class EventManager {
     private static final List<EventListener> eventListeners = new ArrayList<>();
 
     public static void registerListener(EventListener eventListener) {
+        System.out.println("Added listener: " + eventListener.getClass().getName());
         eventListeners.add(eventListener);
     }
 

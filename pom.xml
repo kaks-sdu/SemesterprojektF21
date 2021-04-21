@@ -61,6 +61,7 @@
         <module>Enemy</module>
         <module>Weapon</module>
         <module>Collision</module>
+        <module>Bullet</module>
     </modules>
 
     <build>

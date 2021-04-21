@@ -44,4 +44,8 @@ public class Location {
     public void setDirection(@Nullable Direction direction) {
         this.direction = direction;
     }
+
+    public double distanceSquared(Location o) {
+        return Math.sqrt(Math.pow(o.x - this.x, 2) + Math.pow(o.y - this.x, y));
+    }
 }

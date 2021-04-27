@@ -110,7 +110,7 @@ public class Enemy implements LivingEntity {
 
     @Override
     public void kill() {
-        //System.out.println("Enemy died");
+        this.world.removeEntity(this);
     }
 
     @Override

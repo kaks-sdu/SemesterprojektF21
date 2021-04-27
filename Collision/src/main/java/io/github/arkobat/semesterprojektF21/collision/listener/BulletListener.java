@@ -28,6 +28,8 @@ public class BulletListener extends EventListener {
         }
         list.removeAll(toRemove);
 
+
+
         /*
         // This we like
         List betterList = event.getEntity().getWorld().getEntities()

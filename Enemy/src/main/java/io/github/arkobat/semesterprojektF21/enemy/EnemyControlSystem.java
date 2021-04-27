@@ -70,7 +70,7 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
             }
 
             // Handle flips
-            boolean flipped = enemy.getCurrentAnimation().isFlipped();
+            boolean flipped = enemy.getLocation().getDirection() == Direction.LEFT;
             if (velocity.getX() > 0 && flipped) {
                 enemy.getCurrentAnimation().flip();
             } else if (velocity.getX() < 0 && !flipped) {

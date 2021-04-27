@@ -23,7 +23,6 @@ public class CollisionPlugin implements GamePluginService {
         for(EventListener listener : listeners){
             EventManager.registerListener(listener);
         }
-        System.out.println("Started collision plugin");
     }
 
     @Override
@@ -31,7 +30,6 @@ public class CollisionPlugin implements GamePluginService {
         for(EventListener listener : listeners){
             EventManager.unregisterListener(listener);
         }
-        System.out.println("Stopped collision plugin");
     }
 
 }

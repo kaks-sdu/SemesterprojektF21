@@ -14,22 +14,31 @@ import lombok.Setter;*/
 @AllArgsConstructor*/
 public class Vector {
 
-    private double x;
-    private double y;
+    private float x;
+    private float y;
 
-    public double getX() {
-        return x;
+    public Vector() {
+        this(0, 0);
     }
 
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
+    public Vector(float x, float y) {
+        this.x = x;
         this.y = y;
     }
 
-    public void setX(double x) {
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public void setX(float x) {
         this.x = x;
     }
 }

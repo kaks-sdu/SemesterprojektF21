@@ -3,12 +3,13 @@ package io.github.arkobat.semesterprojektF21.player;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
+import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NAME;
 
 public class PlayerImpl implements Player {
 
@@ -21,7 +22,7 @@ public class PlayerImpl implements Player {
     private float size;
     private int health;
     private Vector velocity;
-    private Hitbox hitbox;
+    private final Hitbox hitbox;
     private Map<String, Animation> animatons;
     private Animation currentAnimation;
 
@@ -50,6 +51,12 @@ public class PlayerImpl implements Player {
 
     public Animation getCurrentAnimation() {
         return currentAnimation;
+    }
+
+    public void flip() {
+        for (Animation animation : this.animatons.values()) {
+            animation.flip();
+        }
     }
 
     @Override
@@ -88,7 +95,7 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public World getWorld() {
+    public @NotNull World getWorld() {
         return this.world;
     }
 
@@ -122,7 +129,7 @@ public class PlayerImpl implements Player {
 
     @Override
     public Color getColor() {
-        return null;
+        return this.colors[currentColor];
     }
 
     @Override
@@ -130,19 +137,41 @@ public class PlayerImpl implements Player {
         for (int i = 0; i < colors.length; i++) {
             if (colors[i] == color) {
                 this.currentColor = i;
+                changeColor(colors[currentColor]);
                 return;
             }
         }
         throw new IllegalArgumentException("Color not unlocked");
     }
 
+    public void nextColor() {
+        this.currentColor = ++this.currentColor % this.colors.length;
+        changeColor(colors[currentColor]);
+    }
+
+    public void prevColor() {
+        if (currentColor == 0) {
+            this.currentColor = this.colors.length - 1;
+        } else {
+            this.currentColor--;
+        }
+        changeColor(colors[currentColor]);
+    }
+
+    private void changeColor(Color color) {
+        this.animatons.clear();
+        boolean flip = this.location.getDirection() == Direction.LEFT;
+        this.addAnimation("idle", new Animation(MODULE_NAME, "idle/player_" + color.lowerCase() + "_idle.png", 2, 0.5f));
+        this.addAnimation("run", new Animation(MODULE_NAME, "run/player_" + color.lowerCase() + "_run.png", 4, 0.5f));
+        if (flip) flip();
+    }
+
     public int getJumpCharges() {
         return jumpCharges;
     }
 
-    public PlayerImpl setJumpCharges(int jumpCharges) {
+    public void setJumpCharges(int jumpCharges) {
         this.jumpCharges = jumpCharges;
-        return this;
     }
 
 }

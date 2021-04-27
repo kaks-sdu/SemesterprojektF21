@@ -19,4 +19,8 @@ public interface Player extends LivingEntity {
      */
     @Nullable Color getPreviousColor();
 
+    int getJumpCharges();
+
+    void setJumpCharges(int jumpCharges);
+
 }

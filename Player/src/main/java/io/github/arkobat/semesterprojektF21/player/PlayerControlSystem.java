@@ -2,14 +2,16 @@ package io.github.arkobat.semesterprojektF21.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EntityShootEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
@@ -41,12 +43,13 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
                 handleControls(player, delta);
 
-                loc.setX((float) (loc.getX() + velocity.getX() * delta));
-                loc.setY((float) (loc.getY() + velocity.getY() * delta));
-
                 // Check collision X
-                EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
-                EventManager.callEvent(event);
+                if (loc.getX() != oldX || loc.getY() != oldY) {
+                    EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
+                    EventManager.callEvent(event);
+                }
+
+                handleTeleport(player);
 
                 // Process animation
                 player.getCurrentAnimation().process(gameData);
@@ -58,25 +61,52 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Vector velocity = player.getVelocity();
 
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-            if (player.getCurrentAnimation().isFlipped()) {
-                player.getCurrentAnimation().flip();
+            if (velocity.getX() < maxAcceleration) {
+                velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
             }
-
-            velocity.setX(Math.min(maxAcceleration, velocity.getX() + acceleration * delta));
         } else if (velocity.getX() > 0) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta));
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            if (!player.getCurrentAnimation().isFlipped()) player.getCurrentAnimation().flip();
-
-            velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
+            if (velocity.getX() > -maxAcceleration) {
+                velocity.setX(Math.max(-maxAcceleration, velocity.getX() - acceleration * delta));
+            }
         } else if (velocity.getX() < 0) {
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta));
         }
 
+        // Jump
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
-            //   player.setJumpCharges(player.getJumpCharges() - 1);
             velocity.setY(jumpAcceleration);
+            player.setJumpCharges(player.getJumpCharges() - 1);
+        }
+
+        //Dash
+        if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+            float dashSpeed = maxAcceleration * 5;
+            velocity.setX(player.getLocation().getDirection() == Direction.RIGHT ? dashSpeed : -dashSpeed);
+        }
+        if (velocity.getX() > maxAcceleration) {
+            velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta * 5));
+        } else if (velocity.getX() < -maxAcceleration) {
+            velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta * 5));
+        }
+
+        Location loc = player.getLocation();
+        loc.setX((loc.getX() + velocity.getX() * delta));
+        loc.setY((loc.getY() + velocity.getY() * delta));
+
+        // Shoot
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            EntityShootEvent shootEvent = new EntityShootEvent(player);
+            EventManager.callEvent(shootEvent);
+        }
+
+        // Color change
+        if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+            player.nextColor();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+            player.prevColor();
         }
 
         // Handle animations
@@ -89,40 +119,53 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         }
 
         // Handle flips
-        boolean flipped = player.getCurrentAnimation().isFlipped();
+        boolean flipped = player.getLocation().getDirection() == Direction.LEFT;
         if (velocity.getX() > 0 && flipped) {
-            player.getCurrentAnimation().flip();
+            flip(player, Direction.RIGHT);
         } else if (velocity.getX() < 0 && !flipped) {
-            player.getCurrentAnimation().flip();
+            flip(player, Direction.LEFT);
         }
 
-        handleTeleport(player);
     }
 
-    private void handleTeleport(Player player) {
+    private void flip(PlayerImpl player, Direction direction) {
+        EntityTurnEvent entityTurnEvent = new EntityTurnEvent(player, direction);
+        EventManager.callEvent(entityTurnEvent);
+        if (!entityTurnEvent.isCanceled()) {
+            player.getLocation().setDirection(entityTurnEvent.getDirection());
+            player.flip();
+        }
+    }
+
+    private void handleTeleport(PlayerImpl player) {
         Location loc = player.getLocation();
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             loc.setX(loc.getX() - 32);
+            player.getVelocity().setX(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             loc.setX(loc.getX() + 32);
+
+            player.getVelocity().setX(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             loc.setY(loc.getY() + 32);
+            player.getVelocity().setY(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             loc.setY(loc.getY() - 32);
+            player.getVelocity().setY(0);
         }
     }
 
     @Override
     public void render(GameData gameData, World world, SpriteBatch sb) {
-        for (Entity entity : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(PlayerImpl.class)) {
             PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
 
             // Draw animation
-            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + entity.getHitbox().getOffsetX(), loc.getY() + entity.getHitbox().getOffsetY());
+            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + player.getHitbox().getOffsetX(), loc.getY() + player.getHitbox().getOffsetY());
         }
     }
 

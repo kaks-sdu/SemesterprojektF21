@@ -124,9 +124,9 @@ public class WorldMap implements WorldTemp {
             this.camera.position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
             this.camera.update();
 
-            this.renderer.render();
-            this.renderer.setView(camera);
         }
+        this.renderer.render();
+        this.renderer.setView(camera);
     }
 
     @Override

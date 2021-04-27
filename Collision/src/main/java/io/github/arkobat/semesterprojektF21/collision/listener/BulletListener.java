@@ -22,19 +22,24 @@ public class BulletListener extends EventListener {
         List<Entity> list = new ArrayList<>(event.getEntity().getWorld().getEntities());
         List<Entity> toRemove = new LinkedList<>();
         for (Entity entity : list) {
-            if (entity instanceof Damageable) {
+            if (!(entity instanceof Damageable)) {
+                toRemove.add(entity);
+            }
+            if (!event.getEntity().collides(entity)) {
                 toRemove.add(entity);
             }
         }
         list.removeAll(toRemove);
 
-
-
+        for (Entity entity : list) {
+            ((Damageable) entity).kill();
+        }
         /*
         // This we like
         List betterList = event.getEntity().getWorld().getEntities()
                 .stream()
                 .filter(entity -> entity instanceof Damageable)
+                .filter(entity -> event.getEntity().collides(entity))
                 .collect(Collectors.toList());
 
          */

@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 //TODO: Move to managers folder without breaking
 /*
@@ -65,7 +67,8 @@ public class AssetLoader {
 
     public void playSound(String sound) {
         Sound s = Gdx.audio.newSound(new FileHandle(getRawFilePath(sound)));
-        s.play(EFFECT_SOUNDS);
+        double random = ThreadLocalRandom.current().nextDouble(0.75, 1.25);
+        s.play(EFFECT_SOUNDS, (float) random, 0F);
     }
 
     @Deprecated

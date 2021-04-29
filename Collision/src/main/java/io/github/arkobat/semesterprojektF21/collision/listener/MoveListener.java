@@ -150,16 +150,6 @@ public class MoveListener extends EventListener {
             loc.setY(event.getOldLocation().getY());
         }
 
-        List<MapProperties> properties = CollisionHandler.getProperties(collisionLayer, entity.getLocation(), entity.getHitbox());
-        for (MapProperties property : properties) {
-            if (property.containsKey("portal")) {
-                System.out.println("Has portal");
-                Event levelChangeEvent = new LevelChangeEvent(property.get("portal", String.class));
-                EventManager.callEvent(levelChangeEvent);
-                break;
-            }
-        }
-
     }
 
 

@@ -73,8 +73,8 @@ public class EntityCacheTest {
         assertEquals(players, 3);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void getNull_illegalArgumentException_addedOneProjectile() {
+    @Test(expected = NullPointerException.class)
+    public void getNull_nullPointerException_addedOneProjectile() {
         this.cache.add(projectile);
         this.cache.get(null);
     }

@@ -18,7 +18,7 @@ public class EnemyPlugin implements GamePluginService {
     @Override
     public void start(@NotNull GameData gameData, @NotNull World world) {
         // Add entities to world
-        Enemy enemy = new Enemy(world, new Color[]{Color.RED, Color.GREEN, Color.BLUE}, new Location(400, 88));
+        Enemy enemy = new Enemy(world, new Color[]{Color.ORANGE, Color.GREEN, Color.BLUE}, new Location(42, 96));
         world.addEntity(enemy);
 
         // Set animations TODO: Add all colour animations

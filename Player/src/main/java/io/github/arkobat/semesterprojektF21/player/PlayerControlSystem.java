@@ -10,6 +10,7 @@ import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EntityShootEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
@@ -42,12 +43,13 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
 
                 handleControls(player, delta);
 
-                loc.setX((float) (loc.getX() + velocity.getX() * delta));
-                loc.setY((float) (loc.getY() + velocity.getY() * delta));
-
                 // Check collision X
-                EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
-                EventManager.callEvent(event);
+                if (loc.getX() != oldX || loc.getY() != oldY) {
+                    EntityMoveEvent event = new EntityMoveEvent(player, player.getLocation(), new Location(oldX, oldY));
+                    EventManager.callEvent(event);
+                }
+
+                handleTeleport(player);
 
                 // Process animation
                 player.getCurrentAnimation().process(gameData);
@@ -90,6 +92,16 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             velocity.setX(Math.min(0, velocity.getX() + deacceleration * delta * 5));
         }
 
+        Location loc = player.getLocation();
+        loc.setX((loc.getX() + velocity.getX() * delta));
+        loc.setY((loc.getY() + velocity.getY() * delta));
+
+        // Shoot
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            EntityShootEvent shootEvent = new EntityShootEvent(player);
+            EventManager.callEvent(shootEvent);
+        }
+
         // Color change
         if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             player.nextColor();
@@ -114,7 +126,6 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
             flip(player, Direction.LEFT);
         }
 
-        handleTeleport(player);
     }
 
     private void flip(PlayerImpl player, Direction direction) {
@@ -130,26 +141,31 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         Location loc = player.getLocation();
         if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             loc.setX(loc.getX() - 32);
+            player.getVelocity().setX(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             loc.setX(loc.getX() + 32);
+
+            player.getVelocity().setX(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             loc.setY(loc.getY() + 32);
+            player.getVelocity().setY(0);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             loc.setY(loc.getY() - 32);
+            player.getVelocity().setY(0);
         }
     }
 
     @Override
     public void render(GameData gameData, World world, SpriteBatch sb) {
-        for (Entity entity : world.getEntities(Player.class)) {
+        for (Entity entity : world.getEntities(PlayerImpl.class)) {
             PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
 
             // Draw animation
-            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + entity.getHitbox().getOffsetX(), loc.getY() + entity.getHitbox().getOffsetY());
+            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + player.getHitbox().getOffsetX(), loc.getY() + player.getHitbox().getOffsetY());
         }
     }
 

@@ -52,10 +52,6 @@ public class AStar {
             }
         }
 
-        //TODO: Change to entity's location
-        // map is sideways, so what you think is x is actually y. tilt ur head
-        // Right now it only completes a maze, and thus not take into account having to jump and where it will land.
-        // Could be fixable by telling it to jump if there is a gap infront of it, or if the path goes upwards.
         int tilesPerPixel = 8;
 
         int entityX = (int) entity.getLocation().getX() / tilesPerPixel;
@@ -88,7 +84,7 @@ public class AStar {
             if(distance < LEAST_DISTANCE){
                 // Done following to this node, so remove it
                 path.remove(0);
-                //System.out.println("Enemy reached checkpoint");
+                //Enemy reached checkpoint
             }
 
             if(currentLocation.getX() < nodeLocation.getX()){
@@ -100,29 +96,9 @@ public class AStar {
                 entity.getVelocity().setX(-entity.getSpeed());
             }
 
-           /* System.out.println("Is on ground? " + isOnGround());
-            System.out.println("Node instruction: " + node.getInstruction());*/
-            //System.out.println("Is ground below? " + isGroundBelow(node));
-
-
             if(node.getInstruction() == Node.Instruction.JUMP && isOnGround()){
                 entity.getVelocity().setY(entity.getJumpHeight());
             }
-
-
-           /* if(node.getInstruction() == Node.Instruction.JUMP && isOnGround()){
-                entity.getVelocity().setY(75f);
-            }
-*/
-            // And is on ground
-            /*if(currentLocation.getY() < nodeLocation.getY() && node.getInstruction() == Node.Instruction.JUMP){
-                // jump
-                if(isOnGround())
-                    entity.getVelocity().setY(75f);
-            }*/
-            /*if(node.getInstruction() == Node.Instruction.JUMP){
-                entity.getVelocity().setY(75f);
-            }*/
 
             // No more path to follow, so algorithm does not run anymore
             if(path.isEmpty()){
@@ -138,7 +114,7 @@ public class AStar {
     public void gotoLocation(Location endLocation){
         // If it's been long enough without finding the path, then cancel
         if(((System.currentTimeMillis() - startTime) / 1000) > SECONDS_BEFORE_STOPPING){
-            System.out.println("Cancelled pathfinding due to time constraints");
+            // Cancelled pathfinding due to time constraints
             isRunning = false;
             path = null;
         }
@@ -166,17 +142,8 @@ public class AStar {
 
         if(path == null || path.isEmpty()){
             // Found no path
-            System.out.println("Found no path to specified location");
             return;
         }
-
-        //System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
-        //System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
-        /*
-        for(Node node : path){
-            System.out.println("Node waypoint: " + node.convertToLocation().getX() + ", " + node.convertToLocation().getY());
-        }
-        System.out.println("End pathway points");*/
 
         isRunning = true;
     }
@@ -266,18 +233,15 @@ public class AStar {
             closed.offer(currentNode);
         }
         // No path found
-        System.out.println("Found no path!");
         return null;
     }
 
     // If a node with position already exists in the open list, and it has a lower f score, then there is no reason to expand that node
     private boolean skipChild(Node node, PriorityQueue<Node> open){
-        //System.out.println("Looping through " + open.size() + " entries...");
         double nodeF = node.f;
         for(Node openNode : open){
             if(node.location.getX() == openNode.location.getX() && node.location.getY() == openNode.location.getY()){
                 if(openNode.f < node.f){
-                    //System.out.println("Done!");
                     return true;
                 }
             }
@@ -306,12 +270,6 @@ public class AStar {
                 continue;
             }
 
-            // Make sure it is a valid child i.e going to this node won't make it so it falls down into spikes
-            // TODO: This makes the game freeze when having to calculate a position to it in the air it seems.
-            /*if(!isValidNode(nodePosition)){
-                continue;
-            }*/
-
             // If it is not a wall
             if (map[(int) nodePosition.getX()][ (int) nodePosition.getY()] != WALL) {
 
@@ -320,17 +278,6 @@ public class AStar {
 
                 // If there is not ground below this node, then it's not a valid location
                 if(!isGroundBelow(child)) continue;
-
-                // Distance from original position to new position. Euclidean
-                int distanceToLocation = (int) Math.sqrt( (node.location.getX() - newPosition.getX()) * 2 + (node.location.getY() - newPosition.getY()) * 2);
-
-                // If node is a jump or a drop
-                /*if(newPosition.getY() > 0 ||  newPosition.getY() < 0){
-                    // +movement cost for jumping and dropping
-                    child.g = node.g + JUMP_COST;
-                }else{
-                    child.g = node.g + 1;
-                }*/
 
                 // Set nodes instruction (either jump or walk)
                 if(newPosition.getX() > 1 || newPosition.getX() == -3 || newPosition.getY() >= 1){ // jump 2+ x tiles or 1+ y tile
@@ -343,7 +290,6 @@ public class AStar {
                     }else{
                         child.setInstruction(Node.Instruction.WALK_RIGHT);
                     }
-                    //child.setInstruction(Node.Instruction.WALK);
                     child.g = node.g + 1; // Walk cost
                 }
 
@@ -372,11 +318,6 @@ public class AStar {
         return true;
     }
 
-    // The Manhattan distance from the node to the enemy. This is used to not add nodes that are too far away from the enemy (i.e. jump height)
-    /*private boolean nodeDistanceFrom(Enemy entity){
-
-    }
-*/
     private boolean isGroundBelow(Node node){
         // If outside map boundaries
         if(node.location.getX() > map.length - 1 || node.location.getX() < 0 || node.location.getY() > map[0].length - 1 || node.location.getY() < 0) return false;
@@ -399,31 +340,6 @@ public class AStar {
             map[(int) node.location.getX()][(int) node.location.getY()] = 99;
         }
 
-       /* for(int i = 1; i < path.size(); i++){
-            Node node = path.get(i);
-            Node previousNode = path.get(i-1);
-
-            *//*if(node.location.getX() > previousNode.location.getX()){
-                // move right
-                System.out.println("Move right");
-            }else if(node.location.getX() < previousNode.location.getX()){
-                // move left
-                System.out.println("Move left");
-            }else if(node.location.getY() > previousNode.location.getY()){
-                // jump
-                System.out.println("Jump");
-            }*//*
-
-            System.out.println("Node instruction: " + node.getInstruction());
-
-            System.out.println("(" + previousNode.location.getX() + ", " + previousNode.location.getY() + ")");
-            map[(int) node.location.getX()][(int) node.location.getY()] = 99;
-        }*/
-
-        /*for(Node node : path){
-            System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
-            map[(int) node.location.getX()][(int) node.location.getY()] = 99;
-        }*/
         displayMap();
     }
 

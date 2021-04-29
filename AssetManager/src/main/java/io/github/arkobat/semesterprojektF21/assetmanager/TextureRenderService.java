@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.common.texture;
+package io.github.arkobat.semesterprojektF21.assetmanager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.common.World;

@@ -6,12 +6,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 
@@ -70,7 +69,6 @@ public class Game implements ApplicationListener {
 
         System.out.println("Created game!");
 
-        worldLoaders.forEach(loader -> loader.start(gameData));
         Optional<WorldLoader> worldLoader = worldLoaders.stream().findFirst();
         if (!worldLoader.isPresent()) {
             throw new IllegalStateException("Could not load world");

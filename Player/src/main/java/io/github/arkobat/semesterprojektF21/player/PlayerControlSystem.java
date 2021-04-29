@@ -3,6 +3,7 @@ package io.github.arkobat.semesterprojektF21.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -15,11 +16,14 @@ import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
+
+import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NAME;
 
 public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
 
+    private final static AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
     private static final float acceleration = 150F;
     private static final float deacceleration = 250F;
     private static final float jumpAcceleration = 75F;
@@ -79,12 +83,14 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) && player.getJumpCharges() > 0) {
             velocity.setY(jumpAcceleration);
             player.setJumpCharges(player.getJumpCharges() - 1);
+            assetLoader.playSound("jump.wav", "sound");
         }
 
         //Dash
         if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
             float dashSpeed = maxAcceleration * 5;
             velocity.setX(player.getLocation().getDirection() == Direction.RIGHT ? dashSpeed : -dashSpeed);
+            assetLoader.playSound("dash.wav", "sound");
         }
         if (velocity.getX() > maxAcceleration) {
             velocity.setX(Math.max(0, velocity.getX() - deacceleration * delta * 5));

@@ -1,7 +1,7 @@
 package io.github.arkobat.semesterprojektF21.bullet.model;
 
 import io.github.arkobat.semesterprojektF21.common.*;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
 import io.github.arkobat.semesterprojektF21.bullet.BulletPlugin;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.common.texture;
+package io.github.arkobat.semesterprojektF21.assetmanager;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +16,7 @@ public class Animation {
     public Animation(String moduleName, String fileName, int frameCount, float cycleTime) {
         frames = new Array<>();
 
-        Texture texture = AssetLoader.getInstance().loadTexture(moduleName, fileName);
+        Texture texture = AssetLoader.getInstance(moduleName).loadTexture(fileName);
 
         TextureRegion region = new TextureRegion(texture);
         TextureRegion temp;

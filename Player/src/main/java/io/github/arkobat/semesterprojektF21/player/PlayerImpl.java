@@ -2,7 +2,7 @@ package io.github.arkobat.semesterprojektF21.player;
 
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 

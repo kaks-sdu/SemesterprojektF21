@@ -10,15 +10,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
-import io.github.arkobat.semesterprojektF21.common.texture.AssetLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +36,7 @@ public class WorldMap implements WorldTemp {
 
     private @Nullable WorldMap nextMap;
 
+    private final AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
     private TiledMap map;
     private TiledMapTileLayer collisionLayer;
     private OrthogonalTiledMapRenderer renderer;
@@ -49,7 +48,7 @@ public class WorldMap implements WorldTemp {
     WorldMap(@NotNull String mapId, @NotNull String mapFileName, @Nullable String music) {
         this.mapId = mapId;
         this.mapFileName = mapFileName;
-        String mapPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "map/" + mapFileName + ".tmx");
+        String mapPath = assetLoader.getRawFilePath("map/" + mapFileName + ".tmx");
         this.map = new TmxMapLoader().load(mapPath);
         //TODO: Make AssetLoader handle loading maps
 
@@ -64,9 +63,11 @@ public class WorldMap implements WorldTemp {
             }
         }
         if (music != null) {
-            String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
+            String musicPath = assetLoader.getRawFilePath("sound/" + music);
             this.music = Gdx.audio.newMusic(new FileHandle(musicPath));
         }
+
+        startMap();
     }
 
     @NotNull
@@ -99,7 +100,7 @@ public class WorldMap implements WorldTemp {
     private void toggleMusic(boolean start) {
         if (this.music == null) return;
         if (start) {
-            music.setVolume(0.1F);
+            music.setVolume(AssetLoader.BACKGROUND_MUSIC);
             music.setLooping(true);
             music.play();
         } else {

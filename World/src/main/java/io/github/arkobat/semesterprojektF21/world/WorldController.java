@@ -24,6 +24,7 @@ public class WorldController {
         WorldMap map = new MapBuilder()
                 .setMapId("map1")
                 .setMapFileName("level0")
+                .setMusic("main_theme.mp3")
                 .build();
         worldMap.put(map.getMapId(), map);
         return map;

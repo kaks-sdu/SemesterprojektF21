@@ -34,7 +34,6 @@ public class AssetLoader {
     }
 
     public static AssetLoader getInstance(String module) {
-        System.out.println(module);
         AssetLoader instance = instances.get(module);
         if (instance == null) {
             instance = new AssetLoader(module);

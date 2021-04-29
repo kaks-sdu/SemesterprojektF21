@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
@@ -13,6 +14,9 @@ import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
+import io.github.arkobat.semesterprojektF21.core.listener.LevelChangeListener;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +31,16 @@ public class Game implements ApplicationListener {
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
+    @Setter
+    @Getter
     private WorldTemp world;
     private boolean created = false;
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;
 
-
     public Game() {
         init();
+        EventManager.registerListener(new LevelChangeListener(this));
     }
 
     private void init() {
@@ -80,6 +86,7 @@ public class Game implements ApplicationListener {
             gamePluginService.start(gameData, world);
         }
         created = true;
+        world.startMap();
     }
 
     @Override

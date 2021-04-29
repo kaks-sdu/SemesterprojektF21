@@ -71,6 +71,8 @@
                 <artifactId>maven-pax-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <!--
                                | some example Pax-Runner settings
                               -->

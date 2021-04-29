@@ -10,7 +10,7 @@ public class BulletImpl implements Bullet {
 
     private final Hitbox hitbox = new Hitbox(4, 2);
     private final Color color;
-    private final World world;
+    private World world;
     private final Location location;
     private Vector velocity;
     private long spawnTime;
@@ -48,6 +48,12 @@ public class BulletImpl implements Bullet {
     @Override
     public @NotNull World getWorld() {
         return this.world;
+    }
+
+    @Override
+    public void setWorld(@NotNull World world) {
+        this.world.removeEntity(this);
+        this.world = world;
     }
 
     @Override

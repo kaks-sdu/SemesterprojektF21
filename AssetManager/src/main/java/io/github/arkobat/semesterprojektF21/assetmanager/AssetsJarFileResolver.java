@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.common.texture;
+package io.github.arkobat.semesterprojektF21.assetmanager;
 
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;

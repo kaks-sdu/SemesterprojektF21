@@ -11,6 +11,8 @@ public interface Entity extends Colorable, Collidable {
      */
     @NotNull World getWorld();
 
+    void setWorld(@NotNull World world);
+
     /**
      * Gets the current location of this entity.
      * @return Location - which consists of 2 int values.

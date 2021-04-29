@@ -19,6 +19,11 @@ public class WorldPlugin implements WorldLoader {
     }
 
     @Override
+    public WorldTemp getWorld(String name) {
+        return worldController.getMap(name);
+    }
+
+    @Override
     public void stop() {
     }
 

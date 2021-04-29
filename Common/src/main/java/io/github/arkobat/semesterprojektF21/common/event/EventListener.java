@@ -25,6 +25,9 @@ public class EventListener {
     public void onEntityTurn(EntityTurnEvent event) {
     }
 
+    public void onLevelChange(LevelChangeEvent event) {
+    }
+
     final void callEvent(@NotNull Event event) {
         if (event.getClass() == EntityEvent.class) {
             onEntity((EntityEvent) event);
@@ -34,7 +37,10 @@ public class EventListener {
             onEntityShoot((EntityShootEvent) event);
         } else if (event.getClass() == EntityTurnEvent.class) {
             onEntityTurn((EntityTurnEvent) event);
-        } else {
+        } else if (event.getClass() == LevelChangeEvent.class) {
+            onLevelChange((LevelChangeEvent) event);
+        }
+        else {
             throw new IllegalArgumentException("Unknown event");
         }
 

@@ -31,7 +31,7 @@ public class EntityCacheTest {
     }
 
     @Test
-    public void get_one_addedTwoEntities() {
+    public void get_one_addedOneEntity() {
         this.cache.add(projectile);
 
         int entities = this.cache.get().size();
@@ -75,6 +75,7 @@ public class EntityCacheTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void getNull_illegalArgumentException_addedOneProjectile() {
+        this.cache.add(projectile);
         this.cache.get(null);
     }
 

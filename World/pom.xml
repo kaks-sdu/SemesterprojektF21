@@ -11,6 +11,8 @@
     <properties>
         <bundle.symbolicName>io.github.arkobat.semesterprojektF21.world</bundle.symbolicName>
         <bundle.namespace>io.github.arkobat.semesterprojektF21.world</bundle.namespace>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonTexture</artifactId>
+            <artifactId>AssetManager</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

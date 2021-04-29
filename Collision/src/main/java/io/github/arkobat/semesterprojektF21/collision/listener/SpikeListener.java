@@ -6,8 +6,7 @@ import io.github.arkobat.semesterprojektF21.collision.CollisionHandler;
 import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Damageable;
 import io.github.arkobat.semesterprojektF21.common.World;
-import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
-import io.github.arkobat.semesterprojektF21.common.event.EventListener;
+import io.github.arkobat.semesterprojektF21.common.event.*;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,6 +65,17 @@ public class SpikeListener extends EventListener {
         }
          */
 
-        ((Damageable) event.getEntity()).kill();
+        int health = ((Damageable) event.getEntity()).getHealth();
+        EntityHealthChangeEvent healthEvent = new EntityHealthChangeEvent(event.getEntity(), 0);
+        EventManager.callEvent(healthEvent);
+        if (event.isCanceled()) {
+            ((Damageable) event.getEntity()).setHealth(health);
+        }
+
+        ((Damageable) event.getEntity()).setHealth(healthEvent.getHealth());
+        if (((Damageable) event.getEntity()).getHealth() <= 0) {
+            ((Damageable) event.getEntity()).kill();
+        }
+
     }
 }

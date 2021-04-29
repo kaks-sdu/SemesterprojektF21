@@ -12,4 +12,12 @@ public interface WorldTemp extends World {
 
     void resize(int width, int height);
 
+    void startMap();
+
+    void endMap();
+
+    WorldTemp getNextMap();
+
+
+
 }

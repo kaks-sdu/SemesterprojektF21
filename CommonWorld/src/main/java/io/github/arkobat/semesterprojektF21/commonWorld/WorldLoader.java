@@ -12,6 +12,8 @@ public interface WorldLoader {
      */
     WorldTemp start(@NotNull GameData gameData);
 
+    WorldTemp getWorld(String name);
+
     void stop();
 
 }

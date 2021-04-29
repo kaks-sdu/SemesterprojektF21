@@ -67,6 +67,7 @@ public class WorldMap implements WorldTemp {
             String musicPath = AssetLoader.getInstance().getRawFilePath(MODULE_NAME, "sound/" + music);
             this.music = Gdx.audio.newMusic(new FileHandle(musicPath));
         }
+        startMap();
     }
 
     @NotNull

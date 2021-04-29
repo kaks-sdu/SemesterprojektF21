@@ -31,6 +31,11 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
+    public boolean hasColorCollision() {
+        return true;
+    }
+
+    @Override
     public @NotNull Hitbox getHitbox() {
         return this.hitbox;
     }

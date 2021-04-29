@@ -7,9 +7,17 @@ public interface Collidable {
     /**
      * Checks if there is a collision
      *
-     * @return boolean - returns true if there is a collision, else returns false.
+     * @return if the collidable have collision
      */
     boolean hasCollision();
+
+    /**
+     * If the collidable respect colors of platforms.
+     * If the Collidable have color collision, it will fall thru platforms of different colors
+     *
+     * @return if the collidable have color collision
+     */
+    boolean hasColorCollision();
 
     /**
      * Not implemented.

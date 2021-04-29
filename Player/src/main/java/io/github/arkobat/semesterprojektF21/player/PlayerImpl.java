@@ -121,6 +121,11 @@ public class PlayerImpl implements Player {
         return true;
     }
 
+    @Override
+    public boolean hasColorCollision() {
+        return true;
+    }
+
     @NotNull
     @Override
     public Hitbox getHitbox() {

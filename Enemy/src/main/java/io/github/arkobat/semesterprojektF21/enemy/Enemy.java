@@ -93,6 +93,11 @@ public class Enemy implements LivingEntity {
     }
 
     @Override
+    public boolean hasColorCollision() {
+        return false;
+    }
+
+    @Override
     public @NotNull Hitbox getHitbox() {
         return hitbox;
     }

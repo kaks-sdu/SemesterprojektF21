@@ -51,7 +51,7 @@ public class MoveListener extends EventListener {
             int cellX = (int) (loc.getX() + hitbox.getWidth()) / collisionLayer.getTileWidth();
             int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
             while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
+                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY, entity.hasColorCollision())) {
                     blocked = true;
                     break;
                 }
@@ -62,7 +62,7 @@ public class MoveListener extends EventListener {
             int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
             int cellY = (int) (loc.getY() + 0.1) / collisionLayer.getTileHeight();
             while (cellY * collisionLayer.getTileHeight() < loc.getY() + hitbox.getHeight()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
+                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY, entity.hasColorCollision())) {
                     blocked = true;
                     break;
                 }
@@ -81,7 +81,7 @@ public class MoveListener extends EventListener {
             int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
             int cellY = (int) (loc.getY() + hitbox.getHeight()) / collisionLayer.getTileHeight();
             while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
+                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY, entity.hasColorCollision())) {
                     blocked = true;
                     break;
                 }
@@ -92,7 +92,7 @@ public class MoveListener extends EventListener {
             int cellX = (int) loc.getX() / collisionLayer.getTileWidth();
             int cellY = (int) loc.getY() / collisionLayer.getTileHeight();
             while (cellX * collisionLayer.getTileWidth() < loc.getX() + hitbox.getWidth()) {
-                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY)) {
+                if (checkCollision(collisionLayer, event.getEntity(), cellX, cellY, entity.hasColorCollision())) {
                     blocked = true;
                     if (entity instanceof Player) {
                         ((Player) entity).setJumpCharges(2);
@@ -188,12 +188,12 @@ public class MoveListener extends EventListener {
     }
 */
 
-    private boolean checkCollision(TiledMapTileLayer collisionLayer, Colorable colorable, int x, int y) {
+    private boolean checkCollision(TiledMapTileLayer collisionLayer, Colorable colorable, int x, int y, boolean hasColorCollision) {
         TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
         if (cell == null) return false;
         TiledMapTile tile = cell.getTile();
         MapProperties properties = tile.getProperties();
-        if (properties.containsKey("color")) {
+        if (hasColorCollision && properties.containsKey("color")) {
             Color color = Color.valueOf(properties.get("color", String.class));
             if (color != Color.ALL && color != colorable.getColor()) return false;
         }

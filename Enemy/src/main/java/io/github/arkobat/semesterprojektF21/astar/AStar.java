@@ -15,9 +15,9 @@ import java.util.PriorityQueue;
 public class AStar {
 
     private final int WALL = 100;
-    private final double LEAST_DISTANCE = 1.2; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate
+    private final double LEAST_DISTANCE = 10; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate. 10 for jumping on platforms
     private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
-    private  final int JUMP_COST = 2;
+    private  final int JUMP_COST = 7;
 
     private Enemy entity;
     private int[][] map;
@@ -78,10 +78,6 @@ public class AStar {
             // Get initial node
             Node node = path.get(0);
 
-            // If node's instruction is null then skip this instruction. rly fucking shit code but i cba
-            if(node.getInstruction() == null)
-                path.remove(0);
-
             Location nodeLocation = node.convertToLocation(); // target location
             Location currentLocation = entity.getLocation();
 
@@ -92,6 +88,7 @@ public class AStar {
             if(distance < LEAST_DISTANCE){
                 // Done following to this node, so remove it
                 path.remove(0);
+                //System.out.println("Enemy reached checkpoint");
             }
 
             if(currentLocation.getX() < nodeLocation.getX()){
@@ -105,10 +102,11 @@ public class AStar {
 
            /* System.out.println("Is on ground? " + isOnGround());
             System.out.println("Node instruction: " + node.getInstruction());*/
+            //System.out.println("Is ground below? " + isGroundBelow(node));
 
 
-            if(currentLocation.getY() < nodeLocation.getY()){
-                entity.getVelocity().setY(75f);
+            if(node.getInstruction() == Node.Instruction.JUMP && isOnGround()){
+                entity.getVelocity().setY(entity.getJumpHeight());
             }
 
 
@@ -128,7 +126,7 @@ public class AStar {
 
             // No more path to follow, so algorithm does not run anymore
             if(path.isEmpty()){
-                System.out.println("Enemy reached goal!");
+                //System.out.println("Enemy reached goal!");
                 // Stop x movement.
                 entity.getVelocity().setX(0);
                 isRunning = false;
@@ -164,7 +162,7 @@ public class AStar {
         Location _endLocation = new Location(endX, endY);
 
 
-        path = findPath(_endLocation);
+        path = findPath(_endLocation);  
 
         if(path == null || path.isEmpty()){
             // Found no path
@@ -172,9 +170,9 @@ public class AStar {
             return;
         }
 
-        /*System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
-        System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
-
+        //System.out.println("Current Location: " + entity.getLocation().getX() + ", " + entity.getLocation().getY());
+        //System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
+        /*
         for(Node node : path){
             System.out.println("Node waypoint: " + node.convertToLocation().getX() + ", " + node.convertToLocation().getY());
         }
@@ -187,12 +185,17 @@ public class AStar {
 
     // Returns null if no path
     private List<Node> findPath(Location endLocation){
+        // Check if end location is a valid location i.e. it's not over spikes (as this will make it so the AI cannot ever find the goal)
+        if(!isValidNode(endLocation)){
+            //End location will never return a path!
+            return null;
+        }
+
         // Initialize open and closed lists
         PriorityQueue<Node> open = new PriorityQueue<>(); // Priority queue is like a heap q. Using normal ArrayList will mean that every pop, we have to scan the WHOLE list. See https://stackoverflow.com/questions/60853524/astar-pathfinding-visualization-is-incredibly-slow-python
         PriorityQueue<Node> closed = new PriorityQueue<>();
 
         Node startNode = new Node(null, startLocation);
-        System.out.println("End Location: " + endLocation.getX() + ", " + endLocation.getY());
 
         // Add start node to open list
         open.offer(startNode);
@@ -203,7 +206,7 @@ public class AStar {
             Node currentNode = open.poll();
 
             // Generate successors i.e. find the neighbours of the current node
-            List<Node> children = findNeighborsOptimized(currentNode, true);
+            List<Node> children = findNeighborsOptimized(currentNode, false);
 
             // For each child
             for(Node child : children){
@@ -219,18 +222,17 @@ public class AStar {
                     }
                     path.remove(0); // Remove initial node, since it is the starting point, and we don't want that to be in the path too
                     Collections.reverse(path); // We have to reverse the path first
-                    displayPath(path);
-                    //TODO: Go to path
+                    //displayPath(path);
+                    //TODO: The display path can be used for the report as it will display the matrix we use for the A* algorithm
                     return path;
                 }
 
-                // Create the f, g, and h values
                 //child.g = currentNode.g + 1; // This is the movement cost from starting point to this node. See neighbours instead
                 // Heuristic function
-                //child.h = Math.abs(child.location.getX() - endLocation.getX()) + Math.abs(child.location.getY() - endLocation.getY()); // Manhattan distance
+                child.h = Math.abs(child.location.getX() - endLocation.getX()) + Math.abs(child.location.getY() - endLocation.getY()); // Manhattan distance
 
                 // Use the euclidean distance
-                child.h = Math.sqrt(Math.abs((child.location.getX() - endLocation.getX()) * 2 + (child.location.getY() - endLocation.getY()) * 2)); // Euclidean distance
+                //child.h = Math.sqrt(Math.abs((child.location.getX() - endLocation.getX()) * 2 + (child.location.getY() - endLocation.getY()) * 2)); // Euclidean distance
                 // 0 for Dijkstra's Algorithm
                 //child.h = 0;
                 child.f = child.g + child.h;
@@ -248,11 +250,11 @@ public class AStar {
                  * FASTEST. Seems like Java contains method does not have O(n) complexity
                  */
                 // We add our own equals method to our node class, so that we don't have to o(n)
-                if(open.contains(child)){
+                if(open.contains(child)){ //TODO: Read up on https://stackoverflow.com/questions/6997604/a-algorithm-not-working-properly for checking if it contains
                     continue;
                 }
 
-                if(skipChild(child, closed)){
+                if(closed.contains(child)){
                     continue; // Skip this child
                 }else {
                     // If there is no node in the closed list with same position or lower f score, then add that as a new search area i.e. add it to the open list
@@ -264,14 +266,18 @@ public class AStar {
             closed.offer(currentNode);
         }
         // No path found
+        System.out.println("Found no path!");
         return null;
     }
 
-    // If a node with position already exists in the closed list, and it has a lower f score, then there is no reason to expand that node
-    private boolean skipChild(Node node, PriorityQueue<Node> closed){
-        for(Node closedNode : closed){
-            if(node.location.getX() == closedNode.location.getX() && node.location.getY() == closedNode.location.getY()){
-                if(closedNode.f < node.f){
+    // If a node with position already exists in the open list, and it has a lower f score, then there is no reason to expand that node
+    private boolean skipChild(Node node, PriorityQueue<Node> open){
+        //System.out.println("Looping through " + open.size() + " entries...");
+        double nodeF = node.f;
+        for(Node openNode : open){
+            if(node.location.getX() == openNode.location.getX() && node.location.getY() == openNode.location.getY()){
+                if(openNode.f < node.f){
+                    //System.out.println("Done!");
                     return true;
                 }
             }
@@ -285,18 +291,10 @@ public class AStar {
         Location[] adjacentLocations = {
                 new Location(0, -1),
                 new Location(0, 1),
-                new Location(-1, 0),
+                new Location(-1, 0), // TODO: Read up on https://stackoverflow.com/questions/26615312/how-to-straighten-unneeded-turns-in-a-a-graph-search-result
                 new Location(1, 0),
-                //new Location(4, 0)
-                //new Location(2, 1), // Jump + 2 tiles forward and +3 tiles upwards
-                //new Location(3, 1), // Jump + 2 tiles forward and +3 tiles upwards
-                //new Location(4, 1), // Jump + 2 tiles forward and +3 tiles upwards
-
-
-                /* new Location(-1, -1), // Diagonals. Skip for now, but can be used to implement jumping. Just insert it as a valid neighbor, and calculate it's
-                 new Location(-1, 1),    // Cost in child.g + distance
-                 new Location(1, -1),
-                 new Location(1, 1),*/
+                new Location(3, 0), // Jump +3 tiles to the right
+                new Location(-3, 0), // Jump +3 tiles to the left
         };
 
         for(Location newPosition : adjacentLocations){
@@ -309,7 +307,8 @@ public class AStar {
             }
 
             // Make sure it is a valid child i.e going to this node won't make it so it falls down into spikes
-            /*if(!isValidChild(nodePosition)){
+            // TODO: This makes the game freeze when having to calculate a position to it in the air it seems.
+            /*if(!isValidNode(nodePosition)){
                 continue;
             }*/
 
@@ -318,6 +317,10 @@ public class AStar {
 
 
                 Node child = new Node(node, nodePosition);
+
+                // If there is not ground below this node, then it's not a valid location
+                if(!isGroundBelow(child)) continue;
+
                 // Distance from original position to new position. Euclidean
                 int distanceToLocation = (int) Math.sqrt( (node.location.getX() - newPosition.getX()) * 2 + (node.location.getY() - newPosition.getY()) * 2);
 
@@ -330,9 +333,9 @@ public class AStar {
                 }*/
 
                 // Set nodes instruction (either jump or walk)
-                if(newPosition.getX() > 1 || newPosition.getY() >= 1){ // jump 2+ x tiles or 1+ y tile
+                if(newPosition.getX() > 1 || newPosition.getX() == -3 || newPosition.getY() >= 1){ // jump 2+ x tiles or 1+ y tile
                     child.setInstruction(Node.Instruction.JUMP);
-                    child.g = node.g + JUMP_COST; // = 2
+                    child.g = node.g + JUMP_COST;
                 }else{
 
                     if(newPosition.getX() < 0){
@@ -357,7 +360,8 @@ public class AStar {
 
     // Check whether the node will make it so the player ends up falling into a spike
     // TODO: Can't do this, as it will make it so the ai can't go down and strafe to a new spot, I'm pretty sure
-    private boolean isValidChild(Location nodeLocation){
+    // TODO: Save in memory on map start instead of checking everytime, as some maps can be very big. Instead just check rows and dont path find to rows that are bad
+    private boolean isValidNode(Location nodeLocation){
         for(int y = (int) nodeLocation.getY(); y >= 0; y--){
             if(map[ (int) nodeLocation.getX()][y] == 200){ // TODO: Or if it is down in the void. 200 = spikes
                 return false;
@@ -366,6 +370,21 @@ public class AStar {
             }
         }
         return true;
+    }
+
+    // The Manhattan distance from the node to the enemy. This is used to not add nodes that are too far away from the enemy (i.e. jump height)
+    /*private boolean nodeDistanceFrom(Enemy entity){
+
+    }
+*/
+    private boolean isGroundBelow(Node node){
+        // If outside map boundaries
+        if(node.location.getX() > map.length - 1 || node.location.getX() < 0 || node.location.getY() > map[0].length - 1 || node.location.getY() < 0) return false;
+
+        int index = Math.round(node.location.getY()-1);
+        if(index == -1) return false;
+
+        return map[Math.round(node.location.getX())][index] == WALL;
     }
 
     private void displayPath(List<Node> path){

@@ -26,6 +26,7 @@ public class Enemy implements LivingEntity {
     private Animation currentAnimation;
     private float speed = 50f;
     private int jumpCharges = 1;
+    private float jumpHeight = 75;
     private AStar ai;
 
     public Enemy(World world, Color[] colors, Location location){
@@ -36,6 +37,14 @@ public class Enemy implements LivingEntity {
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 12, -4, 0);
         animatons = new HashMap<>();
+    }
+
+    public void setJumpHeight(float jumpHeight) {
+        this.jumpHeight = jumpHeight;
+    }
+
+    public float getJumpHeight() {
+        return jumpHeight;
     }
 
     public void setJumpCharges(int jumpCharges) {

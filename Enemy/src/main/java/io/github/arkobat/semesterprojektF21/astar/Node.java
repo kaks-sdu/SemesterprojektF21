@@ -38,7 +38,7 @@ public class Node implements Comparable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Node aStarNode = (Node) o;
-        return location.getX() == aStarNode.location.getX() && location.getY() == aStarNode.location.getY();
+        return location.getX() == aStarNode.location.getX() && location.getY() == aStarNode.location.getY() && aStarNode.f < f;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Node implements Comparable {
     }
 
     enum Instruction {
-        JUMP,
+        JUMP, // TODO: Can have small jump and big jump
         WALK_RIGHT,
         WALK_LEFT,
     }

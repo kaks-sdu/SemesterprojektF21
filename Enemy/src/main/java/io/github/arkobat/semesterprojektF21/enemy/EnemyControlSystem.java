@@ -47,7 +47,7 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
             // Track player
             for (Entity player : world.getEntities(Player.class)) {
                 //System.out.println("Player location: " + player.getLocation().getX() + ", " + player.getLocation().getY());
-                //enemy.getAi().gotoLocation(player.getLocation());
+                enemy.getAi().gotoLocation(player.getLocation());
             }
 
                     loc.setX((float) (loc.getX() + velocity.getX() * delta));

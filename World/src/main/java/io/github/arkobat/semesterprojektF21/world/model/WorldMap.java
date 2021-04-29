@@ -73,6 +73,7 @@ public class WorldMap implements WorldTemp {
         int startX = map.getProperties().get("spawnX", int.class);
         int startY = map.getProperties().get("height", int.class) - map.getProperties().get("spawnY", int.class) - 1;
         this.playerStart = new Location(startX * 8, startY * 8);
+        startMap();
     }
 
     @NotNull

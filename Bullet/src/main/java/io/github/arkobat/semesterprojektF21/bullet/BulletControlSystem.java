@@ -2,6 +2,7 @@ package io.github.arkobat.semesterprojektF21.bullet;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
+import io.github.arkobat.semesterprojektF21.bullet.model.BulletImpl;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;

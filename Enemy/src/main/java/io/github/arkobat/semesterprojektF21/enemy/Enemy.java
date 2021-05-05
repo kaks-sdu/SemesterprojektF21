@@ -1,12 +1,11 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import io.github.arkobat.semesterprojektF21.astar.AStar;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.LivingEntity;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.HashMap;
 import java.util.Map;

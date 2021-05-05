@@ -74,7 +74,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
-      <artifactId>CommonTexture</artifactId>
+      <artifactId>AssetManager</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
@@ -94,7 +94,7 @@
     </dependency>
     <dependency>
       <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
-      <artifactId>CommonTexture</artifactId>
+      <artifactId>AssetManager</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>

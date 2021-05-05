@@ -1,5 +1,6 @@
 package io.github.arkobat.semesterprojektF21.collision;
 
+import io.github.arkobat.semesterprojektF21.collision.listener.BulletListener;
 import io.github.arkobat.semesterprojektF21.collision.listener.MoveListener;
 import io.github.arkobat.semesterprojektF21.collision.listener.PortalListener;
 import io.github.arkobat.semesterprojektF21.collision.listener.SpikeListener;
@@ -22,6 +23,7 @@ public class CollisionPlugin implements GamePluginService {
         this.listeners.add(new MoveListener());
         this.listeners.add(new PortalListener());
         this.listeners.add(new SpikeListener());
+        this.listeners.add(new BulletListener());
         for(EventListener listener : listeners){
             EventManager.registerListener(listener);
         }

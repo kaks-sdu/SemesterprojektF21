@@ -6,11 +6,12 @@ import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
-import io.github.arkobat.semesterprojektF21.bullet.model.BulletImpl;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -42,8 +43,15 @@ public class BulletControlSystem implements GameProcessingService, TextureRender
     private void moveBullet(Bullet bullet, float delta) {
         Location loc = bullet.getLocation();
         Vector vec = bullet.getVelocity();
-        loc.setX((loc.getX() + vec.getX() * delta));
-        loc.setY((loc.getY() + vec.getY() * delta));
+
+        EntityMoveEvent moveEvent = new EntityMoveEvent(bullet, new Location(loc.getX() + vec.getX() * delta, loc.getY() + vec.getY() * delta), loc);
+        EventManager.callEvent(moveEvent);
+        if (moveEvent.isCanceled()) {
+            return;
+        }
+
+        loc.setX(moveEvent.getNewLocation().getX());
+        loc.setY(moveEvent.getNewLocation().getY());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package io.github.arkobat.semesterprojektF21.bullet.listener;
 
+import io.github.arkobat.semesterprojektF21.bullet.BulletControlSystem;
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -23,6 +24,7 @@ public class ShootListener extends EventListener {
         );
 
         event.getEntity().getWorld().addEntity(bullet);
+        BulletControlSystem.assetLoader.playSound("shoot.wav", "sound");
     }
 
 }

@@ -1,7 +1,7 @@
 package io.github.arkobat.semesterprojektF21.bullet;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.semesterprojektF21.bullet.model.BulletImpl;
+import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -10,14 +10,18 @@ import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.LinkedList;
 
+import static io.github.arkobat.semesterprojektF21.bullet.BulletPlugin.MODULE_NAME;
+
 public class BulletControlSystem implements GameProcessingService, TextureRenderService {
+
+    public static final AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
 
     @Override
     public void process(@NotNull GameData gameData, @NotNull World world) {

@@ -1,4 +1,4 @@
 Bundle-SymbolicName: SemesterProjectGroup1_Enemy
 Bundle-ActivationPolicy: lazy
 Service-Component: META-INF/entityprocessor.xml, META-INF/gameplugin.xml, META-INF/texturerenderer.xml
-Import-Package: io.github.arkobat.semesterprojektF21.common.texture;io.github.arkobat.semesterprojektF21.common.*;com.badlogic.gdx.*;io.github.arkobat.semesterprojektF21.commonWorld
+Import-Package: io.github.arkobat.semesterprojektF21.assetmanager;io.github.arkobat.semesterprojektF21.common.*;com.badlogic.gdx.*

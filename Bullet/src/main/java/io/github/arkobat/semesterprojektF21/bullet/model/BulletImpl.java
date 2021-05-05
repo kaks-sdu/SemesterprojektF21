@@ -1,7 +1,7 @@
 package io.github.arkobat.semesterprojektF21.bullet.model;
 
 import io.github.arkobat.semesterprojektF21.common.*;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
 import io.github.arkobat.semesterprojektF21.bullet.BulletPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ public class BulletImpl implements Bullet {
 
     private final Hitbox hitbox = new Hitbox(4, 2);
     private final Color color;
-    private final World world;
+    private World world;
     private final Location location;
     private Vector velocity;
     private long spawnTime;
@@ -53,6 +53,12 @@ public class BulletImpl implements Bullet {
     @Override
     public @NotNull World getWorld() {
         return this.world;
+    }
+
+    @Override
+    public void setWorld(@NotNull World world) {
+        this.world.removeEntity(this);
+        this.world = world;
     }
 
     @Override

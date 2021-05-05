@@ -4,12 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import io.github.arkobat.semesterprojektF21.collision.CollisionHandler;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
-import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
-import io.github.arkobat.semesterprojektF21.common.event.EventListener;
+import io.github.arkobat.semesterprojektF21.common.event.*;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
+
+import java.util.List;
 
 
 public class MoveListener extends EventListener {
@@ -107,7 +109,6 @@ public class MoveListener extends EventListener {
             entity.getVelocity().setY(0);
             loc.setY(event.getOldLocation().getY());
         }
-
 
     }
 

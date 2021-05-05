@@ -12,7 +12,7 @@ import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

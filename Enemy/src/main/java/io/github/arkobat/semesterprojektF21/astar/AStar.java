@@ -15,6 +15,7 @@ import java.util.PriorityQueue;
 public class AStar {
 
     private final int WALL = 100;
+    private final int SPIKE = 200;
     private final double LEAST_DISTANCE = 10; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate. 10 for jumping on platforms
     private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
     private  final int JUMP_COST = 7;
@@ -45,7 +46,7 @@ public class AStar {
                 if(containsProperty("collision", new Location(x, y))){
                     map[x][y] = WALL;
                 }else if(containsProperty("spikes", new Location(x, y))){
-                    map[x][y] = 200; // TODO: SPIKES
+                    map[x][y] = SPIKE;
                 } else  {
                     map[x][y] = 0;
                 }
@@ -309,7 +310,7 @@ public class AStar {
     // TODO: Save in memory on map start instead of checking everytime, as some maps can be very big. Instead just check rows and dont path find to rows that are bad
     private boolean isValidNode(Location nodeLocation){
         for(int y = (int) nodeLocation.getY(); y >= 0; y--){
-            if(map[ (int) nodeLocation.getX()][y] == 200){ // TODO: Or if it is down in the void. 200 = spikes
+            if(map[ (int) nodeLocation.getX()][y] == SPIKE){
                 return false;
             }else if(map[ (int) nodeLocation.getX()][y] == WALL){ // If it finds the ground before it finds spikes, then it is a valid position
                 return true;

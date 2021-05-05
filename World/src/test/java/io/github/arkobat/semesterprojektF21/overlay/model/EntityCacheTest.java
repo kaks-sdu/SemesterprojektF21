@@ -1,9 +1,8 @@
-package io.github.arkobat.semesterprojektF21.world.model;
+package io.github.arkobat.semesterprojektF21.overlay.model;
 
 import io.github.arkobat.semesterprojektF21.common.entity.LivingEntity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.entity.Projectile;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

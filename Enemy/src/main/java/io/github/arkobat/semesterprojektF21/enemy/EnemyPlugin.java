@@ -6,12 +6,12 @@ import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.List;
 
 public class EnemyPlugin implements GamePluginService {
     @Override

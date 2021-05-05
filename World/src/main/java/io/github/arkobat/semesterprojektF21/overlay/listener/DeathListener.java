@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.world.listener;
+package io.github.arkobat.semesterprojektF21.overlay.listener;
 
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityDeathEvent;

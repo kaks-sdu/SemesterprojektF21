@@ -14,6 +14,7 @@ import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EntityShootEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
@@ -165,14 +166,17 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     }
 
     @Override
-    public void render(GameData gameData, World world, SpriteBatch sb) {
+    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
         for (Entity entity : world.getEntities(PlayerImpl.class)) {
             PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
 
             // Draw animation
+            System.out.println("Draw player");
             sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + player.getHitbox().getOffsetX(), loc.getY() + player.getHitbox().getOffsetY());
+            return;
         }
+        System.out.println("No player found");
     }
 
 }

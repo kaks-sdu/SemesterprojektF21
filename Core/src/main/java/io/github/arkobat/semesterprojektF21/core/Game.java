@@ -5,13 +5,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import io.github.arkobat.semesterprojektF21.core.listener.LevelChangeListener;
@@ -26,6 +31,10 @@ import java.util.function.Supplier;
 
 public class Game implements ApplicationListener {
 
+    private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+
     private static final List<GameProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
@@ -37,6 +46,7 @@ public class Game implements ApplicationListener {
     private boolean created = false;
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;
+    private Supplier<ExtendedGameData> extendedGameDataSupplier;
 
     public Game() {
         init();
@@ -59,9 +69,14 @@ public class Game implements ApplicationListener {
         config.foregroundFPS = -1;
 
         gameDataSupplier = () -> new GameData(
+                Gdx.graphics.getDeltaTime()
+        );
+
+        extendedGameDataSupplier = () -> new ExtendedGameData(
                 Gdx.graphics.getDeltaTime(),
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight()
+                renderer,
+                camera,
+                viewport
         );
 
         new LwjglApplication(this, config);
@@ -69,8 +84,6 @@ public class Game implements ApplicationListener {
 
     @Override
     public void create() {
-        GameData gameData = gameDataSupplier.get();
-
         this.spriteBatch = new SpriteBatch();
 
         System.out.println("Created game!");
@@ -79,7 +92,15 @@ public class Game implements ApplicationListener {
         if (!worldLoader.isPresent()) {
             throw new IllegalStateException("Could not load world");
         }
+        GameData gameData = gameDataSupplier.get();
         world = worldLoader.get().start(gameData);
+
+        this.renderer = new OrthogonalTiledMapRenderer(world.getMap());
+        this.camera = new OrthographicCamera();
+        this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+
+
 
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
@@ -95,16 +116,22 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0.054f, 0.027f, 0.105f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.world.update(this.spriteBatch);
+        this.world.update(extendedGameDataSupplier.get(), this.spriteBatch);
+        this.renderer.render();
+        this.renderer.setView(camera);
         update();
     }
 
     private void update() {
+        if (!created) {
+            return;
+        }
         GameData gameData = gameDataSupplier.get();
+        ExtendedGameData extendedGameData = extendedGameDataSupplier.get();
         // Render
         for (TextureRenderService textureRenderService : textureRenderList) {
             spriteBatch.begin();
-            textureRenderService.render(gameData, world, spriteBatch);
+            textureRenderService.render(extendedGameData, world, spriteBatch);
             spriteBatch.end();
         }
 
@@ -123,7 +150,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void resize(int width, int height) {
-        this.world.resize(width, height);
+        final float mapZoom = 5.0F;
+        camera.viewportWidth = width / mapZoom;
+        camera.viewportHeight = height / mapZoom;
     }
 
     @Override
@@ -154,7 +183,7 @@ public class Game implements ApplicationListener {
 
     @SuppressWarnings("unused")
     public void addTextureRenderService(TextureRenderService eps) {
-        System.out.println("Added texture render service");
+        System.out.println("Added texture render service " + eps.getClass().getName());
         textureRenderList.add(eps);
     }
 

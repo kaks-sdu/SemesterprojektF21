@@ -1,19 +1,15 @@
-package io.github.arkobat.semesterprojektF21.world.model;
+package io.github.arkobat.semesterprojektF21.overlay.model;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
@@ -27,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Optional;
 
-import static io.github.arkobat.semesterprojektF21.world.WorldPlugin.MODULE_NAME;
+import static io.github.arkobat.semesterprojektF21.overlay.WorldPlugin.MODULE_NAME;
 
 @Getter
 public class WorldMap implements WorldTemp {
@@ -41,23 +37,16 @@ public class WorldMap implements WorldTemp {
     private final AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
     private final TiledMap map;
     private TiledMapTileLayer collisionLayer;
-    private final OrthogonalTiledMapRenderer renderer;
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
 
     private Music music;
 
     private final Location playerStart;
 
-    WorldMap( @NotNull String mapFileName, @Nullable String music) {
+    WorldMap(@NotNull String mapFileName, @Nullable String music) {
         this.mapFileName = mapFileName;
         String mapPath = assetLoader.getRawFilePath("map/" + mapFileName + ".tmx");
         this.map = new TmxMapLoader().load(mapPath);
         //TODO: Make AssetLoader handle loading maps
-
-        this.renderer = new OrthogonalTiledMapRenderer(map);
-        this.camera = new OrthographicCamera();
-        this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         for (MapLayer layer : map.getLayers()) {
             if (layer.getName().endsWith("_map")) {
@@ -105,7 +94,6 @@ public class WorldMap implements WorldTemp {
             player.getLocation().setY(playerStart.getY());
         }
         toggleMusic(true);
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     private void toggleMusic(boolean start) {
@@ -128,21 +116,19 @@ public class WorldMap implements WorldTemp {
     }
 
     @Override
-    public void update(SpriteBatch spriteBatch) {
+    public void update(ExtendedGameData gameData, SpriteBatch spriteBatch) {
         // Update camera view
         Optional<Entity> player = getEntities(Player.class).stream().findFirst();
         if (player.isPresent()) {
-            spriteBatch.setProjectionMatrix(this.camera.combined);
+            spriteBatch.setProjectionMatrix(gameData.getCamera().combined);
 
             Location loc = player.get().getLocation();
             Hitbox hb = player.get().getHitbox();
 
-            this.camera.position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
-            this.camera.update();
+            gameData.getCamera().position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
+            gameData.getCamera().update();
 
         }
-        this.renderer.render();
-        this.renderer.setView(camera);
     }
 
     @Override
@@ -150,11 +136,5 @@ public class WorldMap implements WorldTemp {
         return this.collisionLayer;
     }
 
-    @Override
-    public void resize(int width, int height) {
-        final float mapZoom = 5.0F;
-        camera.viewportWidth = width / mapZoom;
-        camera.viewportHeight = height / mapZoom;
-    }
 
 }

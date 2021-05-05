@@ -7,6 +7,7 @@ import io.github.arkobat.semesterprojektF21.collision.listener.SpikeListener;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import org.jetbrains.annotations.NotNull;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <relativePath>../poms/compiled/pom.xml</relativePath>
@@ -9,22 +10,19 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.commonWorld</bundle.symbolicName>
-        <bundle.namespace>io.github.arkobat.semesterprojektF21.commonWorld</bundle.namespace>
+        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.overlay</bundle.symbolicName>
+        <bundle.namespace>io.github.arkobat.semesterprojektF21.overlay</bundle.namespace>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>CommonWorld</artifactId>
+    <artifactId>Overlay</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
-    <name>CommonWorld</name>
+    <name>Overlay</name>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiLibGDX</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>

@@ -9,6 +9,7 @@ import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
@@ -56,7 +57,7 @@ public class BulletControlSystem implements GameProcessingService, TextureRender
     }
 
     @Override
-    public void render(GameData gameData, World world, SpriteBatch sb) {
+    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
         for (Entity entity : world.getEntities(BulletImpl.class)) {
             BulletImpl bullet = (BulletImpl) entity;
             Location loc = bullet.getLocation();

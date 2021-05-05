@@ -1,11 +1,11 @@
-package io.github.arkobat.semesterprojektF21.world;
+package io.github.arkobat.semesterprojektF21.overlay;
 
-import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
-import io.github.arkobat.semesterprojektF21.world.listener.DeathListener;
+import io.github.arkobat.semesterprojektF21.overlay.listener.DeathListener;
 import org.jetbrains.annotations.NotNull;
 
 public class WorldPlugin implements WorldLoader {

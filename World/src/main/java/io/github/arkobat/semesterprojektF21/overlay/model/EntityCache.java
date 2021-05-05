@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.world.model;
+package io.github.arkobat.semesterprojektF21.overlay.model;
 
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import org.jetbrains.annotations.NotNull;

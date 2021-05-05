@@ -63,7 +63,7 @@ public class AStar {
         startLocation = new Location(entityX, entityY);
 
         // Dunno why, but the map is always sideways
-        displayMap();
+        //displayMap();
     }
 
     /**
@@ -341,7 +341,7 @@ public class AStar {
             map[(int) node.location.getX()][(int) node.location.getY()] = 99;
         }
 
-        displayMap();
+        // displayMap();
     }
 
     private void displayMap(){

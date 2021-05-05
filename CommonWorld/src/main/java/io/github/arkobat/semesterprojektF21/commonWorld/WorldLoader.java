@@ -1,6 +1,5 @@
 package io.github.arkobat.semesterprojektF21.commonWorld;
 
-import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import org.jetbrains.annotations.NotNull;
 

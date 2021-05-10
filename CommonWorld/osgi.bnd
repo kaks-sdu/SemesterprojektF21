@@ -1,1 +1,3 @@
-Export-Package: io.github.arkobat.semesterprojektF21.commonWorld.*;com.badlogic.gdx.*
+Bundle-SymbolicName: SemesterProjectGroup1_CommonWorld
+Export-Package: io.github.arkobat.semesterprojektF21.commonWorld
+Import-Package: io.github.arkobat.semesterprojektF21.common.*;io.github.arkobat.semesterprojektF21.assetmanager.*;com.badlogic.gdx.*

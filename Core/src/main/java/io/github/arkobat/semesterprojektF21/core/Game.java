@@ -40,7 +40,6 @@ public class Game implements ApplicationListener {
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
-    @Setter
     @Getter
     private WorldTemp world;
     private boolean created = false;
@@ -49,11 +48,6 @@ public class Game implements ApplicationListener {
     private Supplier<ExtendedGameData> extendedGameDataSupplier;
 
     public Game() {
-        init();
-        EventManager.registerListener(new LevelChangeListener(this));
-    }
-
-    private void init() {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Group 1 Semester Project";
 
@@ -68,6 +62,13 @@ public class Game implements ApplicationListener {
         config.backgroundFPS = -1;
         config.foregroundFPS = -1;
 
+        new LwjglApplication(this, config);
+    }
+
+    @Override
+    public void create() {
+        System.out.println("Created game!");
+
         gameDataSupplier = () -> new GameData(
                 Gdx.graphics.getDeltaTime()
         );
@@ -79,14 +80,7 @@ public class Game implements ApplicationListener {
                 viewport
         );
 
-        new LwjglApplication(this, config);
-    }
-
-    @Override
-    public void create() {
-        this.spriteBatch = new SpriteBatch();
-
-        System.out.println("Created game!");
+        EventManager.registerListener(new LevelChangeListener(this));
 
         Optional<WorldLoader> worldLoader = worldLoaders.stream().findFirst();
         if (!worldLoader.isPresent()) {
@@ -99,8 +93,8 @@ public class Game implements ApplicationListener {
         this.camera = new OrthographicCamera();
         this.viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-
-
+        this.spriteBatch = new SpriteBatch();
+        this.spriteBatch.setProjectionMatrix(camera.combined);
 
         for (GamePluginService gamePluginService : gamePluginList) {
             System.out.println("Starting plugin " + gamePluginService.getClass());
@@ -147,7 +141,6 @@ public class Game implements ApplicationListener {
 
     }
 
-
     @Override
     public void resize(int width, int height) {
         final float mapZoom = 5.0F;
@@ -167,60 +160,75 @@ public class Game implements ApplicationListener {
     public void dispose() {
     }
 
+    public void setWorld(WorldTemp world) {
+        this.world = world;
+        this.renderer.setMap(world.getMap());
+    }
+
     @SuppressWarnings("unused")
     public void removeWorldLoaderService(WorldLoader eps) {
         worldLoaders.remove(eps);
+        System.out.println("Removed World Loader " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void addWorldLoaderService(WorldLoader eps) {
-        System.out.println("Added World Loader " + eps.getClass().getName());
         worldLoaders.add(eps);
         if (created) {
             eps.start(gameDataSupplier.get());
+            System.out.println("Reloaded World Loader " + eps.getClass().getName());
+        } else {
+            System.out.println("Started World Loader " + eps.getClass().getName());
         }
+
     }
 
     @SuppressWarnings("unused")
     public void addTextureRenderService(TextureRenderService eps) {
-        System.out.println("Added texture render service " + eps.getClass().getName());
         textureRenderList.add(eps);
+        System.out.println("Added TextureRenderService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void removeTextureRenderService(TextureRenderService eps) {
         textureRenderList.remove(eps);
+        System.out.println("Removed TextureRenderService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void addEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.add(eps);
+        System.out.println("Added EntityProcessingService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void removeEntityProcessingService(GameProcessingService eps) {
         entityProcessorList.remove(eps);
+        System.out.println("Removed EntityProcessingService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void addPostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.add(eps);
+        System.out.println("Added PostEntityProcessingService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void removePostEntityProcessingService(GamePostProcessingService eps) {
         postEntityProcessorList.remove(eps);
+        System.out.println("Removed PostEntityProcessingService plugin: " + eps.getClass().getName());
     }
 
     @SuppressWarnings("unused")
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
         GameData gameData = gameDataSupplier.get();
-        System.out.println("Started plugin from core scope: " + plugin);
 
         if (created) {
             plugin.start(gameData, world);
-            System.out.println("Reloaded!");
+            System.out.println("Reloaded plugin: " + plugin.getClass().getName());
+        } else {
+            System.out.println("Started plugin: " + plugin.getClass().getName());
         }
     }
 
@@ -229,6 +237,7 @@ public class Game implements ApplicationListener {
         gamePluginList.remove(plugin);
         GameData gameData = gameDataSupplier.get();
         plugin.stop(gameData, world);
+        System.out.println("Removed plugin: " + plugin.getClass().getName());
     }
 
 }

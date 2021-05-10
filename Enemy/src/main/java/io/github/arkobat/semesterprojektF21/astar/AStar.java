@@ -58,7 +58,7 @@ public class AStar {
         int entityX = (int) entity.getLocation().getX() / tilesPerPixel;
         int entityY = (int) entity.getLocation().getY() / tilesPerPixel - 1; // -1 since it goes from the head
 
-        System.out.println("x: " + entityX + ", y: " + entityY);
+        //System.out.println("x: " + entityX + ", y: " + entityY);
 
         startLocation = new Location(entityX, entityY);
 

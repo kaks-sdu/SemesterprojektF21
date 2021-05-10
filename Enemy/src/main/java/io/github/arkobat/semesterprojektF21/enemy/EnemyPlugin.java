@@ -31,9 +31,9 @@ public class EnemyPlugin implements GamePluginService {
         // Set current animation
         enemy.setCurrentAnimation(enemy.getAnimation("idle"));
 
-        System.out.println("Started enemy plugin");
+        //System.out.println("Started enemy plugin");
 
-        System.out.println("Printing 2d map representation");
+        //System.out.println("Printing 2d map representation");
         AStar aStar = new AStar(enemy);
         enemy.setAi(aStar);
 
@@ -51,6 +51,5 @@ public class EnemyPlugin implements GamePluginService {
         for (Entity enemy : enemies) {
             world.removeEntity(enemy);
         }
-        System.out.println("Stopped enemy plugin");
     }
 }

@@ -6,7 +6,6 @@ import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
-import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
 import org.jetbrains.annotations.NotNull;
@@ -27,8 +26,6 @@ public class PlayerPlugin implements GamePluginService {
         // TODO: Setup tests for assets loading
         // Set current animation
         player.setCurrentAnimation(player.getAnimation("idle"));
-
-        System.out.println("Started Player plugin from module scope");
     }
 
     @Override

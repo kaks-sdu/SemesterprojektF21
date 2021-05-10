@@ -55,6 +55,13 @@ public enum Alignment {
         public Location apply(Location location, Hitbox hitbox) {
             return new Location(location.getX(), location.getY() - hitbox.getHeight());
         }
+    }),
+
+    TOP_CENTER(new BiFunction<Location, Hitbox, Location>() {
+        @Override
+        public Location apply(Location location, Hitbox hitbox) {
+            return new Location(location.getX() - hitbox.getWidth() / 2, location.getY() - hitbox.getHeight());
+        }
     });
 
     private final BiFunction<Location, Hitbox, Location> function;

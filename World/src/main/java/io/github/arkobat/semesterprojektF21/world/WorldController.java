@@ -20,16 +20,9 @@ public class WorldController {
     }
 
     WorldMap init() {
-<<<<<<< HEAD
-        // TODO - Implement via config file, instead of hard coded maps
-        WorldMap map = new MapBuilder()
-                .setMapId("map1")
-                .setMapFileName("level3")
-=======
         WorldMap lvl0 = new MapBuilder()
                 .setMapFileName("level0")
                 .setMusic("main_theme.mp3")
->>>>>>> e70eba32c145443e1fca12999d97639b79603078
                 .build();
         addMap(lvl0);
 
@@ -53,6 +46,35 @@ public class WorldController {
                 .build();
         lvl2.setNextMap(lvl3);
         addMap(lvl3);
+
+        WorldMap lvl4 = new MapBuilder()
+                .setMapFileName("level4")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl3.setNextMap(lvl4);
+        addMap(lvl4);
+
+        WorldMap lvl5 = new MapBuilder()
+                .setMapFileName("level5")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl4.setNextMap(lvl5);
+        addMap(lvl5);
+
+        WorldMap lvl6 = new MapBuilder()
+                .setMapFileName("level6")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl5.setNextMap(lvl6);
+        addMap(lvl6);
+
+        WorldMap lvl7 = new MapBuilder()
+                .setMapFileName("level7")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl6.setNextMap(lvl7);
+        addMap(lvl7);
+        lvl7.setNextMap(lvl0);
 
         return lvl0;
     }

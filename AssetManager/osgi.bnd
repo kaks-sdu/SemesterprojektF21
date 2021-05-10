@@ -1,1 +1,4 @@
-Export-Package: io.github.arkobat.semesterprojektF21.assetmanager.*;com.badlogic.gdx.*
+Bundle-SymbolicName: SemesterProjectGroup1_AssetManager
+Bundle-ActivationPolicy: lazy
+Export-Package: io.github.arkobat.semesterprojektF21.assetmanager.*
+Import-Package: io.github.arkobat.semesterprojektF21.common.*;com.badlogic.gdx.*

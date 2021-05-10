@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 //TODO: Move to managers folder without breaking
@@ -42,6 +41,10 @@ public class AssetLoader {
             instances.put(module, instance);
         }
         return instance;
+    }
+
+    public FileHandle loadFile(String fileName) {
+        return new FileHandle(getRawFilePath(fileName));
     }
 
     private String getJarUrl(String fileName) {

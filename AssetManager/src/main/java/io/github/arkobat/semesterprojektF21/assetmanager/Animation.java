@@ -3,6 +3,7 @@ package io.github.arkobat.semesterprojektF21.assetmanager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 
 public class Animation {

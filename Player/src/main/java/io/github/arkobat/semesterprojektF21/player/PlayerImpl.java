@@ -63,12 +63,13 @@ public class PlayerImpl implements Player {
 
     @Override
     public Color getNextColor() {
-        return colors[++currentColor % colors.length];
+        return colors[(currentColor + 1) % colors.length];
     }
 
     @Override
     public Color getPreviousColor() {
-        return colors[--currentColor % colors.length];
+        if (currentColor == 0) return colors[colors.length - 1];
+        return colors[currentColor - 1];
     }
 
     @Override

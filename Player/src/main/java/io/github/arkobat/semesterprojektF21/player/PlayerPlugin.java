@@ -26,8 +26,6 @@ public class PlayerPlugin implements GamePluginService {
         // TODO: Setup tests for assets loading
         // Set current animation
         player.setCurrentAnimation(player.getAnimation("idle"));
-
-        System.out.println("Started Player plugin from module scope");
     }
 
     @Override

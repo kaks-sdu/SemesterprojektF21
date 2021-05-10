@@ -38,7 +38,7 @@
 
         <dependency>
             <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
-            <artifactId>CommonTexture</artifactId>
+            <artifactId>AssetManager</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -53,6 +53,7 @@
             <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
+
 
     </dependencies>
 

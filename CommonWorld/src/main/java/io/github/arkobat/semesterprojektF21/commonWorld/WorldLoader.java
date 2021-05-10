@@ -1,6 +1,5 @@
 package io.github.arkobat.semesterprojektF21.commonWorld;
 
-import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,6 +10,8 @@ public interface WorldLoader {
      * @return the initial world
      */
     WorldTemp start(@NotNull GameData gameData);
+
+    WorldTemp getWorld(String name);
 
     void stop();
 

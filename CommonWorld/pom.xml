@@ -9,8 +9,8 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.common</bundle.symbolicName>
-        <bundle.namespace>io.github.arkobat.semesterprojektF21</bundle.namespace>
+        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.commonWorld</bundle.symbolicName>
+        <bundle.namespace>io.github.arkobat.semesterprojektF21.commonWorld</bundle.namespace>
     </properties>
 
     <modelVersion>4.0.0</modelVersion>
@@ -28,6 +28,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>AssetManager</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

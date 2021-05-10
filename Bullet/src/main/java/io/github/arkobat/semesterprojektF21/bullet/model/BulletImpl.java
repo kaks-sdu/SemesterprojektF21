@@ -1,28 +1,33 @@
 package io.github.arkobat.semesterprojektF21.bullet.model;
 
-import io.github.arkobat.semesterprojektF21.common.*;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
-import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import io.github.arkobat.semesterprojektF21.bullet.BulletPlugin;
+import io.github.arkobat.semesterprojektF21.common.*;
+import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
 import org.jetbrains.annotations.NotNull;
 
 public class BulletImpl implements Bullet {
 
-    private final Hitbox hitbox = new Hitbox(4, 2);
+    private final Hitbox hitbox;
     private final Color color;
-    private final World world;
+    private World world;
     private final Location location;
     private Vector velocity;
     private long spawnTime;
     private Animation animation;
 
     public BulletImpl(Color color, World world, Location location, Vector velocity) {
+        this.hitbox = new Hitbox(3, 1);
         this.color = color;
         this.world = world;
         this.location = location;
         this.velocity = velocity;
         this.spawnTime = System.currentTimeMillis();
-        this.animation = new Animation(BulletPlugin.MODULE_NAME, "bullet/laser_" +color.lowerCase()+".png", 1, 50);
+        this.animation = new Animation(BulletPlugin.MODULE_NAME, "bullet/laser_" + color.lowerCase() + ".png", 1, 50);
+
+        if (this.location.getDirection() == Direction.LEFT) {
+            this.location.setX(location.getX() - hitbox.getWidth());
+        }
     }
 
     @Override
@@ -53,6 +58,12 @@ public class BulletImpl implements Bullet {
     @Override
     public @NotNull World getWorld() {
         return this.world;
+    }
+
+    @Override
+    public void setWorld(@NotNull World world) {
+        this.world.removeEntity(this);
+        this.world = world;
     }
 
     @Override

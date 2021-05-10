@@ -30,10 +30,14 @@ public class BulletListener extends EventListener {
             }
         }
         list.removeAll(toRemove);
+        if (list.size() == 0) {
+            return;
+        }
 
         for (Entity entity : list) {
             ((Damageable) entity).kill();
         }
+        event.getEntity().getWorld().removeEntity(event.getEntity());
         /*
         // This we like
         List betterList = event.getEntity().getWorld().getEntities()

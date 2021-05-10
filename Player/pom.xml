@@ -27,7 +27,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonTexture</artifactId>
+            <artifactId>CommonWorld</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>AssetManager</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

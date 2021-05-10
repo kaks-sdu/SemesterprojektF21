@@ -11,7 +11,7 @@
                name="GameProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
 
    <reference bind="addTextureRenderService" cardinality="0..n"
-               interface="io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService"
+               interface="io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService"
                name="TextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
 
     <reference bind="addWorldLoaderService" cardinality="0..n"

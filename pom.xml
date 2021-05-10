@@ -54,7 +54,7 @@
         <module>OSGiLibGDX</module>
         <module>Core</module>
         <module>Common</module>
-        <module>CommonTexture</module>
+        <module>AssetManager</module>
         <module>CommonWorld</module>
         <module>Player</module>
         <module>World</module>
@@ -62,6 +62,7 @@
         <module>Weapon</module>
         <module>Collision</module>
         <module>Bullet</module>
+        <module>Overlay</module>
     </modules>
 
     <build>
@@ -71,6 +72,8 @@
                 <artifactId>maven-pax-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <!--
                                | some example Pax-Runner settings
                               -->
@@ -112,6 +115,18 @@
             <artifactId>org-openide-util-lookup</artifactId>
             <version>RELEASE122</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.9.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

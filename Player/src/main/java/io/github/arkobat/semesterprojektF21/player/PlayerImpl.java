@@ -2,7 +2,10 @@ package io.github.arkobat.semesterprojektF21.player;
 
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
+import io.github.arkobat.semesterprojektF21.common.event.EntityDeathEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +16,6 @@ import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NA
 
 public class PlayerImpl implements Player {
 
-    @Setter
     private World world;
     private final Location location;
     private Color[] colors;
@@ -61,12 +63,13 @@ public class PlayerImpl implements Player {
 
     @Override
     public Color getNextColor() {
-        return colors[++currentColor % colors.length];
+        return colors[(currentColor + 1) % colors.length];
     }
 
     @Override
     public Color getPreviousColor() {
-        return colors[--currentColor % colors.length];
+        if (currentColor == 0) return colors[colors.length - 1];
+        return colors[currentColor - 1];
     }
 
     @Override
@@ -91,12 +94,20 @@ public class PlayerImpl implements Player {
 
     @Override
     public void kill() {
-        System.out.println("Yooo, you dead");
+        EntityDeathEvent deathEvent = new EntityDeathEvent(this);
+        EventManager.callEvent(deathEvent);
     }
 
     @Override
     public @NotNull World getWorld() {
         return this.world;
+    }
+
+    @Override
+    public void setWorld(@NotNull World world) {
+        this.world.removeEntity(this);
+        world.addEntity(this);
+        this.world = world;
     }
 
     @NotNull

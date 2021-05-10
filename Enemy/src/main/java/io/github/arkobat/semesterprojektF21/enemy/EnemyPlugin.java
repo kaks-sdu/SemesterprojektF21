@@ -1,18 +1,17 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
+import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
 import io.github.arkobat.semesterprojektF21.astar.AStar;
-import io.github.arkobat.semesterprojektF21.astar.Node;
 import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
-import io.github.arkobat.semesterprojektF21.common.texture.Animation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
-import java.util.List;
 
 public class EnemyPlugin implements GamePluginService {
     @Override
@@ -32,9 +31,9 @@ public class EnemyPlugin implements GamePluginService {
         // Set current animation
         enemy.setCurrentAnimation(enemy.getAnimation("idle"));
 
-        System.out.println("Started enemy plugin");
+        //System.out.println("Started enemy plugin");
 
-        System.out.println("Printing 2d map representation");
+        //System.out.println("Printing 2d map representation");
         AStar aStar = new AStar(enemy);
         enemy.setAi(aStar);
 
@@ -52,6 +51,5 @@ public class EnemyPlugin implements GamePluginService {
         for (Entity enemy : enemies) {
             world.removeEntity(enemy);
         }
-        System.out.println("Stopped enemy plugin");
     }
 }

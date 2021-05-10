@@ -1,7 +1,6 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.semesterprojektF21.astar.Node;
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -10,12 +9,11 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.common.texture.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class EnemyControlSystem implements GameProcessingService, TextureRenderService {
 
@@ -80,7 +78,7 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
     }
 
     @Override
-    public void render(GameData gameData, World world, SpriteBatch sb) {
+    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
         for (Entity entity : world.getEntities(Enemy.class)) {
             Enemy enemy = (Enemy) entity;
             Location loc = enemy.getLocation();

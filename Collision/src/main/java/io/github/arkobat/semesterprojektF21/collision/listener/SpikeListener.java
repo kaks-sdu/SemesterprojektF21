@@ -46,7 +46,7 @@ public class SpikeListener extends EventListener {
         for (MapProperties property : properties) {
             if (!property.containsKey("color")) continue;
             Color color = Color.valueOf(property.get("color", String.class));
-            if (color != event.getEntity().getColor()) {
+            if (color != Color.ALL && color != event.getEntity().getColor()) {
                 toRemove.add(property);
             }
         }
@@ -55,15 +55,6 @@ public class SpikeListener extends EventListener {
         if (properties.size() == 0) {
             return;
         }
-        /*
-        if (properties.stream().allMatch(property -> {
-            @Nullable Color color = property.get("color", Color.class);
-            if (color == null) return false;
-            return color != event.getEntity().getColor();
-        })) {
-            return;
-        }
-         */
 
         int health = ((Damageable) event.getEntity()).getHealth();
         EntityHealthChangeEvent healthEvent = new EntityHealthChangeEvent(event.getEntity(), 0);

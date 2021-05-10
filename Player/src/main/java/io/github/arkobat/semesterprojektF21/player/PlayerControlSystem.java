@@ -27,7 +27,7 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     private final static AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
     private static final float acceleration = 150F;
     private static final float deacceleration = 250F;
-    private static final float jumpAcceleration = 75F;
+    private static final float jumpAcceleration = 80F;
     private static final float gravity = 250F;
     private static final float maxAcceleration = 75F;
 

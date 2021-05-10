@@ -1,7 +1,7 @@
-package io.github.arkobat.semesterprojektF21.world;
+package io.github.arkobat.semesterprojektF21.overlay;
 
-import io.github.arkobat.semesterprojektF21.world.model.MapBuilder;
-import io.github.arkobat.semesterprojektF21.world.model.WorldMap;
+import io.github.arkobat.semesterprojektF21.overlay.model.MapBuilder;
+import io.github.arkobat.semesterprojektF21.overlay.model.WorldMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

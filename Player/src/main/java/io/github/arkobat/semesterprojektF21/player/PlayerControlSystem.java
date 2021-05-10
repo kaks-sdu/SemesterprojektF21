@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -16,7 +18,6 @@ import io.github.arkobat.semesterprojektF21.common.event.EntityTurnEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
 import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NAME;
@@ -165,13 +166,14 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
     }
 
     @Override
-    public void render(GameData gameData, World world, SpriteBatch sb) {
+    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
         for (Entity entity : world.getEntities(PlayerImpl.class)) {
             PlayerImpl player = (PlayerImpl) entity;
             Location loc = player.getLocation();
 
             // Draw animation
             sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + player.getHitbox().getOffsetX(), loc.getY() + player.getHitbox().getOffsetY());
+            return;
         }
     }
 

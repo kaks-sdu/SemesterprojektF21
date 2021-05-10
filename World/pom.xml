@@ -9,8 +9,8 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.world</bundle.symbolicName>
-        <bundle.namespace>io.github.arkobat.semesterprojektF21.world</bundle.namespace>
+        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.overlay</bundle.symbolicName>
+        <bundle.namespace>io.github.arkobat.semesterprojektF21.overlay</bundle.namespace>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>

@@ -20,9 +20,9 @@ public class ShootListener extends EventListener {
         Hitbox hb = event.getEntity().getHitbox();
         Direction direction = loc.getDirection();
 
-        System.out.println(event.getEntity().getClass().getName());
         float x = loc.getX();
-        if (direction == Direction.RIGHT) x += hb.getWidth();
+        if (direction == Direction.RIGHT) x += hb.getWidth() + 3;
+        else x -= 3;
         float y = loc.getY() + hb.getOffsetY() + hb.getHeight() / 2;
 
         Bullet bullet = new BulletImpl(

@@ -1,13 +1,14 @@
 package io.github.arkobat.semesterprojektF21.bullet.listener;
 
 import io.github.arkobat.semesterprojektF21.bullet.BulletControlSystem;
+import io.github.arkobat.semesterprojektF21.bullet.model.BulletImpl;
 import io.github.arkobat.semesterprojektF21.common.Direction;
+import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
 import io.github.arkobat.semesterprojektF21.common.event.EntityShootEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 import io.github.arkobat.semesterprojektF21.common.weapon.Bullet;
-import io.github.arkobat.semesterprojektF21.bullet.model.BulletImpl;
 
 public class ShootListener extends EventListener {
 
@@ -16,11 +17,19 @@ public class ShootListener extends EventListener {
     @Override
     public void onEntityShoot(EntityShootEvent event) {
         Location loc = event.getEntity().getLocation();
+        Hitbox hb = event.getEntity().getHitbox();
+        Direction direction = loc.getDirection();
+
+        System.out.println(event.getEntity().getClass().getName());
+        float x = loc.getX();
+        if (direction == Direction.RIGHT) x += hb.getWidth();
+        float y = loc.getY() + hb.getOffsetY() + hb.getHeight() / 2;
+
         Bullet bullet = new BulletImpl(
                 event.getEntity().getColor(),
                 event.getEntity().getWorld(),
-                new Location(loc.getX(), loc.getY()),
-                new Vector(event.getEntity().getLocation().getDirection() == Direction.LEFT ? -BULLET_SPEED : BULLET_SPEED, 0)
+                new Location(x, y, direction),
+                new Vector(direction == Direction.LEFT ? -BULLET_SPEED : BULLET_SPEED, 0)
         );
 
         event.getEntity().getWorld().addEntity(bullet);

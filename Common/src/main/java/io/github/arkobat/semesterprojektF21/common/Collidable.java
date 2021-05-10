@@ -29,11 +29,11 @@ public interface Collidable {
     @NotNull Location getLocation();
 
     default boolean collides(Collidable collidable) {
-        float thisX = this.getLocation().getX() + this.getHitbox().getOffsetX();
-        float otherX = collidable.getLocation().getX() + collidable.getHitbox().getOffsetX();
+        float thisX = this.getLocation().getX();
+        float otherX = collidable.getLocation().getX();
 
-        float thisY = this.getLocation().getY() + this.getHitbox().getOffsetY();
-        float otherY = collidable.getLocation().getY() + collidable.getHitbox().getOffsetY();
+        float thisY = this.getLocation().getY() ;
+        float otherY = collidable.getLocation().getY();
 
         return thisX < otherX + collidable.getHitbox().getWidth() &&
                 thisX + this.getHitbox().getWidth() > otherX &&

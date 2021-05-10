@@ -1,5 +1,6 @@
 package io.github.arkobat.semesterprojektF21.core.listener;
 
+import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 import io.github.arkobat.semesterprojektF21.common.event.LevelChangeEvent;
@@ -27,5 +28,6 @@ public class LevelChangeListener extends EventListener {
         }
         game.setWorld(nextWorld);
         nextWorld.startMap();
+        AssetLoader.getInstance("Core").playSound("portal.wav", "sound");
     }
 }

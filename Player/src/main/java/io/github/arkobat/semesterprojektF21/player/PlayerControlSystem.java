@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static io.github.arkobat.semesterprojektF21.player.PlayerPlugin.MODULE_NAME;
 
-public class PlayerControlSystem implements GameProcessingService, TextureRenderService {
+public class PlayerControlSystem implements GameProcessingService {
 
     private final static AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
     private static final float acceleration = 150F;
@@ -162,18 +162,6 @@ public class PlayerControlSystem implements GameProcessingService, TextureRender
         if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             loc.setY(loc.getY() - 32);
             player.getVelocity().setY(0);
-        }
-    }
-
-    @Override
-    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
-        for (Entity entity : world.getEntities(PlayerImpl.class)) {
-            PlayerImpl player = (PlayerImpl) entity;
-            Location loc = player.getLocation();
-
-            // Draw animation
-            sb.draw(player.getCurrentAnimation().getFrame(), loc.getX() + player.getHitbox().getOffsetX(), loc.getY() + player.getHitbox().getOffsetY());
-            return;
         }
     }
 

@@ -2,10 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.Game">
     <implementation class="io.github.arkobat.semesterprojektF21.core.Game"/>
 
-    <reference bind="addPostEntityProcessingService" cardinality="0..n"
-               interface="io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService"
-               name="GamePostProcessingService" policy="dynamic" unbind="removePostEntityProcessingService"/>
-
     <reference bind="addEntityProcessingService" cardinality="0..n"
                interface="io.github.arkobat.semesterprojektF21.common.game.GameProcessingService"
                name="GameProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>

@@ -8,7 +8,7 @@ public interface Colorable {
      * Get the current color.
      * @return Color - Color is an enum.
      */
-    Color getColor();
+    @NotNull Color getColor();
 
     /**
      * Set the color

@@ -3,7 +3,7 @@
    <enemy>
       <color>ORANGE</color>
       <spawnX>31</spawnX>
-      <spawnY>24</spawnY>
+      <spawnY>10</spawnY>
       <type>NORMAL</type>
    </enemy>
 </enemies>

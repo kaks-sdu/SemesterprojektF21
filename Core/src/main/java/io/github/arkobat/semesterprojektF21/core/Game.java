@@ -210,9 +210,9 @@ public class Game implements ApplicationListener {
     @SuppressWarnings("unused")
     public void addGamePluginService(GamePluginService plugin) {
         gamePluginList.add(plugin);
-        GameData gameData = gameDataSupplier.get();
 
         if (created) {
+            GameData gameData = gameDataSupplier.get();
             plugin.start(gameData, world);
             System.out.println("Reloaded plugin: " + plugin.getClass().getName());
         } else {

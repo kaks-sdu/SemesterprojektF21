@@ -28,14 +28,25 @@ public class Enemy implements LivingEntity {
     private float jumpHeight = 75;
     private AStar ai;
 
-    public Enemy(World world, Color[] colors, Location location){
+    public Enemy(World world, Color[] colors, Location location) {
         this.world = world;
         this.colors = colors;
+        this.currentColor = 0;
         this.location = location;
         this.size = 1;
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 12, -4, 0);
-        animatons = new HashMap<>();
+        this.animatons = new HashMap<>();
+        this.ai = new AStar(this);
+
+        String moduleName = "Enemy";
+        Animation idleAnimation = new Animation(moduleName, "idle/enemy_0_blue_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(moduleName, "run/enemy_0_blue_run.png", 4, 0.5f);
+
+        addAnimation("idle", idleAnimation);
+        addAnimation("run", runAnimation);
+        // Set current animation
+        setCurrentAnimation(idleAnimation);
     }
 
     public void setJumpHeight(float jumpHeight) {
@@ -102,13 +113,13 @@ public class Enemy implements LivingEntity {
     }
 
     @Override
-    public Color getColor() {
-        return null;
+    public @NotNull Color getColor() {
+        return this.colors[currentColor];
     }
 
     @Override
     public void setColor(@NotNull Color color) {
-        // Pass
+        throw new IllegalStateException("Not implemented in enemies");
     }
 
     @Override
@@ -127,7 +138,7 @@ public class Enemy implements LivingEntity {
     }
 
     @Override
-    public World getWorld() {
+    public @NotNull World getWorld() {
         return world;
     }
 

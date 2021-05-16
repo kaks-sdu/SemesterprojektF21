@@ -46,7 +46,7 @@ public class BulletImpl implements Bullet {
     }
 
     @Override
-    public Color getColor() {
+    public @NotNull Color getColor() {
         return this.color;
     }
 

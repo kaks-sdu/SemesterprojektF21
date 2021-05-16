@@ -14,6 +14,8 @@ import io.github.arkobat.semesterprojektF21.common.Hitbox;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
+import io.github.arkobat.semesterprojektF21.common.event.EventManager;
+import io.github.arkobat.semesterprojektF21.common.event.WorldStartEvent;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import lombok.Getter;
 import lombok.Setter;
@@ -88,12 +90,18 @@ public class WorldMap implements WorldTemp {
     }
 
     @Override
+    public @NotNull String getName() {
+        return mapFileName;
+    }
+
+    @Override
     public void startMap() {
         for (Entity player : getEntities(Player.class)) {
             player.getLocation().setX(playerStart.getX());
             player.getLocation().setY(playerStart.getY());
         }
         toggleMusic(true);
+        EventManager.callEvent(new WorldStartEvent(this));
     }
 
     private void toggleMusic(boolean start) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enemies>
+   <enemy>
+      <color>ORANGE</color>
+      <spawnX>31</spawnX>
+      <spawnY>10</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+</enemies>

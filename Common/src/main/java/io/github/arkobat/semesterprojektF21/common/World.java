@@ -39,4 +39,10 @@ public interface World {
      */
     void removeEntity(@NotNull Entity entity);
 
+    /**
+     * Get the name of the world. Will match the file name without any extensions
+     * @return the name of the world
+     */
+    @NotNull String getName();
+
 }

@@ -44,12 +44,11 @@ public class EnemyControlSystem implements GameProcessingService {
 
             // Track player
             for (Entity player : world.getEntities(Player.class)) {
-                //System.out.println("Player location: " + player.getLocation().getX() + ", " + player.getLocation().getY());
                 enemy.getAi().gotoLocation(player.getLocation());
             }
 
-            loc.setX((float) (loc.getX() + velocity.getX() * delta));
-            loc.setY((float) (loc.getY() + velocity.getY() * delta));
+            loc.setX(loc.getX() + velocity.getX() * delta);
+            loc.setY(loc.getY() + velocity.getY() * delta);
 
             // Check collision X
             EntityMoveEvent event = new EntityMoveEvent(enemy, enemy.getLocation(), new Location(oldX, oldY));

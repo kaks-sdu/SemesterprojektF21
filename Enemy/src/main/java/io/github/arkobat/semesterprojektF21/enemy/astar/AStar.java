@@ -37,9 +37,9 @@ public class AStar {
     public AStar(Enemy entity) {
         this.entity = entity;
         this.path = new ArrayList<>();
-        tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
+        this.tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
         this.map = new int[tiledMapTileLayer.getWidth()][tiledMapTileLayer.getHeight()];
-        isRunning = false;
+        this.isRunning = false;
 
         // Fill map
         for (int x = 0; x < tiledMapTileLayer.getWidth(); x++) {
@@ -47,10 +47,10 @@ public class AStar {
                 MapProperties properties = getProperties(new Location(x, y));
                 // If there is a wall at the current location
                 if (properties.containsKey("collision")) {
-                    if (matchesColor(properties)) continue;
+                    if (!matchesColor(properties)) continue;
                     map[x][y] = WALL;
                 } else if (properties.containsKey("spikes")) {
-                    if (matchesColor(properties)) continue;
+                    if (!matchesColor(properties)) continue;
                     map[x][y] = SPIKE;
                 }
             }
@@ -66,7 +66,7 @@ public class AStar {
         startLocation = new Location(entityX, entityY);
 
         // Dunno why, but the map is always sideways
-        //displayMap();
+        // displayMap();
     }
 
     /**
@@ -356,8 +356,9 @@ public class AStar {
     }
 
     private void displayMap() {
-        for (int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[0].length; y++) {
+        if (map.length == 0) return;
+        for (int y = map[0].length - 1; y >= 0; y--) {
+            for (int x = 0; x < map.length; x++) {
                 System.out.printf("%5d", map[x][y]);
             }
             System.out.println();

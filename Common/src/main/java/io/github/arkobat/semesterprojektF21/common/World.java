@@ -11,7 +11,7 @@ public interface World {
     /**
      * Get all entities in the world
      *
-     * @return a collection on entities
+     * @return A collection on entities
      */
     @NotNull Collection<Entity> getEntities();
 
@@ -20,7 +20,7 @@ public interface World {
      *
      * @param entityTypes Filter of which types wanted
      * @param <E>         Filter of which types wanted
-     * @return a filtered collection on entities
+     * @return A filtered collection on entities
      */
     @NotNull <E extends Entity> Collection<Entity> getEntities(@NotNull Class<E>... entityTypes);
 
@@ -28,14 +28,14 @@ public interface World {
     /**
      * Adds an entity.
      *
-     * @param entity - an entity has a location and a vector for velocity.
+     * @param entity An entity has a location and a vector for velocity.
      */
     void addEntity(@NotNull Entity entity);
 
     /**
      * Removes an entity.
      *
-     * @param entity - an entity has a location and a vector for velocity.
+     * @param entity An entity has a location and a vector for velocity.
      */
     void removeEntity(@NotNull Entity entity);
 

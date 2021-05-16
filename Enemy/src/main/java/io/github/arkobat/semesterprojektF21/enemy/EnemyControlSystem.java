@@ -15,7 +15,7 @@ import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import org.jetbrains.annotations.NotNull;
 
-public class EnemyControlSystem implements GameProcessingService, TextureRenderService {
+public class EnemyControlSystem implements GameProcessingService {
 
     private static final float acceleration = 150F;
     private static final float deacceleration = 250F;
@@ -77,14 +77,4 @@ public class EnemyControlSystem implements GameProcessingService, TextureRenderS
         }
     }
 
-    @Override
-    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
-        for (Entity entity : world.getEntities(Enemy.class)) {
-            Enemy enemy = (Enemy) entity;
-            Location loc = enemy.getLocation();
-
-            // Draw animation
-            sb.draw(enemy.getCurrentAnimation().getFrame(), loc.getX() + entity.getHitbox().getOffsetX(), loc.getY() + entity.getHitbox().getOffsetY());
-        }
-    }
 }

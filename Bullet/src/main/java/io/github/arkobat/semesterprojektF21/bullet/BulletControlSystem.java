@@ -21,7 +21,7 @@ import java.util.LinkedList;
 
 import static io.github.arkobat.semesterprojektF21.bullet.BulletPlugin.MODULE_NAME;
 
-public class BulletControlSystem implements GameProcessingService, TextureRenderService {
+public class BulletControlSystem implements GameProcessingService {
 
     public static final AssetLoader assetLoader = AssetLoader.getInstance(MODULE_NAME);
 
@@ -56,15 +56,6 @@ public class BulletControlSystem implements GameProcessingService, TextureRender
         loc.setY(moveEvent.getNewLocation().getY());
     }
 
-    @Override
-    public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
-        for (Entity entity : world.getEntities(BulletImpl.class)) {
-            BulletImpl bullet = (BulletImpl) entity;
-            Location loc = bullet.getLocation();
 
-            // Draw animation
-            sb.draw(bullet.getAnimation().getFrame(), loc.getX() + bullet.getHitbox().getOffsetX(), loc.getY() + bullet.getHitbox().getOffsetY());
-        }
-    }
 
 }

@@ -13,11 +13,6 @@ public interface GamePluginService {
      */
     void start(@NotNull GameData gameData, @NotNull World world);
 
-    @Deprecated
-    default void load(@NotNull GameData gameData, @NotNull World world) {
-
-    }
-
     /**
      * Stop the game
      *

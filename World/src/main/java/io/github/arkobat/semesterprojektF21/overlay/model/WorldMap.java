@@ -135,7 +135,6 @@ public class WorldMap implements WorldTemp {
 
             gameData.getCamera().position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
             gameData.getCamera().update();
-
         }
     }
 
@@ -144,5 +143,10 @@ public class WorldMap implements WorldTemp {
         return this.collisionLayer;
     }
 
+
+    @Override
+    public void dispose() {
+        map.dispose();
+    }
 
 }

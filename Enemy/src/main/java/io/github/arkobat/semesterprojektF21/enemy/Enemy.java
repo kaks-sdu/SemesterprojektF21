@@ -21,7 +21,7 @@ public class Enemy implements LivingEntity {
     private int health;
     private Vector velocity;
     private Hitbox hitbox;
-    private Map<String, Animation> animatons;
+    private final Map<String, Animation> animatons;
     private Animation currentAnimation;
     private float speed = 50f;
     private int jumpCharges = 1;
@@ -40,8 +40,9 @@ public class Enemy implements LivingEntity {
         this.ai = new AStar(this);
 
         String moduleName = "Enemy";
-        Animation idleAnimation = new Animation(moduleName, "idle/enemy_0_blue_idle.png", 2, 0.5f);
-        Animation runAnimation = new Animation(moduleName, "run/enemy_0_blue_run.png", 4, 0.5f);
+        String color = getColor().lowerCase();
+        Animation idleAnimation = new Animation(moduleName, "idle/enemy_0_" + color + "_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(moduleName, "run/enemy_0_" + color + "_run.png", 4, 0.5f);
 
         addAnimation("idle", idleAnimation);
         addAnimation("run", runAnimation);

@@ -3,43 +3,43 @@
    <enemy>
       <color>BLUE</color>
       <spawnX>9</spawnX>
-      <spawnY>9</spawnY>
+      <spawnY>25</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>GREEN</color>
       <spawnX>16</spawnX>
-      <spawnY>9</spawnY>
+      <spawnY>25</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>BLUE</color>
       <spawnX>35</spawnX>
-      <spawnY>7</spawnY>
+      <spawnY>27</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>BLUE</color>
       <spawnX>44</spawnX>
-      <spawnY>9</spawnY>
+      <spawnY>25</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>GREEN</color>
       <spawnX>8</spawnX>
-      <spawnY>20</spawnY>
+      <spawnY>14</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>ORANGE</color>
       <spawnX>16</spawnX>
-      <spawnY>20</spawnY>
+      <spawnY>14</spawnY>
       <type>NORMAL</type>
    </enemy>
       <enemy>
       <color>BLUE</color>
       <spawnX>36</spawnX>
-      <spawnY>20</spawnY>
+      <spawnY>14</spawnY>
       <type>NORMAL</type>
    </enemy>
 </enemies>

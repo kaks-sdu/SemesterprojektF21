@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.listener;
+package io.github.arkobat.semesterprojektF21.enemy.listener;
 
 import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.Color;

@@ -1,15 +1,11 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
-import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
-import io.github.arkobat.semesterprojektF21.astar.AStar;
-import io.github.arkobat.semesterprojektF21.common.Color;
-import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.World;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
-import io.github.arkobat.semesterprojektF21.listener.WorldStartListener;
+import io.github.arkobat.semesterprojektF21.enemy.listener.WorldStartListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

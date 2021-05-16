@@ -1,9 +1,9 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
 import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
-import io.github.arkobat.semesterprojektF21.astar.AStar;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.LivingEntity;
+import io.github.arkobat.semesterprojektF21.enemy.astar.AStar;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,28 +49,28 @@ public class Enemy implements LivingEntity {
         setCurrentAnimation(idleAnimation);
     }
 
-    public void setJumpHeight(float jumpHeight) {
-        this.jumpHeight = jumpHeight;
-    }
-
     public float getJumpHeight() {
         return jumpHeight;
     }
 
-    public void setJumpCharges(int jumpCharges) {
-        this.jumpCharges = jumpCharges;
+    public void setJumpHeight(float jumpHeight) {
+        this.jumpHeight = jumpHeight;
     }
 
     public int getJumpCharges() {
         return jumpCharges;
     }
 
-    public void setAi(AStar ai) {
-        this.ai = ai;
+    public void setJumpCharges(int jumpCharges) {
+        this.jumpCharges = jumpCharges;
     }
 
     public AStar getAi() {
         return ai;
+    }
+
+    public void setAi(AStar ai) {
+        this.ai = ai;
     }
 
     public float getSpeed() {
@@ -89,12 +89,12 @@ public class Enemy implements LivingEntity {
         return animatons.get(id);
     }
 
-    public void setCurrentAnimation(Animation currentAnimation) {
-        this.currentAnimation = currentAnimation;
-    }
-
     public Animation getCurrentAnimation() {
         return currentAnimation;
+    }
+
+    public void setCurrentAnimation(Animation currentAnimation) {
+        this.currentAnimation = currentAnimation;
     }
 
     @Override

@@ -2,6 +2,9 @@ package io.github.arkobat.semesterprojektF21.common;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represent different objects that have the ability to change color
+ */
 public interface Colorable {
 
     /**

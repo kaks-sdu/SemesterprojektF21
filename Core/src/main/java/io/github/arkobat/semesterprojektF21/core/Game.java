@@ -15,13 +15,11 @@ import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GamePluginService;
-import io.github.arkobat.semesterprojektF21.common.game.GamePostProcessingService;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import io.github.arkobat.semesterprojektF21.core.listener.LevelChangeListener;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +37,6 @@ public class Game implements ApplicationListener {
     private static final List<GamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
-    private static List<GamePostProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
     @Getter
     private WorldTemp world;
     private boolean created = false;
@@ -133,12 +130,6 @@ public class Game implements ApplicationListener {
         for (GameProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
         }
-
-        // Post Update
-        for (GamePostProcessingService postEntityProcessorService : postEntityProcessorList) {
-            postEntityProcessorService.process(gameData, world);
-        }
-
     }
 
     @Override
@@ -146,6 +137,10 @@ public class Game implements ApplicationListener {
         final float mapZoom = 5.0F;
         camera.viewportWidth = width / mapZoom;
         camera.viewportHeight = height / mapZoom;
+
+        for (TextureRenderService service : textureRenderList) {
+            service.resize(width, height);
+        }
     }
 
     @Override
@@ -158,6 +153,9 @@ public class Game implements ApplicationListener {
 
     @Override
     public void dispose() {
+        for (TextureRenderService service : textureRenderList) {
+            service.dispose();
+        }
     }
 
     public void setWorld(WorldTemp world) {
@@ -207,17 +205,7 @@ public class Game implements ApplicationListener {
         System.out.println("Removed EntityProcessingService plugin: " + eps.getClass().getName());
     }
 
-    @SuppressWarnings("unused")
-    public void addPostEntityProcessingService(GamePostProcessingService eps) {
-        postEntityProcessorList.add(eps);
-        System.out.println("Added PostEntityProcessingService plugin: " + eps.getClass().getName());
-    }
 
-    @SuppressWarnings("unused")
-    public void removePostEntityProcessingService(GamePostProcessingService eps) {
-        postEntityProcessorList.remove(eps);
-        System.out.println("Removed PostEntityProcessingService plugin: " + eps.getClass().getName());
-    }
 
     @SuppressWarnings("unused")
     public void addGamePluginService(GamePluginService plugin) {

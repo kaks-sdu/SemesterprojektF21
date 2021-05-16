@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.World;
@@ -16,7 +17,6 @@ public class TimeHud implements TextureRenderService {
 
     public TimeHud() {
         timeLabel = new Label("00:00:00", new Label.LabelStyle(new BitmapFont(OverlayDrawer.ASSET_LOADER.loadFile("fonts/Minecraft.fnt")), Color.WHITE));
-        timeLabel.setPosition(5, Gdx.graphics.getHeight() - 50);
         timeLabel.setScale(3F);
     }
 
@@ -28,6 +28,15 @@ public class TimeHud implements TextureRenderService {
 
         timeLabel.setText(String.format("%2d:%02d:%02d", minutes, seconds, millis % 1000));
         timeLabel.draw(sb, 1);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        timeLabel.setPosition(5, Gdx.graphics.getHeight() - 50);
+    }
+
+    @Override
+    public void dispose() {
     }
 
 }

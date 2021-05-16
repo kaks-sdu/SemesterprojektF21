@@ -28,6 +28,10 @@ public class ColorHud {
         nextColor.draw(shapeRenderer, player.getNextColor());
     }
 
+    public void resize(float width, float height) {
+        shapeRenderer.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
     private static class ColorBox {
 
         private final Location location;

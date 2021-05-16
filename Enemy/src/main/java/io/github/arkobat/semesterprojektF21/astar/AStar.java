@@ -260,6 +260,14 @@ public class AStar {
                 new Location(1, 0),
                 new Location(3, 0), // Jump +3 tiles to the right
                 new Location(-3, 0), // Jump +3 tiles to the left
+                new Location(3, 1), // Jump +3 tiles to the right + 1 up
+                new Location(3, -1),
+                new Location(-3, 1),
+                new Location(-3, -1),
+                new Location(3, 2), // Jump 3 tiles forward + 2 up
+                new Location(-3, 2),
+                new Location(3, -2), // Jump 3 tiles forward + 2 tiles down
+                new Location(-3, -2),
         };
 
         for(Location newPosition : adjacentLocations){

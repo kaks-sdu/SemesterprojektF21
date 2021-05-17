@@ -19,4 +19,14 @@ public class WeaponControlSystem implements GameProcessingService, TextureRender
     public void render(ExtendedGameData gameData, World world, SpriteBatch sb) {
 
     }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }

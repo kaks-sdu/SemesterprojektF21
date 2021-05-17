@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
-        <groupId>io.github.arkobat.semesterprojektF21</groupId>
+        <groupId>io.github.arkobat.kolorkarl</groupId>
         <artifactId>Group1SemesterProject</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+    <groupId>io.github.arkobat.kolorkarl.build</groupId>
     <artifactId>shared-plugin-settings</artifactId>
 
     <name>Group 1 SemesterProject - plugin configuration</name>
@@ -50,7 +50,7 @@
                  | dependency pom representing the global classpath of imported bundles
                 -->
                 <type>pom</type>
-                <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+                <groupId>io.github.arkobat.kolorkarl.build</groupId>
                 <artifactId>provision</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <scope>provided</scope>

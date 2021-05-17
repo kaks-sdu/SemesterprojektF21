@@ -213,7 +213,12 @@ public class Game implements ApplicationListener {
 
         if (created) {
             GameData gameData = gameDataSupplier.get();
-            plugin.start(gameData, world);
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    plugin.start(gameData, world);
+                }
+            });
             System.out.println("Reloaded plugin: " + plugin.getClass().getName());
         } else {
             System.out.println("Started plugin: " + plugin.getClass().getName());

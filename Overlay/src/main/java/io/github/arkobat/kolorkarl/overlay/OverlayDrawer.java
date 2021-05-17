@@ -29,6 +29,7 @@ public class OverlayDrawer implements GamePluginService, TextureRenderService {
 
         timeHud = new TimeHud();
         colorHud = new ColorHud();
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         started = true;
         EventManager.registerListener(timeHud);
@@ -58,7 +59,7 @@ public class OverlayDrawer implements GamePluginService, TextureRenderService {
 
     @Override
     public void resize(int width, int height) {
-        hudBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        hudBatch.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
         timeHud.resize(width, height);
         colorHud.resize(width, height);
     }

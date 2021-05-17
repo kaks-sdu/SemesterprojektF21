@@ -19,7 +19,7 @@
       <type>NORMAL</type>
    </enemy>
       <enemy>
-      <color>GREEN</color>
+      <color>ORANGE</color>
       <spawnX>34</spawnX>
       <spawnY>9</spawnY>
       <type>NORMAL</type>
@@ -31,7 +31,7 @@
       <type>NORMAL</type>
    </enemy>
       <enemy>
-      <color>ORANGE</color>
+      <color>GREEN</color>
       <spawnX>40</spawnX>
       <spawnY>9</spawnY>
       <type>NORMAL</type>

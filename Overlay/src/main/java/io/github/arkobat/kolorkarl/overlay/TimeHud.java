@@ -37,7 +37,7 @@ public class TimeHud extends EventListener implements TextureRenderService {
 
     @Override
     public void resize(int width, int height) {
-        timeLabel.setPosition(15, Gdx.graphics.getHeight() - 65);
+        timeLabel.setPosition(15, height - 65);
     }
 
     @Override

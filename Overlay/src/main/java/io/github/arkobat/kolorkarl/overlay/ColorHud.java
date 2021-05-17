@@ -29,7 +29,7 @@ public class ColorHud {
     }
 
     public void resize(float width, float height) {
-        shapeRenderer.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        shapeRenderer.getProjectionMatrix().setToOrtho2D(0, 0, width, height);
     }
 
     private static class ColorBox {

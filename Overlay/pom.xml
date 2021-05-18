@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <relativePath>../poms/compiled/pom.xml</relativePath>
-        <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+        <groupId>io.github.arkobat.kolorkarl</groupId>
         <artifactId>compiled-bundle-settings</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.overlay</bundle.symbolicName>
-        <bundle.namespace>io.github.arkobat.semesterprojektF21.overlay</bundle.namespace>
+        <bundle.symbolicName>io.github.arkobat.kolorkarl.overlay</bundle.symbolicName>
+        <bundle.namespace>io.github.arkobat.kolorkarl.overlay</bundle.namespace>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>

@@ -1,4 +1,4 @@
 Bundle-SymbolicName: SemesterProjectGroup1_Overlay
 Bundle-ActivationPolicy: lazy
 Service-Component: META-INF/overlayplugin.xml,META-INF/overlayloader.xml
-Import-Package: io.github.arkobat.semesterprojektF21.assetmanager.*;io.github.arkobat.semesterprojektF21.common.*;com.badlogic.gdx.*
+Import-Package: io.github.arkobat.kolorkarl.assetmanager.*;io.github.arkobat.kolorkarl.common.*;com.badlogic.gdx.*

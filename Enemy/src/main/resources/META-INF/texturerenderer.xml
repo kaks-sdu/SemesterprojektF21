@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.enemycontrol">
-    <implementation class="io.github.arkobat.semesterprojektF21.enemy.EnemyControlSystem"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.enemycontrol">
+    <implementation class="io.github.arkobat.kolorkarl.enemy.EnemyRender"/>
     <service>
-        <provide interface="io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService"/>
+        <provide interface="io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService"/>
     </service>
 </scr:component>

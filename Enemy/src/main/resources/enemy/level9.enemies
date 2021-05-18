@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enemies>
+   <enemy>
+      <color>BLUE</color>
+      <spawnX>9</spawnX>
+      <spawnY>25</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>GREEN</color>
+      <spawnX>16</spawnX>
+      <spawnY>25</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>BLUE</color>
+      <spawnX>35</spawnX>
+      <spawnY>27</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>BLUE</color>
+      <spawnX>44</spawnX>
+      <spawnY>25</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>GREEN</color>
+      <spawnX>8</spawnX>
+      <spawnY>14</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>ORANGE</color>
+      <spawnX>16</spawnX>
+      <spawnY>14</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+      <enemy>
+      <color>BLUE</color>
+      <spawnX>36</spawnX>
+      <spawnY>14</spawnY>
+      <type>NORMAL</type>
+   </enemy>
+</enemies>

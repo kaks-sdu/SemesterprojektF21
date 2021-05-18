@@ -2,22 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <relativePath>../poms/compiled/pom.xml</relativePath>
-        <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+        <groupId>io.github.arkobat.kolorkarl</groupId>
         <artifactId>compiled-bundle-settings</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <properties>
-        <bundle.symbolicName>io.github.arkobat.semesterprojektF21.core</bundle.symbolicName>
-        <bundle.namespace>io.github.arkobat.semesterprojektF21</bundle.namespace>
+        <bundle.symbolicName>io.github.arkobat.kolorkarl.core</bundle.symbolicName>
+        <bundle.namespace>io.github.arkobat.kolorkarl</bundle.namespace>
     </properties>
-  
+
+    <name>Core</name>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>Core</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>Core</name>
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
@@ -31,19 +31,19 @@
         </dependency>
 
         <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>CommonWorld</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>AssetManager</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -53,8 +53,6 @@
             <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -67,4 +65,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

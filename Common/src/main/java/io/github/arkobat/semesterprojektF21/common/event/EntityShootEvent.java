@@ -10,6 +10,7 @@ public class EntityShootEvent extends EntityEvent {
 
     /**
      * A constructor for {@link EntityShootEvent}
+     *
      * @param entity requires an Entity object
      */
     public EntityShootEvent(@NotNull Entity entity) {

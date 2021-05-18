@@ -13,6 +13,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancelable {
 
     /**
      * A constructor for creating a {@link EntityHealthChangeEvent}
+     *
      * @param entity requires an {@link Entity} object
      * @param health takes a int value as the entities health
      */
@@ -23,6 +24,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for getting the health value
+     *
      * @return returns an int with the health value
      */
     public int getHealth() {
@@ -31,6 +33,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for setting the health
+     *
      * @param health the int value representing the health value
      */
     public void setHealth(int health) {
@@ -39,6 +42,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for checking if the event is canceled
+     *
      * @return true if the event is canceled
      */
     @Override
@@ -48,6 +52,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for setting the canceled state
+     *
      * @param canceled true if you wish to cancel this event
      */
     @Override

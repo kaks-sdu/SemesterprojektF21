@@ -2,7 +2,6 @@ package io.github.arkobat.semesterprojektF21.common.event;
 
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,9 +15,10 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     /**
      * A constructor for creating an EntityMoveEvent
-     * @param entity an Entity object
-     * @param newLocation the new location
-     * @param oldLocation the old location
+     *
+     * @param entity      an Entity object
+     * @param newLocation the new {@link Location}
+     * @param oldLocation the old {@link Location}
      */
     public EntityMoveEvent(Entity entity, @NotNull Location newLocation, @NotNull Location oldLocation) {
         super(entity);
@@ -28,6 +28,7 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for checking if the event is canceled
+     *
      * @return true if the event is canceled
      */
     @Override
@@ -37,6 +38,7 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for setting the canceled state
+     *
      * @param canceled true if you wish to cancel this event
      */
     @Override
@@ -46,6 +48,7 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for getting the new location
+     *
      * @return returns the new location
      */
     public @NotNull Location getNewLocation() {
@@ -54,6 +57,7 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for getting the old location
+     *
      * @return returns the old location
      */
     public @NotNull Location getOldLocation() {

@@ -7,15 +7,10 @@ public interface RangedWeapon extends Weapon {
 
     /**
      * Get how many bullets are left in the chamber
+     *
      * @return the bullets in the chamber
      */
     int getChamber();
-
-    /**
-     * Get how many bullets the chamber can hold
-     * @return the max bullets for the chamber
-     */
-    int getMaxChamber();
 
     /**
      * Change the chamber with bullets.
@@ -24,5 +19,12 @@ public interface RangedWeapon extends Weapon {
      * @param bullets The amount of bullets
      */
     void setChamber(int bullets);
+
+    /**
+     * Get how many bullets the chamber can hold
+     *
+     * @return the max bullets for the chamber
+     */
+    int getMaxChamber();
 
 }

@@ -24,12 +24,14 @@ public interface Player extends LivingEntity {
 
     /**
      * Get the amount of jump charges left
+     *
      * @return the amount of jump charges
      */
     int getJumpCharges();
 
     /**
      * Set the amount of jump charges left
+     *
      * @param jumpCharges the amount of jump charges
      */
     void setJumpCharges(int jumpCharges);

@@ -2,7 +2,6 @@ package io.github.arkobat.semesterprojektF21.common.event;
 
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,7 +14,8 @@ public class EntityTurnEvent extends EntityEvent implements Cancelable {
 
     /**
      * A constructor for creating a {@link EntityTurnEvent}
-     * @param entity requires a {@link Entity} object
+     *
+     * @param entity    requires a {@link Entity} object
      * @param direction requires a Direction object
      */
     public EntityTurnEvent(@NotNull Entity entity, @NotNull Direction direction) {
@@ -26,6 +26,7 @@ public class EntityTurnEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for checking if the event is canceled
+     *
      * @return true if the event is canceled
      */
     @Override
@@ -35,6 +36,7 @@ public class EntityTurnEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for setting the canceled state
+     *
      * @param canceled true if you wish to cancel this event
      */
     @Override
@@ -44,6 +46,7 @@ public class EntityTurnEvent extends EntityEvent implements Cancelable {
 
     /**
      * A method for getting the direction
+     *
      * @return returns the direction
      */
     public @NotNull Direction getDirection() {

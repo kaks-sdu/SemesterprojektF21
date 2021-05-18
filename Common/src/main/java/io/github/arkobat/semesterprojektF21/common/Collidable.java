@@ -28,6 +28,7 @@ public interface Collidable {
 
     /**
      * Gets the current location of this entity.
+     *
      * @return the location of the collidable.
      */
     @NotNull Location getLocation();
@@ -43,7 +44,7 @@ public interface Collidable {
         float thisX = this.getLocation().getX();
         float otherX = collidable.getLocation().getX();
 
-        float thisY = this.getLocation().getY() ;
+        float thisY = this.getLocation().getY();
         float otherY = collidable.getLocation().getY();
 
         return thisX < otherX + collidable.getHitbox().getWidth() &&

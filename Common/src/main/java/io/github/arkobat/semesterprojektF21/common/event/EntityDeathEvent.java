@@ -10,6 +10,7 @@ public class EntityDeathEvent extends EntityEvent {
 
     /**
      * A constructor for creating a death event for an entity
+     *
      * @param entity requires an Entity object
      */
     public EntityDeathEvent(@NotNull Entity entity) {

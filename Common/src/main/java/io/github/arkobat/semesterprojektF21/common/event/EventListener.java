@@ -40,8 +40,7 @@ public class EventListener {
             onEntityTurn((EntityTurnEvent) event);
         } else if (event.getClass() == LevelChangeEvent.class) {
             onLevelChange((LevelChangeEvent) event);
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Unknown event");
         }
     }

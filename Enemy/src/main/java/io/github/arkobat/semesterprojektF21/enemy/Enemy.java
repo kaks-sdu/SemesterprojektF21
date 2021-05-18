@@ -1,9 +1,9 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
 import io.github.arkobat.semesterprojektF21.assetmanager.Animation;
-import io.github.arkobat.semesterprojektF21.astar.AStar;
 import io.github.arkobat.semesterprojektF21.common.*;
 import io.github.arkobat.semesterprojektF21.common.entity.LivingEntity;
+import io.github.arkobat.semesterprojektF21.enemy.astar.AStar;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class Enemy implements LivingEntity {
     private int health;
     private Vector velocity;
     private Hitbox hitbox;
-    private Map<String, Animation> animatons;
+    private final Map<String, Animation> animatons;
     private Animation currentAnimation;
     private float speed = 50f;
     private int jumpCharges = 1;
@@ -40,8 +40,9 @@ public class Enemy implements LivingEntity {
         this.ai = new AStar(this);
 
         String moduleName = "Enemy";
-        Animation idleAnimation = new Animation(moduleName, "idle/enemy_0_blue_idle.png", 2, 0.5f);
-        Animation runAnimation = new Animation(moduleName, "run/enemy_0_blue_run.png", 4, 0.5f);
+        String color = getColor().lowerCase();
+        Animation idleAnimation = new Animation(moduleName, "idle/enemy_0_" + color + "_idle.png", 2, 0.5f);
+        Animation runAnimation = new Animation(moduleName, "run/enemy_0_" + color + "_run.png", 4, 0.5f);
 
         addAnimation("idle", idleAnimation);
         addAnimation("run", runAnimation);
@@ -49,28 +50,28 @@ public class Enemy implements LivingEntity {
         setCurrentAnimation(idleAnimation);
     }
 
-    public void setJumpHeight(float jumpHeight) {
-        this.jumpHeight = jumpHeight;
-    }
-
     public float getJumpHeight() {
         return jumpHeight;
     }
 
-    public void setJumpCharges(int jumpCharges) {
-        this.jumpCharges = jumpCharges;
+    public void setJumpHeight(float jumpHeight) {
+        this.jumpHeight = jumpHeight;
     }
 
     public int getJumpCharges() {
         return jumpCharges;
     }
 
-    public void setAi(AStar ai) {
-        this.ai = ai;
+    public void setJumpCharges(int jumpCharges) {
+        this.jumpCharges = jumpCharges;
     }
 
     public AStar getAi() {
         return ai;
+    }
+
+    public void setAi(AStar ai) {
+        this.ai = ai;
     }
 
     public float getSpeed() {
@@ -89,12 +90,12 @@ public class Enemy implements LivingEntity {
         return animatons.get(id);
     }
 
-    public void setCurrentAnimation(Animation currentAnimation) {
-        this.currentAnimation = currentAnimation;
-    }
-
     public Animation getCurrentAnimation() {
         return currentAnimation;
+    }
+
+    public void setCurrentAnimation(Animation currentAnimation) {
+        this.currentAnimation = currentAnimation;
     }
 
     @Override

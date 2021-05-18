@@ -1,4 +1,4 @@
-package io.github.arkobat.semesterprojektF21.listener;
+package io.github.arkobat.semesterprojektF21.enemy.listener;
 
 import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
 import io.github.arkobat.semesterprojektF21.common.Color;
@@ -41,6 +41,7 @@ public class WorldStartListener extends EventListener {
                     int spawnX = Integer.parseInt(element.getElementsByTagName("spawnX").item(0).getTextContent());
                     int spawnY = Integer.parseInt(element.getElementsByTagName("spawnY").item(0).getTextContent());
                     Color color = Color.valueOf(element.getElementsByTagName("color").item(0).getTextContent());
+                    System.out.println("Creating enemy with color " + color);
                     Enemy enemy = new Enemy(event.getWorld(), new Color[]{color}, new Location(spawnX * 8F, spawnY * 8F));
                     event.getWorld().addEntity(enemy);
                 }

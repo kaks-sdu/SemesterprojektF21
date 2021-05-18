@@ -1,11 +1,13 @@
-package io.github.arkobat.semesterprojektF21.astar;
+package io.github.arkobat.semesterprojektF21.enemy.astar;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import io.github.arkobat.semesterprojektF21.common.Color;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 import io.github.arkobat.semesterprojektF21.enemy.Enemy;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,15 +16,16 @@ import java.util.PriorityQueue;
 
 public class AStar {
 
-    private final int WALL = 100;
-    private final int SPIKE = 200;
-    private final double LEAST_DISTANCE = 10; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate. 10 for jumping on platforms
-    private final int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
-    private final int JUMP_COST = 7;
+    private final static int WALL = 100;
+    private final static int SPIKE = 200;
+    private final static double LEAST_DISTANCE = 10; // Least distance before a node has been reached. Higher = less accurate, lower = more accurate. 10 for jumping on platforms
+    private final static int SECONDS_BEFORE_STOPPING = 5; // If the AI gets stuck, this is the time to wait before cancelling the current pathfind and finding a new one
+    private final static int JUMP_COST = 7;
 
-    private Enemy entity;
-    private int[][] map;
-    private TiledMapTileLayer tiledMapTileLayer;
+    private final Enemy entity;
+    private final int[][] map;
+    private final TiledMapTileLayer tiledMapTileLayer;
+
     private Location startLocation;
     private List<Node> path;
     private boolean isRunning;
@@ -34,21 +37,21 @@ public class AStar {
     public AStar(Enemy entity) {
         this.entity = entity;
         this.path = new ArrayList<>();
-        tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
+        this.tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
         this.map = new int[tiledMapTileLayer.getWidth()][tiledMapTileLayer.getHeight()];
-        isRunning = false;
+        this.isRunning = false;
 
         // Fill map
         for (int x = 0; x < tiledMapTileLayer.getWidth(); x++) {
             for (int y = 0; y < tiledMapTileLayer.getHeight(); y++) {
-
+                MapProperties properties = getProperties(new Location(x, y));
                 // If there is a wall at the current location
-                if (containsProperty("collision", new Location(x, y))) {
+                if (properties.containsKey("collision")) {
+                    if (!matchesColor(properties)) continue;
                     map[x][y] = WALL;
-                } else if (containsProperty("spikes", new Location(x, y))) {
+                } else if (properties.containsKey("spikes")) {
+                    if (!matchesColor(properties)) continue;
                     map[x][y] = SPIKE;
-                } else {
-                    map[x][y] = 0;
                 }
             }
         }
@@ -63,7 +66,7 @@ public class AStar {
         startLocation = new Location(entityX, entityY);
 
         // Dunno why, but the map is always sideways
-        //displayMap();
+        // displayMap();
     }
 
     /**
@@ -180,13 +183,13 @@ public class AStar {
             for (Node child : children) {
 
                 // If the child is the goal then stop the search
-                if (child.location.getX() == endLocation.getX() && child.location.getY() == endLocation.getY()) {
+                if (child.getLocation().getX() == endLocation.getX() && child.getLocation().getY() == endLocation.getY()) {
                     List<Node> path = new ArrayList<>();
                     path.add(new Node(null, endLocation)); // Add end location too. Can be ommitted
                     Node current = currentNode;
                     while (current != null) {
                         path.add(current);
-                        current = current.parent;
+                        current = current.getParent();
                     }
                     path.remove(0); // Remove initial node, since it is the starting point, and we don't want that to be in the path too
                     Collections.reverse(path); // We have to reverse the path first
@@ -197,13 +200,13 @@ public class AStar {
 
                 //child.g = currentNode.g + 1; // This is the movement cost from starting point to this node. See neighbours instead
                 // Heuristic function
-                child.h = Math.abs(child.location.getX() - endLocation.getX()) + Math.abs(child.location.getY() - endLocation.getY()); // Manhattan distance
+                child.setH(Math.abs(child.getLocation().getX() - endLocation.getX()) + Math.abs(child.getLocation().getY() - endLocation.getY())); // Manhattan distance
 
                 // Use the euclidean distance
                 //child.h = Math.sqrt(Math.abs((child.location.getX() - endLocation.getX()) * 2 + (child.location.getY() - endLocation.getY()) * 2)); // Euclidean distance
                 // 0 for Dijkstra's Algorithm
                 //child.h = 0;
-                child.f = child.g + child.h;
+                child.setF(child.getG() + child.getH());
 
                 /**
                  * Looping through the list takes O(n)
@@ -239,10 +242,10 @@ public class AStar {
 
     // If a node with position already exists in the open list, and it has a lower f score, then there is no reason to expand that node
     private boolean skipChild(Node node, PriorityQueue<Node> open) {
-        double nodeF = node.f;
+        double nodeF = node.getF();
         for (Node openNode : open) {
-            if (node.location.getX() == openNode.location.getX() && node.location.getY() == openNode.location.getY()) {
-                if (openNode.f < node.f) {
+            if (node.getLocation().getX() == openNode.getLocation().getX() && node.getLocation().getY() == openNode.getLocation().getY()) {
+                if (openNode.getF() < node.getF()) {
                     return true;
                 }
             }
@@ -260,11 +263,19 @@ public class AStar {
                 new Location(1, 0),
                 new Location(3, 0), // Jump +3 tiles to the right
                 new Location(-3, 0), // Jump +3 tiles to the left
+                new Location(3, 1), // Jump +3 tiles to the right + 1 up
+                new Location(3, -1),
+                new Location(-3, 1),
+                new Location(-3, -1),
+                new Location(3, 2), // Jump 3 tiles forward + 2 up
+                new Location(-3, 2),
+                new Location(3, -2), // Jump 3 tiles forward + 2 tiles down
+                new Location(-3, -2),
         };
 
         for (Location newPosition : adjacentLocations) {
             // Get adjacent node position
-            Location nodePosition = new Location(node.location.getX() + newPosition.getX(), node.location.getY() + newPosition.getY());
+            Location nodePosition = new Location(node.getLocation().getX() + newPosition.getX(), node.getLocation().getY() + newPosition.getY());
 
             // Make sure the node is withing the maze boundary
             if (nodePosition.getX() > map.length - 1 || nodePosition.getX() < 0 || nodePosition.getY() > map[0].length - 1 || nodePosition.getY() < 0) {
@@ -283,15 +294,14 @@ public class AStar {
                 // Set nodes instruction (either jump or walk)
                 if (newPosition.getX() > 1 || newPosition.getX() == -3 || newPosition.getY() >= 1) { // jump 2+ x tiles or 1+ y tile
                     child.setInstruction(Node.Instruction.JUMP);
-                    child.g = node.g + JUMP_COST;
+                    child.setG(node.getG() + JUMP_COST);
                 } else {
-
                     if (newPosition.getX() < 0) {
                         child.setInstruction(Node.Instruction.WALK_LEFT);
                     } else {
                         child.setInstruction(Node.Instruction.WALK_RIGHT);
                     }
-                    child.g = node.g + 1; // Walk cost
+                    child.setG(node.getG() + 1); // Walk cost
                 }
 
                 neighbours.add(child);
@@ -309,29 +319,25 @@ public class AStar {
     // TODO: Can't do this, as it will make it so the ai can't go down and strafe to a new spot, I'm pretty sure
     // TODO: Save in memory on map start instead of checking everytime, as some maps can be very big. Instead just check rows and dont path find to rows that are bad
     private boolean isValidNode(Location nodeLocation) {
-        try {
-            for (int y = (int) nodeLocation.getY(); y >= 0; y--) {
-                if (map[(int) nodeLocation.getX()][y] == SPIKE) {
-                    return false;
-                } else if (map[(int) nodeLocation.getX()][y] == WALL) { // If it finds the ground before it finds spikes, then it is a valid position
-                    return true;
-                }
+        for (int y = (int) nodeLocation.getY(); y >= 0; y--) {
+            if (map[(int) nodeLocation.getX()][y] == SPIKE) {
+                return false;
+            } else if (map[(int) nodeLocation.getX()][y] == WALL) { // If it finds the ground before it finds spikes, then it is a valid position
+                return true;
             }
-        } catch (ArrayIndexOutOfBoundsException ignored) {
-            return false;
         }
         return true;
     }
 
     private boolean isGroundBelow(Node node) {
         // If outside map boundaries
-        if (node.location.getX() > map.length - 1 || node.location.getX() < 0 || node.location.getY() > map[0].length - 1 || node.location.getY() < 0)
+        if (node.getLocation().getX() > map.length - 1 || node.getLocation().getX() < 0 || node.getLocation().getY() > map[0].length - 1 || node.getLocation().getY() < 0)
             return false;
 
-        int index = Math.round(node.location.getY() - 1);
+        int index = Math.round(node.getLocation().getY() - 1);
         if (index == -1) return false;
 
-        return map[Math.round(node.location.getX())][index] == WALL;
+        return map[Math.round(node.getLocation().getX())][index] == WALL;
     }
 
     private void displayPath(List<Node> path) {
@@ -339,19 +345,20 @@ public class AStar {
         for (Node node : path) {
             System.out.println("Node instruction: " + node.getInstruction());
 
-            System.out.println("Nodes f: " + node.f + "  | g: " + node.g + " | h " + node.h);
-            System.out.println("Node location: " + node.location.getX() + ", " + node.location.getY());
+            System.out.println("Nodes f: " + node.getF() + "  | g: " + node.getG() + " | h " + node.getH());
+            System.out.println("Node location: " + node.getLocation().getX() + ", " + node.getLocation().getY());
 
-            System.out.println("(" + node.location.getX() + ", " + node.location.getY() + ")");
-            map[(int) node.location.getX()][(int) node.location.getY()] = 99;
+            System.out.println("(" + node.getLocation().getX() + ", " + node.getLocation().getY() + ")");
+            map[(int) node.getLocation().getX()][(int) node.getLocation().getY()] = 99;
         }
 
         // displayMap();
     }
 
     private void displayMap() {
-        for (int x = 0; x < map.length; x++) {
-            for (int y = 0; y < map[0].length; y++) {
+        if (map.length == 0) return;
+        for (int y = map[0].length - 1; y >= 0; y--) {
+            for (int x = 0; x < map.length; x++) {
                 System.out.printf("%5d", map[x][y]);
             }
             System.out.println();
@@ -365,10 +372,21 @@ public class AStar {
     }
 
     private boolean containsProperty(String property, Location location) {
-        TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) location.getX(), (int) location.getY()); //might need better conversion in future
-        if (cell == null) return false;
-        TiledMapTile tile = cell.getTile();
-        MapProperties properties = tile.getProperties();
+        MapProperties properties = getProperties(location);
         return properties.containsKey(property);
+    }
+
+    private @NotNull MapProperties getProperties(Location location) {
+        TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) location.getX(), (int) location.getY()); //might need better conversion in future
+        if (cell == null) return new MapProperties();
+        TiledMapTile tile = cell.getTile();
+        return tile.getProperties();
+    }
+
+    private boolean matchesColor(MapProperties mapProperties) {
+        if (!mapProperties.containsKey("color")) return true;
+        Color color = Color.valueOf(mapProperties.get("color", String.class));
+        if (color == Color.ALL) return true;
+        return color == this.entity.getColor();
     }
 }

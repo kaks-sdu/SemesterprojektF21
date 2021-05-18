@@ -5,13 +5,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Align;
 import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.World;
+import io.github.arkobat.semesterprojektF21.common.entity.Player;
+import io.github.arkobat.semesterprojektF21.common.event.EntityDeathEvent;
+import io.github.arkobat.semesterprojektF21.common.event.EventListener;
 
-public class TimeHud implements TextureRenderService {
+public class TimeHud extends EventListener implements TextureRenderService {
 
+    private int deaths = 0;
     private final long startTime = System.currentTimeMillis();
     private final Label timeLabel;
 
@@ -26,17 +29,24 @@ public class TimeHud implements TextureRenderService {
         long minutes = (millis / 1000) / 60;
         int seconds = (int) ((millis / 1000) % 60);
 
-        timeLabel.setText(String.format("%2d:%02d:%02d", minutes, seconds, millis % 1000));
+        String time = String.format("%d:%02d:%02d", minutes, seconds, millis % 1000);
+        String deaths = "Deaths: " + this.deaths;
+        timeLabel.setText(String.join("\n", time, deaths));
         timeLabel.draw(sb, 1);
     }
 
     @Override
     public void resize(int width, int height) {
-        timeLabel.setPosition(5, Gdx.graphics.getHeight() - 50);
+        timeLabel.setPosition(15, Gdx.graphics.getHeight() - 65);
     }
 
     @Override
     public void dispose() {
     }
 
+    @Override
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+        deaths++;
+    }
 }

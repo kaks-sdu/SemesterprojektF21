@@ -1,6 +1,8 @@
 package io.github.arkobat.semesterprojektF21.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
+import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.Direction;
 import io.github.arkobat.semesterprojektF21.common.Location;
 import io.github.arkobat.semesterprojektF21.common.Vector;
@@ -9,10 +11,8 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import io.github.arkobat.semesterprojektF21.common.event.EntityMoveEvent;
 import io.github.arkobat.semesterprojektF21.common.event.EventManager;
-import io.github.arkobat.semesterprojektF21.assetmanager.model.ExtendedGameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameData;
 import io.github.arkobat.semesterprojektF21.common.game.GameProcessingService;
-import io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService;
 import org.jetbrains.annotations.NotNull;
 
 public class EnemyControlSystem implements GameProcessingService {
@@ -44,12 +44,11 @@ public class EnemyControlSystem implements GameProcessingService {
 
             // Track player
             for (Entity player : world.getEntities(Player.class)) {
-                //System.out.println("Player location: " + player.getLocation().getX() + ", " + player.getLocation().getY());
                 enemy.getAi().gotoLocation(player.getLocation());
             }
 
-                    loc.setX((float) (loc.getX() + velocity.getX() * delta));
-            loc.setY((float) (loc.getY() + velocity.getY() * delta));
+            loc.setX(loc.getX() + velocity.getX() * delta);
+            loc.setY(loc.getY() + velocity.getY() * delta);
 
             // Check collision X
             EntityMoveEvent event = new EntityMoveEvent(enemy, enemy.getLocation(), new Location(oldX, oldY));

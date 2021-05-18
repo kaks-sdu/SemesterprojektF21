@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.playercontrol">
-    <implementation class="io.github.arkobat.semesterprojektF21.player.PlayerRender"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.playercontrol">
+    <implementation class="io.github.arkobat.kolorkarl.player.PlayerRender"/>
     <service>
-        <provide interface="io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService"/>
+        <provide interface="io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService"/>
     </service>
 </scr:component>

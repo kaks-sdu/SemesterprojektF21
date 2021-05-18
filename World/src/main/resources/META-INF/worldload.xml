@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.world.plugin">
-    <implementation class="io.github.arkobat.semesterprojektF21.overlay.WorldPlugin"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.world.plugin">
+    <implementation class="io.github.arkobat.kolorkarl.world.WorldPlugin"/>
     <service>
-        <provide interface="io.github.arkobat.semesterprojektF21.commonWorld.WorldLoader"/>
+        <provide interface="io.github.arkobat.kolorkarl.commonWorld.WorldLoader"/>
     </service>
 </scr:component>

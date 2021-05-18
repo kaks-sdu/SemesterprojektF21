@@ -1,5 +1,6 @@
 package io.github.arkobat.kolorkarl.collision.listener;
 
+import io.github.arkobat.kolorkarl.assetmanager.AssetLoader;
 import io.github.arkobat.kolorkarl.common.Damageable;
 import io.github.arkobat.kolorkarl.common.entity.Entity;
 import io.github.arkobat.kolorkarl.common.event.EntityMoveEvent;
@@ -38,6 +39,7 @@ public class BulletListener extends EventListener {
             if (entity.getColor() != event.getEntity().getColor()) continue;
             ((Damageable) entity).kill();
             event.getEntity().getWorld().removeEntity(event.getEntity());
+            AssetLoader.getInstance("Collision").playSound("hit.wav", "sound");
             return;
         }
     }

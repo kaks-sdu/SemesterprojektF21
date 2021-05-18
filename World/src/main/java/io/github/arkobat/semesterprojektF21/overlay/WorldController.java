@@ -90,7 +90,7 @@ public class WorldController {
         addMap(lvl9);
         lvl9.setNextMap(lvl0);
 
-        return lvl0;
+        return lvl4;
     }
 
 }

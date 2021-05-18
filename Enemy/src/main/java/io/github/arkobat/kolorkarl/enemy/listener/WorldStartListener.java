@@ -1,12 +1,12 @@
-package io.github.arkobat.semesterprojektF21.enemy.listener;
+package io.github.arkobat.kolorkarl.enemy.listener;
 
-import io.github.arkobat.semesterprojektF21.assetmanager.AssetLoader;
-import io.github.arkobat.semesterprojektF21.common.Color;
-import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import io.github.arkobat.semesterprojektF21.common.event.EventListener;
-import io.github.arkobat.semesterprojektF21.common.event.WorldStartEvent;
-import io.github.arkobat.semesterprojektF21.enemy.Enemy;
+import io.github.arkobat.kolorkarl.assetmanager.AssetLoader;
+import io.github.arkobat.kolorkarl.common.Color;
+import io.github.arkobat.kolorkarl.common.Location;
+import io.github.arkobat.kolorkarl.common.entity.Entity;
+import io.github.arkobat.kolorkarl.common.event.EventListener;
+import io.github.arkobat.kolorkarl.common.event.WorldStartEvent;
+import io.github.arkobat.kolorkarl.enemy.Enemy;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

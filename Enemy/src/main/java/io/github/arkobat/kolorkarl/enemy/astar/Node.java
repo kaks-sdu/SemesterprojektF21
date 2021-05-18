@@ -1,6 +1,6 @@
-package io.github.arkobat.semesterprojektF21.enemy.astar;
+package io.github.arkobat.kolorkarl.enemy.astar;
 
-import io.github.arkobat.semesterprojektF21.common.Location;
+import io.github.arkobat.kolorkarl.common.Location;
 import org.jetbrains.annotations.NotNull;
 
 public class Node implements Comparable<Node> {

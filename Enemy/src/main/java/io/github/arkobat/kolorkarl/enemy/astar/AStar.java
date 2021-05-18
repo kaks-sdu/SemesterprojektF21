@@ -1,12 +1,12 @@
-package io.github.arkobat.semesterprojektF21.enemy.astar;
+package io.github.arkobat.kolorkarl.enemy.astar;
 
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import io.github.arkobat.semesterprojektF21.common.Color;
-import io.github.arkobat.semesterprojektF21.common.Location;
-import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
-import io.github.arkobat.semesterprojektF21.enemy.Enemy;
+import io.github.arkobat.kolorkarl.common.Color;
+import io.github.arkobat.kolorkarl.common.Location;
+import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.enemy.Enemy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

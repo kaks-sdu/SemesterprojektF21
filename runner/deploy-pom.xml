@@ -2,12 +2,12 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.arkobat.semesterprojektF21.Group1SemesterProject.build</groupId>
+  <groupId>io.github.arkobat.kolorkarl.KolorKarl.build</groupId>
   <artifactId>deployment</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Group 1 Semester Project</name>
-  <description>Generated using Pax-Construct</description>
+  <name>KolorKarl</name>
+  <description>A color based platform game</description>
   <properties>
     <org.osgi.service.http.port>8080</org.osgi.service.http.port>
     <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
@@ -22,7 +22,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>OSGiLibGDX</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
@@ -47,101 +47,101 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>AssetManager</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>OSGiLibGDX</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Common</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>CommonWorld</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>AssetManager</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Core</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>CommonWorld</artifactId>
       <version>1.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Player</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>World</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Enemy</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Weapon</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Collision</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Bullet</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>io.github.arkobat.semesterprojektF21.build</groupId>
+      <groupId>io.github.arkobat.kolorkarl.build</groupId>
       <artifactId>Overlay</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>bundle</type>

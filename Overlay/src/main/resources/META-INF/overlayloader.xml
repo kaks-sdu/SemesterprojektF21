@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.overlay.render">
-    <implementation class="io.github.arkobat.semesterprojektF21.overlay.OverlayDrawer"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.overlay.render">
+    <implementation class="io.github.arkobat.kolorkarl.overlay.OverlayDrawer"/>
     <service>
-        <provide interface="io.github.arkobat.semesterprojektF21.assetmanager.TextureRenderService"/>
+        <provide interface="io.github.arkobat.kolorkarl.assetmanager.TextureRenderService"/>
     </service>
 </scr:component>

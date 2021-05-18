@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.semesterprojektF21.collision.plugin">
-    <implementation class="io.github.arkobat.semesterprojektF21.collision.CollisionPlugin"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.collision.plugin">
+    <implementation class="io.github.arkobat.kolorkarl.collision.CollisionPlugin"/>
     <service>
-        <provide interface="io.github.arkobat.semesterprojektF21.common.game.GamePluginService"/>
+        <provide interface="io.github.arkobat.kolorkarl.common.game.GamePluginService"/>
     </service>
 </scr:component>

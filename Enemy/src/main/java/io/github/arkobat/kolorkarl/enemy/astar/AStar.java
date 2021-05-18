@@ -318,12 +318,14 @@ public class AStar {
     // TODO: Can't do this, as it will make it so the ai can't go down and strafe to a new spot, I'm pretty sure
     // TODO: Save in memory on map start instead of checking everytime, as some maps can be very big. Instead just check rows and dont path find to rows that are bad
     private boolean isValidNode(Location nodeLocation) {
-        for (int y = (int) nodeLocation.getY(); y >= 0; y--) {
-            if (map[(int) nodeLocation.getX()][y] == SPIKE) {
-                return false;
-            } else if (map[(int) nodeLocation.getX()][y] == WALL) { // If it finds the ground before it finds spikes, then it is a valid position
-                return true;
+        try {
+            for (int y = (int) nodeLocation.getY(); y >= 0; y--) {
+                int node = map[(int) nodeLocation.getX()][y];
+                if (node == SPIKE) return false;
+                else if (node == WALL) return true;
             }
+        } catch (ArrayIndexOutOfBoundsException ignored) {
+            return false;
         }
         return true;
     }

@@ -15,7 +15,7 @@ public class CollisionHandler {
         List<MapProperties> list = new LinkedList<>();
 
         for (int cellX = (int) location.getX() / layer.getTileWidth(); cellX * layer.getTileWidth() < location.getX() + hitbox.getWidth(); cellX++) {
-            for (int cellY = (int) location.getY() / layer.getTileHeight(); cellY * layer.getTileHeight() < location.getY() + hitbox.getHeight(); cellY++) {
+            for (int cellY = (int) (location.getY() + 0.1F) / layer.getTileHeight(); cellY * layer.getTileHeight() < location.getY() + hitbox.getHeight(); cellY++) {
                 TiledMapTileLayer.Cell cell = layer.getCell(cellX, cellY);
                 if (cell == null) continue;
                 TiledMapTile tile = cell.getTile();

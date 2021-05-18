@@ -1,9 +1,9 @@
 package io.github.arkobat.kolorkarl.player;
 
-import io.github.arkobat.kolorkarl.common.*;
+import io.github.arkobat.kolorkarl.assetmanager.Animation;
 import io.github.arkobat.kolorkarl.common.*;
 import io.github.arkobat.kolorkarl.common.entity.Player;
-import io.github.arkobat.kolorkarl.assetmanager.Animation;
+import io.github.arkobat.kolorkarl.common.event.EntityColorChangeEvent;
 import io.github.arkobat.kolorkarl.common.event.EntityDeathEvent;
 import io.github.arkobat.kolorkarl.common.event.EventManager;
 import org.jetbrains.annotations.NotNull;
@@ -151,8 +151,14 @@ public class PlayerImpl implements Player {
     public void setColor(@NotNull Color color) {
         for (int i = 0; i < colors.length; i++) {
             if (colors[i] == color) {
+                Color oldColor = getColor();
+
+                EntityColorChangeEvent event = new EntityColorChangeEvent(this, oldColor, color);
+                EventManager.callEvent(event);
+                if (event.isCanceled()) return;
+
                 this.currentColor = i;
-                changeColor(colors[currentColor]);
+                changeColor(colors[this.currentColor]);
                 return;
             }
         }
@@ -160,16 +166,29 @@ public class PlayerImpl implements Player {
     }
 
     public void nextColor() {
-        this.currentColor = ++this.currentColor % this.colors.length;
+        int newColor = (this.currentColor + 1) % this.colors.length;
+
+        EntityColorChangeEvent event = new EntityColorChangeEvent(this, getColor(), this.colors[newColor]);
+        EventManager.callEvent(event);
+        if (event.isCanceled()) return;
+
+        this.currentColor = newColor;
         changeColor(colors[currentColor]);
     }
 
     public void prevColor() {
+        int newColor;
         if (currentColor == 0) {
-            this.currentColor = this.colors.length - 1;
+            newColor = this.colors.length - 1;
         } else {
-            this.currentColor--;
+            newColor = currentColor - 1;
         }
+
+        EntityColorChangeEvent event = new EntityColorChangeEvent(this, getColor(), this.colors[newColor]);
+        EventManager.callEvent(event);
+        if (event.isCanceled()) return;
+
+        this.currentColor = newColor;
         changeColor(colors[currentColor]);
     }
 

@@ -16,6 +16,9 @@ public class EventListener {
     public void onEntity(EntityEvent event) {
     }
 
+    public void onEntityColorChange(EntityColorChangeEvent event) {
+    }
+
     public void onEntityDeath(EntityDeathEvent event) {
     }
 
@@ -40,6 +43,8 @@ public class EventListener {
     final void callEvent(@NotNull Event event) {
         if (event.getClass() == EntityEvent.class) {
             onEntity((EntityEvent) event);
+        } else if (event.getClass() == EntityColorChangeEvent.class) {
+            onEntityColorChange((EntityColorChangeEvent) event);
         } else if (event.getClass() == EntityDeathEvent.class) {
             onEntityDeath((EntityDeathEvent) event);
         } else if (event.getClass() == EntityHealthChangeEvent.class) {

@@ -9,7 +9,6 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.arkobat.kolorkarl</groupId>
     <artifactId>shared-plugin-settings</artifactId>
 
     <name>Group 1 SemesterProject - plugin configuration</name>
@@ -37,7 +36,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-bundle-plugin</artifactId>
-          <version>5.1.2</version>
+          <version>1.4.3</version>
         </plugin>
       </plugins>
     </pluginManagement>

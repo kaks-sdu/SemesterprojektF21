@@ -25,6 +25,9 @@ public class EventListener {
     public void onLevelChange(LevelChangeEvent event) {
     }
 
+    public void onWorldStart(WorldStartEvent event) {
+    }
+
     final void callEvent(@NotNull Event event) {
         if (event.getClass() == EntityEvent.class) {
             onEntity((EntityEvent) event);
@@ -40,6 +43,8 @@ public class EventListener {
             onEntityTurn((EntityTurnEvent) event);
         } else if (event.getClass() == LevelChangeEvent.class) {
             onLevelChange((LevelChangeEvent) event);
+        } else if (event.getClass() == WorldStartEvent.class) {
+            onWorldStart((WorldStartEvent) event);
         } else {
             throw new IllegalArgumentException("Unknown event");
         }

@@ -35,18 +35,10 @@ public class BulletListener extends EventListener {
         }
 
         for (Entity entity : list) {
+            if (entity.getColor() != event.getEntity().getColor()) continue;
             ((Damageable) entity).kill();
+            event.getEntity().getWorld().removeEntity(event.getEntity());
+            return;
         }
-        event.getEntity().getWorld().removeEntity(event.getEntity());
-        /*
-        // This we like
-        List betterList = event.getEntity().getWorld().getEntities()
-                .stream()
-                .filter(entity -> entity instanceof Damageable)
-                .filter(entity -> event.getEntity().collides(entity))
-                .collect(Collectors.toList());
-
-         */
-
     }
 }

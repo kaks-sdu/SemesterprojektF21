@@ -12,7 +12,7 @@ public interface Colorable {
      *
      * @return Color - Color is an enum.
      */
-    Color getColor();
+    @NotNull Color getColor();
 
     /**
      * Set the color

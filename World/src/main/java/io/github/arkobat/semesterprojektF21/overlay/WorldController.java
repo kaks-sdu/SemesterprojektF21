@@ -74,7 +74,21 @@ public class WorldController {
                 .build();
         lvl6.setNextMap(lvl7);
         addMap(lvl7);
-        lvl7.setNextMap(lvl0);
+
+        WorldMap lvl8 = new MapBuilder()
+                .setMapFileName("level8")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl7.setNextMap(lvl8);
+        addMap(lvl8);
+
+        WorldMap lvl9 = new MapBuilder()
+                .setMapFileName("level9")
+                .setMusic("main_theme.mp3")
+                .build();
+        lvl8.setNextMap(lvl9);
+        addMap(lvl9);
+        lvl9.setNextMap(lvl0);
 
         return lvl0;
     }

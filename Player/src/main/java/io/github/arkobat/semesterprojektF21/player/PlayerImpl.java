@@ -144,7 +144,7 @@ public class PlayerImpl implements Player {
     }
 
     @Override
-    public Color getColor() {
+    public @NotNull Color getColor() {
         return this.colors[currentColor];
     }
 

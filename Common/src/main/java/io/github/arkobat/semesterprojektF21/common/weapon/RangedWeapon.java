@@ -1,12 +1,20 @@
 package io.github.arkobat.semesterprojektF21.common.weapon;
 
+/**
+ * Represents a Ranged Weapon
+ */
 public interface RangedWeapon extends Weapon {
 
     /**
-     * @return the amount of bullets currently in the weapon
+     * Get how many bullets are left in the chamber
+     * @return the bullets in the chamber
      */
     int getChamber();
 
+    /**
+     * Get how many bullets the chamber can hold
+     * @return the max bullets for the chamber
+     */
     int getMaxChamber();
 
     /**

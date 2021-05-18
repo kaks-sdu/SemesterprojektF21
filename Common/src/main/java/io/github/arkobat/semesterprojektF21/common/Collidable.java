@@ -2,6 +2,9 @@ package io.github.arkobat.semesterprojektF21.common;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents objects that can collide with other objects
+ */
 public interface Collidable {
 
     /**

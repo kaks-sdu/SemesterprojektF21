@@ -19,6 +19,9 @@ public interface Damageable {
      */
     void setHealth(int health);
 
+    /**
+     * A method for killing, should be called when the health value is <= 0
+     */
     void kill();
 
 }

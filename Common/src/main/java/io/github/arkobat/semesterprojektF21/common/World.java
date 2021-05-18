@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
+/**
+ * Represents a world which contains entities
+ */
 public interface World {
 
     /**

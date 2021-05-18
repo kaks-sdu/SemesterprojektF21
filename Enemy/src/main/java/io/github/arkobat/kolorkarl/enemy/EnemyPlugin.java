@@ -5,7 +5,7 @@ import io.github.arkobat.kolorkarl.common.entity.Entity;
 import io.github.arkobat.kolorkarl.common.event.EventManager;
 import io.github.arkobat.kolorkarl.common.game.GameData;
 import io.github.arkobat.kolorkarl.common.game.GamePluginService;
-import io.github.arkobat.kolorkarl.listener.WorldStartListener;
+import io.github.arkobat.kolorkarl.enemy.listener.WorldStartListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;

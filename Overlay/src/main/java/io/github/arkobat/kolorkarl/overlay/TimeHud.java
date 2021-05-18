@@ -1,12 +1,11 @@
 package io.github.arkobat.kolorkarl.overlay;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import io.github.arkobat.kolorkarl.assetmanager.TextureRenderService;
-import io.github.arkobat.kolorkarl.assetmanager.model.ExtendedGameData;
+import io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService;
+import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
 import io.github.arkobat.kolorkarl.common.World;
 import io.github.arkobat.kolorkarl.common.entity.Player;
 import io.github.arkobat.kolorkarl.common.event.EntityDeathEvent;

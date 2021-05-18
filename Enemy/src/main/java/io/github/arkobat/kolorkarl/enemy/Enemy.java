@@ -5,7 +5,7 @@ import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.Vector;
 import io.github.arkobat.kolorkarl.common.World;
 import io.github.arkobat.kolorkarl.assetmanager.Animation;
-import io.github.arkobat.kolorkarl.astar.AStar;
+import io.github.arkobat.kolorkarl.enemy.astar.AStar;
 import io.github.arkobat.kolorkarl.common.*;
 import io.github.arkobat.kolorkarl.common.entity.LivingEntity;
 import lombok.Setter;

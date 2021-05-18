@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -50,7 +51,7 @@ public class AssetLoader {
     private String getJarUrl(String fileName) {
         String jarName = module + "-1.0-SNAPSHOT.jar!";
         // Get texture from relative path of jar name
-        String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", jarName, fileName).toString();
+        String jarUrl = Paths.get(new File("").getAbsolutePath(), "target", jarName, fileName).toString();
         jarUrl = jarUrl.replace("runner", "" + module).replace('\\', '/');
         return jarUrl;
     }
@@ -79,7 +80,7 @@ public class AssetLoader {
         //TODO: Fix to open jar file instead
         //String jarName = moduleName + "-1.0-SNAPSHOT.jar!";
         // Get texture from relative path of jar name
-        String jarUrl = java.nio.file.Paths.get(new File("").getAbsolutePath(), "target", "classes", fileName).toString();
+        String jarUrl = Paths.get(new File("").getAbsolutePath(), "target", "classes", fileName).toString();
         jarUrl = jarUrl.replace("runner", "" + module).replace('\\', '/');
         return jarUrl;
 

@@ -1,8 +1,8 @@
 package io.github.arkobat.kolorkarl.enemy;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.kolorkarl.assetmanager.TextureRenderService;
-import io.github.arkobat.kolorkarl.assetmanager.model.ExtendedGameData;
+import io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService;
+import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
 import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.World;
 import io.github.arkobat.kolorkarl.common.entity.Entity;

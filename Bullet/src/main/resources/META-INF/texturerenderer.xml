@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.bulletcontrol">
     <implementation class="io.github.arkobat.kolorkarl.bullet.BulletRender"/>
     <service>
-        <provide interface="io.github.arkobat.kolorkarl.assetmanager.TextureRenderService"/>
+        <provide interface="io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService"/>
     </service>
 </scr:component>

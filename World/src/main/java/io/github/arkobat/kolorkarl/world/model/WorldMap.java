@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import io.github.arkobat.kolorkarl.world.WorldPlugin;
 import io.github.arkobat.kolorkarl.assetmanager.AssetLoader;
-import io.github.arkobat.kolorkarl.assetmanager.model.ExtendedGameData;
+import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
 import io.github.arkobat.kolorkarl.common.Hitbox;
 import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.entity.Entity;

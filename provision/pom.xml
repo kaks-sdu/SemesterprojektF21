@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.arkobat.kolorkarl.build</groupId>
+    <groupId>io.github.arkobat.kolorkarl</groupId>
     <artifactId>provision</artifactId>
 
     <name>Group 1 SemesterProject - imported bundles</name>

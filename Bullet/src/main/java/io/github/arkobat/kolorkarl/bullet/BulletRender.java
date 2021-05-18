@@ -1,8 +1,8 @@
 package io.github.arkobat.kolorkarl.bullet;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.arkobat.kolorkarl.assetmanager.TextureRenderService;
-import io.github.arkobat.kolorkarl.assetmanager.model.ExtendedGameData;
+import io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService;
+import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
 import io.github.arkobat.kolorkarl.bullet.model.BulletImpl;
 import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.World;

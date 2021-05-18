@@ -1,4 +1,4 @@
-package io.github.arkobat.kolorkarl.assetmanager.model;
+package io.github.arkobat.kolorkarl.assetmanager.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;

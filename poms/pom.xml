@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>io.github.arkobat.kolorkarl.build</groupId>
+    <groupId>io.github.arkobat.kolorkarl</groupId>
     <artifactId>shared-plugin-settings</artifactId>
 
     <name>Group 1 SemesterProject - plugin configuration</name>
@@ -50,7 +50,7 @@
                  | dependency pom representing the global classpath of imported bundles
                 -->
                 <type>pom</type>
-                <groupId>io.github.arkobat.kolorkarl.build</groupId>
+                <groupId>io.github.arkobat.kolorkarl</groupId>
                 <artifactId>provision</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <scope>provided</scope>

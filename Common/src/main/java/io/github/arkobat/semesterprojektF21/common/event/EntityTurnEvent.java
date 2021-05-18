@@ -5,13 +5,12 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 public class EntityTurnEvent extends EntityEvent implements Cancelable {
 
-    private final Direction direction;
+    private final @NotNull Direction direction;
     private boolean canceled;
 
-    public EntityTurnEvent(@NotNull Entity entity, Direction direction) {
+    public EntityTurnEvent(@NotNull Entity entity, @NotNull Direction direction) {
         super(entity);
         this.direction = direction;
         this.canceled = false;
@@ -27,4 +26,7 @@ public class EntityTurnEvent extends EntityEvent implements Cancelable {
         this.canceled = canceled;
     }
 
+    public @NotNull Direction getDirection() {
+        return direction;
+    }
 }

@@ -5,10 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
-@AllArgsConstructor
 public class EntityEvent extends Event {
 
     private final @NotNull Entity entity;
 
+    public EntityEvent(@NotNull Entity entity) {
+        this.entity = entity;
+    }
+
+    public @NotNull Entity getEntity() {
+        return entity;
+    }
 }

@@ -5,30 +5,41 @@ import org.jetbrains.annotations.NotNull;
 public interface Collidable {
 
     /**
-     * Checks if there is a collision
+     * Checks if there is a collision.
      *
-     * @return if the collidable have collision
+     * @return if the collidable have collision.
      */
     boolean hasCollision();
 
     /**
      * If the collidable respect colors of platforms.
-     * If the Collidable have color collision, it will fall thru platforms of different colors
+     * If the Collidable have color collision, it will fall thru platforms of different colors.
      *
      * @return if the collidable have color collision
      */
     boolean hasColorCollision();
 
     /**
-     * Not implemented.
+     * Get the {@link Hitbox} of the collidable
      *
-     * @return Hitbox
+     * @return the hitbox
      */
     @NotNull Hitbox getHitbox();
 
+    /**
+     * Gets the current location of this entity.
+     * @return the location of the collidable.
+     */
     @NotNull Location getLocation();
 
-    default boolean collides(Collidable collidable) {
+    /**
+     * Checks if the collidable collides with another collidable.
+     * It is assumed all collidable are squares.
+     *
+     * @param collidable the other collidable.
+     * @return weather the two collides.
+     */
+    default boolean collides(@NotNull Collidable collidable) {
         float thisX = this.getLocation().getX();
         float otherX = collidable.getLocation().getX();
 

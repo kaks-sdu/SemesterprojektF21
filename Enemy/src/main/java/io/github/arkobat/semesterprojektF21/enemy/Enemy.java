@@ -127,7 +127,7 @@ public class Enemy implements LivingEntity {
     }
 
     @Override
-    public World getWorld() {
+    public @NotNull World getWorld() {
         return world;
     }
 

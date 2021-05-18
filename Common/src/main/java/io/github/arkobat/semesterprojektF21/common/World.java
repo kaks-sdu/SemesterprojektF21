@@ -24,7 +24,6 @@ public interface World {
      */
     @NotNull <E extends Entity> Collection<Entity> getEntities(@NotNull Class<E>... entityTypes);
 
-
     /**
      * Adds an entity.
      *

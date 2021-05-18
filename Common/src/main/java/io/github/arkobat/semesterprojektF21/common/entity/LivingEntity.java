@@ -2,6 +2,9 @@ package io.github.arkobat.semesterprojektF21.common.entity;
 
 import io.github.arkobat.semesterprojektF21.common.Damageable;
 
+/**
+ * Represents a living entity, such as a monster or player
+ */
 public interface LivingEntity extends Entity, Damageable {
 
     /**
@@ -14,7 +17,7 @@ public interface LivingEntity extends Entity, Damageable {
     /**
      * Set the size of the current entity.
      *
-     * @param size - The new size ratio
+     * @param size the new size ratio
      */
     void setSize(float size);
 

@@ -5,7 +5,6 @@ import io.github.arkobat.semesterprojektF21.common.entity.Entity;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
-@Getter
 public class EntityMoveEvent extends EntityEvent implements Cancelable {
 
     private final @NotNull Location newLocation;
@@ -28,4 +27,11 @@ public class EntityMoveEvent extends EntityEvent implements Cancelable {
         this.canceled = canceled;
     }
 
+    public @NotNull Location getNewLocation() {
+        return newLocation;
+    }
+
+    public @NotNull Location getOldLocation() {
+        return oldLocation;
+    }
 }

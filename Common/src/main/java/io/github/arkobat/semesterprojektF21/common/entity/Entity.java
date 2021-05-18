@@ -3,6 +3,9 @@ package io.github.arkobat.semesterprojektF21.common.entity;
 import io.github.arkobat.semesterprojektF21.common.*;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a base entity in the world
+ */
 public interface Entity extends Colorable, Collidable {
 
     /**
@@ -11,11 +14,15 @@ public interface Entity extends Colorable, Collidable {
      */
     @NotNull World getWorld();
 
+    /**
+     * Change the world of the entity
+     * @param world the new world
+     */
     void setWorld(@NotNull World world);
 
     /**
      * Gets the current location of this entity.
-     * @return Location - which consists of 2 int values.
+     * @return the location of the entity
      */
     @NotNull Location getLocation();
 

@@ -191,7 +191,6 @@ public class AStar {
                         path.add(current);
                         current = current.getParent();
                     }
-                    //path.remove(0); // Remove initial node, since it is the starting point, and we don't want that to be in the path too
                     Collections.reverse(path); // We have to reverse the path first
                     //displayPath(path);
                     //TODO: The display path can be used for the report as it will display the matrix we use for the A* algorithm

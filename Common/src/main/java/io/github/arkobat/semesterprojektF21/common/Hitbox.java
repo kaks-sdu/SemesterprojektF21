@@ -13,7 +13,8 @@ public class Hitbox {
 
     /**
      * Creates a HitBox without any offset
-     * @param width The width of the object
+     *
+     * @param width  The width of the object
      * @param height The height of the object
      */
     public Hitbox(float width, float height) {
@@ -23,8 +24,9 @@ public class Hitbox {
     /**
      * Creates a HitBox with the possibility to create an offset.
      * If the object do not have any offset, take a look at {@link #Hitbox(float, float)}
-     * @param width The width of the object
-     * @param height The height of the object
+     *
+     * @param width   The width of the object
+     * @param height  The height of the object
      * @param offsetX The offset on the X axis
      * @param offsetY The offset on the Y axis
      */
@@ -37,6 +39,7 @@ public class Hitbox {
 
     /**
      * How width an object is
+     *
      * @return The width of the object
      */
     public float getWidth() {
@@ -45,6 +48,7 @@ public class Hitbox {
 
     /**
      * How high an object is
+     *
      * @return the height of the object
      */
     public float getHeight() {
@@ -54,6 +58,7 @@ public class Hitbox {
     /**
      * Objects textures can have different offsets, which is used to display the asset in the right location.
      * If a asset have 3 invisible pixels before the {@link Hitbox} actually starts, the offset should be <code>-3</code>
+     *
      * @return The objects offset on the X axis
      */
     public float getOffsetX() {
@@ -62,6 +67,7 @@ public class Hitbox {
 
     /**
      * Like {@link #getOffsetX()}, this is used to calculate the offset on the Y axis
+     *
      * @return The objects offset on the Y axis
      */
     public float getOffsetY() {

@@ -2,6 +2,9 @@ package io.github.arkobat.semesterprojektF21.common.entity;
 
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Represents a shootable entity.
+ */
 public interface Projectile extends Entity {
 
     /**
@@ -16,6 +19,6 @@ public interface Projectile extends Entity {
      *
      * @return double
      */
-    double getTrajectory();
+    float getTrajectory();
 
 }

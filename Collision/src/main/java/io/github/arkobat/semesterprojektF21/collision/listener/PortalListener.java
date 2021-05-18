@@ -10,6 +10,9 @@ import io.github.arkobat.semesterprojektF21.commonWorld.WorldTemp;
 
 import java.util.List;
 
+/**
+ * A listener for changing levels when reaching the "portal" sprite
+ */
 public class PortalListener extends EventListener {
 
     @Override

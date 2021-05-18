@@ -1,11 +1,13 @@
 package io.github.arkobat.semesterprojektF21.common;
 
 import io.github.arkobat.semesterprojektF21.common.entity.Entity;
-import io.github.arkobat.semesterprojektF21.common.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
+/**
+ * Represents a world which contains entities
+ */
 public interface World {
 
     /**
@@ -23,7 +25,6 @@ public interface World {
      * @return A filtered collection on entities
      */
     @NotNull <E extends Entity> Collection<Entity> getEntities(@NotNull Class<E>... entityTypes);
-
 
     /**
      * Adds an entity.

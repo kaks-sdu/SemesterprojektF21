@@ -1,0 +1,85 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: "/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/AssetManager/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Bullet/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Collision/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Common/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/CommonWorld/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Core/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Enemy/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/OSGiLibGDX"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Overlay/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Player/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/Weapon/"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/World"
+    schedule:
+      interval: weekly
+    target-branch: "develop"
+    open-pull-requests-limit: 10

@@ -46,3 +46,5 @@ out/
 /.idea/
 /runner/felix/cache/
 /runner/bundles/
+/Core/felix-cache/
+/Core/felix-cache

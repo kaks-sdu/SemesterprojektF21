@@ -1,6 +1,7 @@
 package io.github.arkobat.kolorkarl.core;
 
 import org.apache.felix.framework.FrameworkFactory;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,9 +21,10 @@ import static org.junit.Assert.fail;
 public class IntegrationTest {
 
     static BundleContext context;
+    static Framework framework;
 
     @BeforeClass
-    public static void setup() {
+    public static void setupClass() {
         // Start the framework
         FrameworkFactory frameworkFactory = new FrameworkFactory();
 
@@ -39,7 +41,7 @@ public class IntegrationTest {
         config.put("felix.fileinstall.noInitialDelay", "true");
         config.put("felix.fileinstall.start.level", "4");
 
-        Framework framework = frameworkFactory.newFramework(config);
+        framework = frameworkFactory.newFramework(config);
 
         try {
             framework.start();
@@ -48,6 +50,15 @@ public class IntegrationTest {
         }
 
         context = framework.getBundleContext();
+    }
+
+    @AfterClass
+    public static void tearDownClass(){
+        try {
+            framework.stop();
+        } catch (BundleException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

@@ -18,7 +18,7 @@ public enum Color {
      */
     BLUE("Blue", 0f, 0.59607843137f, 0.86274509803f),
     /**
-     * White Color, A universal color that everything can collide with
+     * White Color, a universal color that everything can collide with
      */
     ALL("All", 1f, 1f, 1f);
 

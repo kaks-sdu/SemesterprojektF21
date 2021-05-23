@@ -53,9 +53,34 @@ public class IntegrationTest {
     @Test
     public void installBundle_AssetManagerInstalled_newFramework() {
         try {
-            installBundle("SemesterProjectGroup1_AssetManager_1.0.0.SNAPSHOT.jar");
+            installBundle("AssetManager");
         } catch (BundleException e) {
             fail("Could not install AssetManager bundle");
+        }
+    }
+
+    @Test
+    public void installAllBundles_allBundlesInstalled_newFramework() {
+        String[] BUNDLES_TO_BE_INSTALLED = {
+                "AssetManager",
+                "Common",
+                "CommonWorld",
+                "OSGiLibGDX",
+                "Core",
+                "World",
+                "Player",
+                "Overlay",
+                "Enemy",
+                "Collision",
+                "Bullet",
+        };
+
+        for (String bundle : BUNDLES_TO_BE_INSTALLED) {
+            try {
+                installBundle(bundle);
+            } catch (BundleException e) {
+                fail("Could not install the " + bundle + " bundle");
+            }
         }
     }
 
@@ -64,10 +89,10 @@ public class IntegrationTest {
         assertThrows(BundleException.class, () -> installBundle("unknown_bundle.jar"));
     }
 
-    public void installBundle(String jar) throws BundleException {
-        String jarUrl = Paths.get(new File("").getAbsolutePath(), "runner", "bundles", jar).toString();
-        jarUrl = jarUrl.replace("Core", "");
-
+    public void installBundle(String module) throws BundleException {
+        String jarName = module + "-1.0-SNAPSHOT.jar";
+        String jarUrl = Paths.get(new File("").getAbsolutePath(), "target", jarName).toString();
+        jarUrl = jarUrl.replace("Core", module).replace('\\', '/');
         context.installBundle("file:" + jarUrl);
     }
 }

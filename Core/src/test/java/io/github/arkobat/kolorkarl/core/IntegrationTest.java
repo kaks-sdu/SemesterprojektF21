@@ -5,6 +5,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.launch.Framework;
@@ -62,9 +63,11 @@ public class IntegrationTest {
     }
 
     @Test
-    public void installBundle_AssetManagerInstalled_newFramework() {
+    public void installBundle_CommonInstalled_newFramework() {
         try {
-            installBundle("AssetManager");
+            Bundle b = installBundle("Common");
+            b.start();
+            b.stop();
         } catch (BundleException e) {
             fail("Could not install AssetManager bundle");
         }
@@ -88,7 +91,7 @@ public class IntegrationTest {
 
         for (String bundle : BUNDLES_TO_BE_INSTALLED) {
             try {
-                installBundle(bundle);
+                Bundle b = installBundle(bundle);
             } catch (BundleException e) {
                 fail("Could not install the " + bundle + " bundle");
             }
@@ -100,10 +103,10 @@ public class IntegrationTest {
         assertThrows(BundleException.class, () -> installBundle("unknown_bundle.jar"));
     }
 
-    public void installBundle(String module) throws BundleException {
+    public Bundle installBundle(String module) throws BundleException {
         String jarName = module + "-1.0-SNAPSHOT.jar";
         String jarUrl = Paths.get(new File("").getAbsolutePath(), "target", jarName).toString();
         jarUrl = jarUrl.replace("Core", module).replace('\\', '/');
-        context.installBundle("file:" + jarUrl);
+        return context.installBundle("file:" + jarUrl);
     }
 }

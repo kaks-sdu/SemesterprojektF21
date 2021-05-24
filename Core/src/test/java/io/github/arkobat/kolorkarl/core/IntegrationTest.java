@@ -2,7 +2,6 @@ package io.github.arkobat.kolorkarl.core;
 
 import org.apache.felix.framework.FrameworkFactory;
 import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
@@ -15,14 +14,13 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 
 public class IntegrationTest {
 
-    static BundleContext context;
-    static Framework framework;
+    private static BundleContext context;
+    private static Framework framework;
 
     @BeforeClass
     public static void setupClass() {
@@ -54,7 +52,7 @@ public class IntegrationTest {
     }
 
     @AfterClass
-    public static void tearDownClass(){
+    public static void tearDownClass() {
         try {
             framework.stop();
         } catch (BundleException e) {
@@ -98,9 +96,9 @@ public class IntegrationTest {
         }
     }
 
-    @Test
-    public void installBundle_unknownBundle_newFramework() {
-        assertThrows(BundleException.class, () -> installBundle("unknown_bundle.jar"));
+    @Test(expected = BundleException.class)
+    public void installBundle_bundleException_newFramework() throws BundleException {
+        installBundle("unknown_bundle.jar");
     }
 
     public Bundle installBundle(String module) throws BundleException {
@@ -109,4 +107,5 @@ public class IntegrationTest {
         jarUrl = jarUrl.replace("Core", module).replace('\\', '/');
         return context.installBundle("file:" + jarUrl);
     }
+
 }

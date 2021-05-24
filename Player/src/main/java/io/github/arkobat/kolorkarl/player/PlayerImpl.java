@@ -24,7 +24,7 @@ public class PlayerImpl implements Player {
     private int health;
     private Vector velocity;
     private final Hitbox hitbox;
-    private Map<String, Animation> animatons;
+    private Map<String, Animation> animations;
     private Animation currentAnimation;
 
     public PlayerImpl(World world, Color[] colors, Location location) {
@@ -35,15 +35,15 @@ public class PlayerImpl implements Player {
         this.jumpCharges = 2;
         this.velocity = new Vector();
         this.hitbox = new Hitbox(8, 12, -4, 0);
-        animatons = new HashMap<>();
+        animations = new HashMap<>();
     }
 
     public void addAnimation(String id, Animation animation) {
-        animatons.put(id, animation);
+        animations.put(id, animation);
     }
 
     public Animation getAnimation(String id) {
-        return animatons.get(id);
+        return animations.get(id);
     }
 
     public void setCurrentAnimation(Animation currentAnimation) {
@@ -55,7 +55,7 @@ public class PlayerImpl implements Player {
     }
 
     public void flip() {
-        for (Animation animation : this.animatons.values()) {
+        for (Animation animation : this.animations.values()) {
             animation.flip();
         }
     }
@@ -193,7 +193,7 @@ public class PlayerImpl implements Player {
     }
 
     private void changeColor(Color color) {
-        this.animatons.clear();
+        this.animations.clear();
         boolean flip = this.location.getDirection() == Direction.LEFT;
         this.addAnimation("idle", new Animation(MODULE_NAME, "idle/player_" + color.lowerCase() + "_idle.png", 2, 0.5f));
         this.addAnimation("run", new Animation(MODULE_NAME, "run/player_" + color.lowerCase() + "_run.png", 4, 0.5f));

@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.kolorkarl.common.Location;
+import io.github.arkobat.kolorkarl.common.World;
 import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
 import io.github.arkobat.kolorkarl.enemy.Enemy;
 import org.junit.Assert;
@@ -12,6 +13,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;

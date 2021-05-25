@@ -12,6 +12,10 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService;
 import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
+import io.github.arkobat.kolorkarl.common.Hitbox;
+import io.github.arkobat.kolorkarl.common.Location;
+import io.github.arkobat.kolorkarl.common.entity.Entity;
+import io.github.arkobat.kolorkarl.common.entity.Player;
 import io.github.arkobat.kolorkarl.common.event.EventManager;
 import io.github.arkobat.kolorkarl.common.game.GameData;
 import io.github.arkobat.kolorkarl.common.game.GamePluginService;
@@ -107,7 +111,18 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0.054f, 0.027f, 0.105f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        this.world.update(extendedGameDataSupplier.get(), this.spriteBatch);
+        // Update camera to player location
+        Optional<Entity> player = this.world.getEntities(Player.class).stream().findFirst();
+        if (player.isPresent()) {
+            spriteBatch.setProjectionMatrix(this.camera.combined);
+
+            Location loc = player.get().getLocation();
+            Hitbox hb = player.get().getHitbox();
+
+            this.camera.position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
+            this.camera.update();
+        }
+
         this.renderer.render();
         this.renderer.setView(camera);
         update();

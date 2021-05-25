@@ -123,21 +123,6 @@ public class WorldMap implements WorldTemp {
     }
 
     @Override
-    public void update(ExtendedGameData gameData, SpriteBatch spriteBatch) {
-        // Update camera view
-        Optional<Entity> player = getEntities(Player.class).stream().findFirst();
-        if (player.isPresent()) {
-            spriteBatch.setProjectionMatrix(gameData.getCamera().combined);
-
-            Location loc = player.get().getLocation();
-            Hitbox hb = player.get().getHitbox();
-
-            gameData.getCamera().position.set(loc.getX() + (hb.getWidth() / 2F), loc.getY() + (hb.getHeight() / 2), 0);
-            gameData.getCamera().update();
-        }
-    }
-
-    @Override
     public TiledMapTileLayer getCollisionLayer() {
         return this.collisionLayer;
     }

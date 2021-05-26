@@ -1,11 +1,11 @@
 package io.github.arkobat.kolorkarl.core.listener;
 
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 import io.github.arkobat.kolorkarl.core.Game;
 import io.github.arkobat.kolorkarl.assetmanager.AssetLoader;
 import io.github.arkobat.kolorkarl.common.entity.Entity;
 import io.github.arkobat.kolorkarl.common.event.EventListener;
 import io.github.arkobat.kolorkarl.common.event.LevelChangeEvent;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
 
 public class LevelChangeListener extends EventListener {
 
@@ -17,7 +17,7 @@ public class LevelChangeListener extends EventListener {
 
     @Override
     public void onLevelChange(LevelChangeEvent event) {
-        WorldTemp nextWorld = game.getWorld().getNextMap();
+        ExtendedWorld nextWorld = game.getWorld().getNextMap();
         if (nextWorld == null) {
             return;
         }

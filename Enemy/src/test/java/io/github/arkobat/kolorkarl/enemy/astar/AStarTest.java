@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.World;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 import io.github.arkobat.kolorkarl.enemy.Enemy;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +29,7 @@ public class AStarTest {
     private Enemy enemy;
 
     @Mock
-    private WorldTemp world;
+    private ExtendedWorld world;
 
     @Mock
     TiledMapTileLayer tiledMapTileLayer;

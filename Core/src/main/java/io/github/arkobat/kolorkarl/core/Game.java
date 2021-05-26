@@ -20,8 +20,8 @@ import io.github.arkobat.kolorkarl.common.event.EventManager;
 import io.github.arkobat.kolorkarl.common.game.GameData;
 import io.github.arkobat.kolorkarl.common.game.GamePluginService;
 import io.github.arkobat.kolorkarl.common.game.GameProcessingService;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 import io.github.arkobat.kolorkarl.commonWorld.WorldLoader;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
 import io.github.arkobat.kolorkarl.core.listener.LevelChangeListener;
 import lombok.Getter;
 
@@ -42,7 +42,7 @@ public class Game implements ApplicationListener {
     private static final List<TextureRenderService> textureRenderList = new CopyOnWriteArrayList<>();
     private static final List<WorldLoader> worldLoaders = new CopyOnWriteArrayList<>();
     @Getter
-    private WorldTemp world;
+    private ExtendedWorld world;
     private boolean created = false;
     private SpriteBatch spriteBatch;
     private Supplier<GameData> gameDataSupplier;
@@ -173,7 +173,7 @@ public class Game implements ApplicationListener {
         }
     }
 
-    public void setWorld(WorldTemp world) {
+    public void setWorld(ExtendedWorld world) {
         this.world = world;
         this.renderer.setMap(world.getMap());
     }

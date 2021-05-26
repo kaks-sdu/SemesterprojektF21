@@ -10,7 +10,7 @@ import io.github.arkobat.kolorkarl.common.event.EventManager;
 import io.github.arkobat.kolorkarl.common.Color;
 import io.github.arkobat.kolorkarl.common.Damageable;
 import io.github.arkobat.kolorkarl.common.World;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,11 +25,11 @@ public class SpikeListener extends EventListener {
         }
 
         World world = event.getEntity().getWorld();
-        if (!(world instanceof WorldTemp)) {
+        if (!(world instanceof ExtendedWorld)) {
             return;
         }
 
-        final TiledMapTileLayer collisionLayer = ((WorldTemp) world).getCollisionLayer();
+        final TiledMapTileLayer collisionLayer = ((ExtendedWorld) world).getCollisionLayer();
         List<MapProperties> properties = CollisionHandler.getProperties(collisionLayer, event.getNewLocation(), event.getEntity().getHitbox());
         List<MapProperties> list = new ArrayList<>();
         for (MapProperties mapProperties : properties) {

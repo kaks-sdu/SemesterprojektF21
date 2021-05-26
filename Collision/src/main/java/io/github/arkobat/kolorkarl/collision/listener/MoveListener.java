@@ -13,7 +13,7 @@ import io.github.arkobat.kolorkarl.common.event.EventListener;
 import io.github.arkobat.kolorkarl.common.*;
 import io.github.arkobat.kolorkarl.common.entity.Entity;
 import io.github.arkobat.kolorkarl.common.entity.Player;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 
 
 public class MoveListener extends EventListener {
@@ -26,11 +26,11 @@ public class MoveListener extends EventListener {
         }
 
         World world = event.getEntity().getWorld();
-        if (!(world instanceof WorldTemp)) {
+        if (!(world instanceof ExtendedWorld)) {
             return;
         }
 
-        final TiledMapTileLayer collisionLayer = ((WorldTemp) world).getCollisionLayer();
+        final TiledMapTileLayer collisionLayer = ((ExtendedWorld) world).getCollisionLayer();
 
         Entity entity = event.getEntity();
         Location loc = entity.getLocation();

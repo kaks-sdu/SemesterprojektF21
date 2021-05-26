@@ -3,31 +3,27 @@ package io.github.arkobat.kolorkarl.world.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 import io.github.arkobat.kolorkarl.world.WorldPlugin;
 import io.github.arkobat.kolorkarl.assetmanager.AssetLoader;
-import io.github.arkobat.kolorkarl.assetmanager.game.ExtendedGameData;
-import io.github.arkobat.kolorkarl.common.Hitbox;
 import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.entity.Entity;
 import io.github.arkobat.kolorkarl.common.entity.Player;
 import io.github.arkobat.kolorkarl.common.event.EventManager;
 import io.github.arkobat.kolorkarl.common.event.WorldStartEvent;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @Getter
-public class WorldMap implements WorldTemp {
+public class WorldMap implements ExtendedWorld {
 
     private final @NotNull String mapFileName;
     private final EntityCache entityCache = new EntityCache();

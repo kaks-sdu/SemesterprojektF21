@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.kolorkarl.common.Color;
 import io.github.arkobat.kolorkarl.common.Location;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 import io.github.arkobat.kolorkarl.enemy.Enemy;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +37,7 @@ public class AStar {
     public AStar(Enemy entity) {
         this.entity = entity;
         this.path = new ArrayList<>();
-        this.tiledMapTileLayer = ((WorldTemp) entity.getWorld()).getCollisionLayer();
+        this.tiledMapTileLayer = ((ExtendedWorld) entity.getWorld()).getCollisionLayer();
         this.map = new int[tiledMapTileLayer.getWidth()][tiledMapTileLayer.getHeight()];
         this.isRunning = false;
 

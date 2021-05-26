@@ -5,11 +5,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import io.github.arkobat.kolorkarl.collision.CollisionHandler;
 import io.github.arkobat.kolorkarl.common.Color;
 import io.github.arkobat.kolorkarl.common.Damageable;
-import io.github.arkobat.kolorkarl.common.Location;
 import io.github.arkobat.kolorkarl.common.World;
 import io.github.arkobat.kolorkarl.common.event.EntityColorChangeEvent;
 import io.github.arkobat.kolorkarl.common.event.EventListener;
-import io.github.arkobat.kolorkarl.commonWorld.WorldTemp;
+import io.github.arkobat.kolorkarl.commonWorld.ExtendedWorld;
 
 import java.util.List;
 
@@ -22,10 +21,10 @@ public class ColorChangeListener extends EventListener {
         }
 
         World world = event.getEntity().getWorld();
-        if (!(world instanceof WorldTemp)) {
+        if (!(world instanceof ExtendedWorld)) {
             return;
         }
-        final TiledMapTileLayer collisionLayer = ((WorldTemp) world).getCollisionLayer();
+        final TiledMapTileLayer collisionLayer = ((ExtendedWorld) world).getCollisionLayer();
 
         List<MapProperties> propertiesList = CollisionHandler.getProperties(collisionLayer, event.getEntity().getLocation(), event.getEntity().getHitbox());
         for (MapProperties properties : propertiesList) {

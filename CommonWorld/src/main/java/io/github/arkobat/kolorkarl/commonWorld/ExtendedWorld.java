@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.utils.Disposable;
 import io.github.arkobat.kolorkarl.common.World;
 
-public interface WorldTemp extends World, Disposable {
+public interface ExtendedWorld extends World, Disposable {
 
     TiledMap getMap();
 
@@ -15,6 +15,6 @@ public interface WorldTemp extends World, Disposable {
 
     void endMap();
 
-    WorldTemp getNextMap();
+    ExtendedWorld getNextMap();
 
 }

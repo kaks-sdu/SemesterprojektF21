@@ -85,7 +85,7 @@
         <dependency>
             <groupId>org.netbeans.api</groupId>
             <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE122</version>
+            <version>RELEASE124</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

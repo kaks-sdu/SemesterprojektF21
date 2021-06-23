@@ -12,4 +12,4 @@ Created at 4. semester in Software Engineering.
 #### Build and run in IntelliJ
 1. Opn the project
 1. Run `mvn clean install`
-1. Run `pax:provision install`
+1. Run `mvn pax:provision install`

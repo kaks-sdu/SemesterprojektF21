@@ -2,11 +2,16 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="io.github.arkobat.kolorkarl.Game">
     <implementation class="io.github.arkobat.kolorkarl.core.Game"/>
 
-    <reference bind="addEntityProcessingService" cardinality="0..n"
-               interface="io.github.arkobat.kolorkarl.common.game.GameProcessingService"
-               name="GameProcessingService" policy="dynamic" unbind="removeEntityProcessingService"/>
+    <reference
+            name="GameProcessingService"
+            interface="io.github.arkobat.kolorkarl.common.game.GameProcessingService"
+            policy="dynamic"
+            cardinality="0..n"
+            bind="addEntityProcessingService"
+            unbind="removeEntityProcessingService"
+    />
 
-   <reference bind="addTextureRenderService" cardinality="0..n"
+    <reference bind="addTextureRenderService" cardinality="0..n"
                interface="io.github.arkobat.kolorkarl.assetmanager.game.TextureRenderService"
                name="TextureRenderService" policy="dynamic" unbind="removeTextureRenderService"/>
 

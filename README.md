@@ -2,6 +2,9 @@
 A component based game, implemented with OSGI and LibGDX.  
 Created at 4. semester in Software Engineering.
 
+### Demo video
+A demo video can be found [here](https://www.youtube.com/watch?v=k0Ae5hZ0lj0)
+
 ## Getting Started
 
 ### Prerequisites
